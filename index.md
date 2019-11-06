@@ -21,10 +21,12 @@ and help other developer to understand the code base more efficiently.
 ### Guides
 
 For C++
+
 - [Style Guide](cxx/style_guide.md)
 - [Programming Guide](cxx/programming_guide.md)
 
 For CMake
+
 - [Style Guide](cmake/style_guide.md)
 - [Programming Guide](cmake/programming_guide.md)
 
@@ -34,6 +36,7 @@ This coding guidelines were inspired by other already available guidelines
 namely:
 
 For C++
+
 - [LLVM Code Standards](https://llvm.org/docs/CodingStandards.html)
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 - [Chromium C++ style guide](https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md)
