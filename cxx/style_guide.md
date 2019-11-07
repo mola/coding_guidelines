@@ -108,3 +108,75 @@ and function names.
   }
   } // namespace foo
   ```
+
+### Naming Conventions
+
+#### General Conventions
+
+<div class="alert alert-warning">
+  <strong>TODO:</strong> describe why 'snake_case' is the preferred naming convention.
+</div>
+
+Use descriptive names, and be consistent in the style. In general, use
+`CamelCase` for 'type-level' constructs (classes and enums) and `snake_case`
+for 'value-level' constructs (functions and variables). More precisely:
+
+- **Variables** should be lowercase and `snake_case`
+
+  ```cpp
+  int number_of_bytes;
+  std::string name;
+  ```
+
+- **Private member variables** should be prefixed with `m_` to distinguish them
+  from normal variables.
+
+  ```cpp
+  class Foo {
+      int m_number_of_bytes;
+      std::string m_name;
+  };
+  ```
+
+- **Type names** (including classes, structs, enums, typedefs, etc.) should
+  start with a uppercase letter and follow `CamelCase` afterwards
+
+  ```cpp
+  class Foo { ... }
+  struct FooBar { ... }
+  enum Buz { ... }
+  ```
+
+- **Template parameter** should start with a uppercase letter and follow
+  `CamelCase` afterwards. Usually they are single uppercase letter.
+
+  ```cpp
+  template <typename T>
+  template <typename InputIterator, typename ResultType>
+  ```
+
+- **Functions** should be lowercase and `snake_case`
+
+  ```cpp
+  void clear();
+  void open_file();
+  void very_long_foo_bar();
+  ```
+
+- **Constant variables** should be uppercase and `SNAKE_CASE`
+
+  ```cpp
+  static constexpr char PATH_SEPARATOR = '/';
+  ```
+
+- **Macros** and **Macro-Functions** should be uppercase and `SNAKE_CASE`
+
+  ```cpp
+  #define PI 3.14
+  #define LOG_ERROR(...)
+  ```
+
+<div class="alert alert-warning">
+  <strong>TODO:</strong> define naming convention for 'namespaces' and
+  'enumerators'!
+</div>
