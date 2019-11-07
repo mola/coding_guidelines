@@ -26,6 +26,13 @@ and function names.
 - Do not commit changes that include trailing whitespace at the end of lines or
   files. Let your editor of choice automatically remove trailing whitespace when
   saving a file.
+- Use **space** before opening parenthesis in control flow statements.
+
+  ```cpp
+  if (true) { ... }
+  while (true) { ... }
+  for (...) { ... }
+  ```
 
 ### Comments
 
