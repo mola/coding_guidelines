@@ -49,11 +49,9 @@ and function names.
 - Add a comment to the end of a namespace
 
   ```cpp
-  namespace foo
-  {
+  namespace foo {
       ...
-  namespace bar
-  {
+  namespace bar {
       ...
   } // namespace bar
   } // namespace foo
