@@ -86,3 +86,27 @@ and function names.
   /// \returns true if foo is valid
   bool is_valid(Foo foo);
   ```
+
+### Braces
+
+- Opening braces should go on the same line **except for functions**.
+
+  ```cpp
+  namespace foo {
+
+  class X : public Y {
+      ...
+  }
+
+  void bar()
+  {
+      ...
+
+      if (x) {
+          ...
+      } else {
+          ...
+      }
+  }
+  } // namespace foo
+  ```
