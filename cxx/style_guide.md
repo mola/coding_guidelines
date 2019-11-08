@@ -186,3 +186,81 @@ for 'value-level' constructs (functions and variables). More precisely:
 > In 'snake\_case' or 'SNAKE\_CASE', a word should never consist of a single
 > letter unless it is the last word. So, write `btree_map` rather than
 > `b_tree_map`, but `PI_2` rather than `PI2`.
+
+#### Avoid Redundant Prefixes
+
+- Names of items within a namespace should not be prefixed with that namespace's
+  name.
+
+  ```cpp
+  // GOOD
+  namespace foo {
+      struct Error { ... }
+  } // namespace foo
+
+  // BAD
+  namespace foo {
+      struct FooError { ... }
+  } // namespace foo
+  ```
+
+- Names of files within a library should not be prefixed with that library's
+  name.
+
+  ```cpp
+  // GOOD
+  .
+  └── libutil
+     ├── converter.hpp
+     ├── enums.hpp
+     └── strings.hpp
+
+  // BAD
+  .
+  └── libutil
+     ├── libutil_converter.hpp
+     ├── libutil_enums.hpp
+     └── libutil_strings.hpp
+  ```
+
+This convention avoids stuttering (like io::IoError). Library clients can rename
+the namespace and define the include style to avoid clashes.
+
+#### Getter/Setter Methods
+
+- **Getter methods** should **not** be prefixed with `get_`, instead just use the
+  corresponding variable name.
+- **Setter methods** should be prefixed with `set_`.
+
+  ```cpp
+  class Error {
+      int m_error_code;
+  public:
+      int error_code() const noexcept
+      {
+          return m_error_code;
+      }
+
+      void set_error_code(int value) noexcept
+      {
+          m_error_code = value;
+      }
+  }
+  ```
+
+#### Variable/Function Prefixes
+
+- Simple boolean predicates should be prefixed with `is_` or another short
+  question word, e.g. `is_empty`.
+- Converter functions should be prefixed with `as_` / `to_` / `from_` depending
+  on the cost and direction, e.g. `as_bytes` / `to_string` / `from_uint`.
+  - Prefix `as_` has no costs and gives a view to the data, which is a no-op.
+  - Prefix `to_` is expensive because it copies the data to a new type.
+
+#### File Naming / Extensions
+
+- **File names** should be written lowercase and `snake_case`
+- **User-generated** files should use `.cpp` and `.hpp` extensions, which are
+  widely recognized by various editors and tools.
+- **Tool-generated** files should use `.cxx` and `.hxx` extensions, which helps
+  to differentiate them from normal files.
