@@ -180,3 +180,9 @@ for 'value-level' constructs (functions and variables). More precisely:
   <strong>TODO:</strong> define naming convention for 'namespaces' and
   'enumerators'!
 </div>
+
+> In 'CamelCase', acronyms count as on word: use `Uuid` rather than `UUID`.
+
+> In 'snake\_case' or 'SNAKE\_CASE', a word should never consist of a single
+> letter unless it is the last word. So, write `btree_map` rather than
+> `b_tree_map`, but `PI_2` rather than `PI2`.
