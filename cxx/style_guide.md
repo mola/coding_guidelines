@@ -264,3 +264,158 @@ the namespace and define the include style to avoid clashes.
   widely recognized by various editors and tools.
 - **Tool-generated** files should use `.cxx` and `.hxx` extensions, which helps
   to differentiate them from normal files.
+
+### Includes
+
+- Use double quotes for *local header* and angle brackets for *system header*
+- Preferred **#include** order:
+  - "main" header (`#include "foo/foo.hpp"`)
+  - "project" header (`#include "foo/bar.hpp"`)
+  - "dependency" header (`#include "util/util.hpp"`)
+  - \<system dependency\> header (`#include <QtByteArray>`)
+  - \<system\> header (`#include <iostream>`)
+- Separate each header section with an empty line:
+
+  ```cpp
+  #include "foo/foo.hpp"
+
+  #include "foo/bar.hpp"
+  #include "foo/buz.hpp"
+
+  #include "util/util.hpp"
+
+  #include <iostream>
+  #include <memory>
+  #include <cstdlib>
+  ```
+
+- Do not include *internal* header in public module header files. Only include
+  them in the implementation file (.cpp).
+
+### Include Guards
+
+Header files must contain a distinctly-named include guard to avoid problems
+with including the same header multiple times and to prevent conflicts with
+headers from other projects. With C-style header guards this can be quiet
+error-prone. Because of that `#pragma once` should be used which is
+quasi-standard across many compilers. It is short and makes the intent clear.
+
+- Use `#pragma once` instead of C-style header guards.
+
+### Indentation
+
+- In general, reduce indentation wherever possible.
+- Do not indent source code inside namespaces. This can avoid some deeply
+  nesting and makes it easier to understand the source code.
+
+  ```cpp
+  namespace foo {
+  class Sample { ... };
+
+  namespace detail {
+  class InternalSample { ... };
+  } // namespace detail
+
+  bool is_valid() noexcept;
+  } // namespace foo
+  ```
+
+- Indent preprocessor directives with the `#` character. Pre-ANSI C compiler would not
+  allow this but these days they are non-existent.
+
+  ```cpp
+  #if defined(__linux__)
+      #ifdef DEBUGGING == 1
+          #if defined (pic18f2480)
+              #define FLASH_MEMORY_END 0x3DC0
+          #elif defined (pic18f2580)
+              #define FLASH_MEMORY_END 0x7DC0
+          #else
+              #error "Can't set  up flash memory end!"
+          #endif
+      #else
+          #define FLASH_MEMORY_END 0x7DC0
+      #endif
+
+  extern "C"
+  {
+      #include <sys/ioctl.h>
+      #include <sys/socket.h>
+      #include <sys/types.h>
+  }
+  #endif
+  ```
+
+- In **functions** align preprocessor directives to the left and do not indent
+  them (if they are not nested).
+
+  ```cpp
+  int some_functions(...) noexcept
+  {
+      auto some_value = int{100};
+
+  #if defined(__linux__)
+      some_value += 77;
+  #elif defined(WIN32)
+      some_value -= 25;
+  #else
+      #error Platform not supported!
+  #endif
+
+      return some_value;
+  }
+  ```
+
+### class/struct Keywords
+
+In C++, the `class` and `struct` keywords can be used almost interchangeably.
+The only difference is in the default access scope. The `struct` keyword should
+be used for POD (Plain Old Data), meaning a data structure which does not
+contain any logic on his own.
+
+```cpp
+struct SomeData
+{
+    std::uint32_t address;
+    std::uint16_t reserved;
+    std::uint16_t count;
+};
+```
+
+### Lambda Formatting
+
+- Try to format lambdas like normal blocks of code.
+- If useful define the return type of the lambda with the
+  *trailing return type syntax*.
+
+  ```cpp
+  auto foo = [&](Foo a, Foo b) -> bool {
+      return a < b;
+  };
+  ```
+
+### Specifier Placement
+
+- Put `*` and `&` by the type rather than the variable name.
+
+  ```cpp
+  int* foo;
+  void bar(Foo const& a);
+  ```
+
+- Use East-const instead of West-const (easier to read from right to left).
+
+  ```cpp
+  Foo const* const*& foo = make();
+  // Ref to pointer, to a const pointer, to a const Foo
+  ```
+
+- When overriding functions only use the `override` specifier and not `virtual`.
+
+  ```cpp
+  // on base class
+  virtual void foo(Foo a, Foo b) = 0;
+
+  // at derived class
+  void foo(Foo a, Foo b) override;
+  ```
