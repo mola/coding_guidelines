@@ -9,6 +9,11 @@ This page provides style guidelines for the C++ programming language.
   <strong>This page is still work in progress.</strong>
 </div>
 
+<div class="alert alert-warning">
+  <strong>TODO:</strong> add '.clang-format' and '.clang-tidy' and describe why
+  and how to use them.
+</div>
+
 ### Source Code Column Limit
 
 The source code must not exceed 100 character. This limit allows to have two
