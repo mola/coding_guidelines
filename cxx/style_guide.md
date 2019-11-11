@@ -163,10 +163,32 @@ for 'value-level' constructs (functions and variables). More precisely:
   void very_long_foo_bar();
   ```
 
+- **Namespaces** should be lowercase and `snake_case`
+
+  ```cpp
+  namespace foo {
+  ...
+  namespace bar {
+  ...
+  } // namespace bar
+  } // namespace foo
+  ```
+
 - **Constant variables** should be uppercase and `SNAKE_CASE`
 
   ```cpp
   static constexpr char PATH_SEPARATOR = '/';
+  ```
+
+- **Enumerators** should be uppercase and `SNAKE_CASE`
+
+  ```cpp
+  enum Status {
+      ERROR,
+      SUCCESS,
+      IDLE,
+      IN_PROGRESS
+  }
   ```
 
 - **Macros** and **Macro-Functions** should be uppercase and `SNAKE_CASE`
@@ -175,11 +197,6 @@ for 'value-level' constructs (functions and variables). More precisely:
   #define PI 3.14
   #define LOG_ERROR(...)
   ```
-
-<div class="alert alert-warning">
-  <strong>TODO:</strong> define naming convention for 'namespaces' and
-  'enumerators'!
-</div>
 
 > In 'CamelCase', acronyms count as on word: use `Uuid` rather than `UUID`.
 
