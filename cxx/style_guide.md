@@ -113,13 +113,10 @@ and function names.
 
 #### General Conventions
 
-<div class="alert alert-warning">
-  <strong>TODO:</strong> describe why 'snake_case' is the preferred naming convention.
-</div>
-
 Use descriptive names, and be consistent in the style. In general, use
 `CamelCase` for 'type-level' constructs (classes and enums) and `snake_case`
-for 'value-level' constructs (functions and variables). More precisely:
+for 'value-level' constructs (functions and variables). The advantage of
+`snake_case` is that it can also work with spell checkers.
 
 - **Variables** should be lowercase and `snake_case`
 
