@@ -11,11 +11,141 @@ This page provides programming guidelines for the C++ programming language.
 
 ### Think Immutable
 
+By default, every object in C++ is mutable, which means it could change anytime.
+But race conditions can not occur on constants and it is easier to reason about
+a program when object cannot change their values. Immutability also helps the
+compiler to optimize the code.
+
+- Immutable objects and methods are easier to reason about, so make objects
+  non-const only when there is a need to change their value.
+- Prevents accidental or hard-to-notice change of values.
+
 #### Const As Much As Possible
 
-#### Const Ref Pitfall By Simple Types
+- Tell the compiler with `const` that a variable or method is immutable.
+- Use const ref (`const&`) to prevent the compiler from copying data unnecessarily.
+- By default, make **member functions** `const`, unless it changes the object's
+  observable state.
 
-#### Reduce Copies And Reassignments
+  ```cpp
+  class Foo {
+      int m_size;
+  public:
+      int size() const // does not modify the object's state
+      {
+          return m_size;
+      }
+  }
+  ```
+
+- Mark **member variables** `const` if they are not expected to change after
+  initialization.
+
+  ```cpp
+  class Bar {
+      int const m_identifier{0};
+  public:
+      explicit Bar(int identifier)
+        : m_identifier{identifier}
+      {}
+  }
+  ```
+
+> Since a const member variable cannot be assigned a new value, such a class may
+> not have a meaningful copy assignment operator.
+
+- Define **objects** with values that **do not change after construction** `const`
+
+  ```cpp
+  void f()
+  {
+      auto x = int{7};
+      auto const y = int{9};
+
+      // As x is not const, we must assume that it is modified somewhere in the
+      // function ...
+  }
+  ```
+
+- If possible, pass and return by const ref (`const&`)
+
+  ```cpp
+  void do_something(std::string const& str);
+  std::string const& return_something();
+  ```
+
+- Use `constexpr` for values/functions that can be computed at compile time
+
+  ```cpp
+  static constexpr char PATH_SEPARATOR = '/';
+  constexpr double z = calc(2); // if calc(2) is a constexpr function
+  ```
+
+#### Const Ref Pitfall For Simple Types
+
+Passing and returning by reference leads to pointer operations instead by
+much faster passing values in processor registers.
+
+- Do not pass and return simple types by const ref.
+
+#### Reduce Moves, Copies And Reassignments
+
+- Reduce temporary object, which will prevent the compiler from performing a
+  move operation.
+
+  ```cpp
+  // instead of:
+  auto x = foo();
+  auto y = bar();
+  do_something(x, y);
+
+  // consider:
+  do_something(foo(), bar());
+  ```
+
+- For simple cases, use the **ternary operator** to reduce reassignments.
+
+  ```cpp
+  // GOOD
+  auto const some_value = std::string{case_a ? "Value A" : "Value B"};
+
+  // BAD
+  std::string some_value;
+
+  if (case_a) {
+      some_value = "Value A";
+  } else {
+      some_value = "Value B";
+  }
+  ```
+
+- For complex cases, use an **immediately-invoked lambda** to reduce reassignments.
+
+  ```cpp
+  // GOOD
+  auto const some_value = [&]() -> std::string {
+      if (case_a) {
+        return "Value A";
+      }
+
+      if (case_b) {
+        return "Value B";
+      }
+
+      return "Value C";
+  }();
+
+  // BAD
+  std::string some_value;
+
+  if (case_a) {
+      some_value = "Value A";
+  } else if (case_b) {
+      some_value = "Value B";
+  } else {
+      some_value = "Value C";
+  }
+  ```
 
 ### Compiler Issues
 
