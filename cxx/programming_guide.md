@@ -247,6 +247,41 @@ think. This is because the **reference count** must be **atomic** and
 
 ### Avoid Macros
 
+Compiler definitions and macros are replaced/removed during preprocessing before the
+compiler is ever run. This can make debugging very difficult because the
+debugger does not know where the source came from. Furthermore are macros not
+obeying scope, type and argument passing rules.
+
+- If not necessary, avoid writing macros and try to decrease the usage of
+  macros as much as possible.
+- Use **enumerations** over macros.
+
+  ```cpp
+  // instead of:
+  #define RED 0
+  #define BLUE 1
+  #define GREEN 2
+
+  // use:
+  enum class Color {
+      RED = 0,
+      BLUE = 1,
+      GREEN = 2
+  };
+  ```
+
+- Use **static constants** over macros.
+
+  ```cpp
+  // instead of:
+  #define PI 3.14
+
+  // use:
+  namespace my_project {
+  static constexpr double PI = 3.14;
+  } // namespace my_project
+  ```
+
 ### Avoid Boolean Parameters
 
 ### Avoid `<iostream>`
