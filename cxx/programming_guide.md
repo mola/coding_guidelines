@@ -354,6 +354,36 @@ obeying scope, type and argument passing rules.
 
 #### Rule Of Five
 
+- The **special member function** are the default constructor, copy/move
+  constructor, copy/move assignment operator and destructor.
+- Declaring any special member function (expect default constructor), even as
+  `= default` or `= delete`, will suppress the implicit declaration of a move
+  constructor and assignment operator.
+- Follow the [Rule of five](https://en.cppreference.com/w/cpp/language/rule_of_three#Rule_of_five)
+  and define all special functions even if they will be defaulted. This avoids
+  unwanted effect like turning all potential moves into more expensive copies,
+  or making a class move-only.
+
+  ```cpp
+  class Foo {
+  public:
+      /// Constructor.
+      Foo();
+      /// Destructor.
+      ~Foo() noexcept = default;
+
+      /// Copy constructor.
+      Foo(Foo const& other) = default;
+      /// Copy assignment.
+      Foo& operator=(Foo const& other) = default;
+
+      /// Move constructor.
+      Foo(Foo&& other) noexcept = default;
+      /// Move assignment.
+      Foo& operator=(Foo&& other) noexcept = default;
+  };
+  ```
+
 #### Use Copy-And-Swap Idiom
 
 The copy-and-swap idiom is the solution, and elegantly assists the assignment
