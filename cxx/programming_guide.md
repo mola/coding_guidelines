@@ -334,6 +334,12 @@ obeying scope, type and argument passing rules.
 
 #### Prefer Pre-Increment To Post-Increment
 
+The semantics of post-increment include making a copy of the value being
+incremented, returning it, and then pre-incrementing the 'work value'. This can
+be a huge issue for iterators.
+
+- Prefer pre-increment (`++y`) to post-increment (`y++`).
+
 #### Difference Between Char And String
 
 Single characters should use single quotes instead of double quotes. Double
