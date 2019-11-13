@@ -392,6 +392,27 @@ int do_something(Instruction const& item)
 
 ### Includes
 
+Be aware that there are many cases where the full definition of a class is not
+required. If a **pointer** of **reference** to a class is used, the header file
+is not needed and a forward declaration is sufficient. This can reduce compile
+times and result in fewer files needing recompilation when a header changes.
+
+- Only include the minimum number of required files. **Don't duplicate includes
+  in header and source files!**
+- Whenever possible use **forward declaration** in header files.
+
+  ```cpp
+  // GOOD
+  class Foo;
+
+  void do_something(Foo const& foo);
+
+  // BAD
+  #include "foo.hpp"
+
+  void do_something(Foo const& foo);
+  ```
+
 ### Classes
 
 #### Default Values With Brace Initialization
