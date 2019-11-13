@@ -181,7 +181,7 @@ code, isolate it behind a well defined and well documented interface.
   `*`.
 - **Temporaries** and **local values** should always returned by value.
 
-### Use Smart Pointer
+### Pointer
 
 #### Avoid Raw Memory Access
 
