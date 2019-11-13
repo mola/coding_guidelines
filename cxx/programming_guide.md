@@ -443,16 +443,38 @@ https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 
 #### Constexpr Lambda
 
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#constexpr-lambda
+
 #### Nested Namespaces
+
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#nested-namespaces
 
 #### Structured Bindings
 
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#structured-bindings
+- See https://en.cppreference.com/w/cpp/language/structured_binding
+
 #### Statements with Initializer
+
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#selection-statements-with-initializer
+- See https://en.cppreference.com/w/cpp/language/if
 
 #### New Standard Attributes
 
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#new-standard-attributes
+- See https://en.cppreference.com/w/cpp/language/attributes
+
 #### Non-Owning Reference To String - `std::string_view`
+
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdstring_view
+- See https://en.cppreference.com/w/cpp/string/basic_string_view
 
 #### Standard For Filesystem Interaction - `std::filesystem`
 
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdfilesystem
+- See https://en.cppreference.com/w/cpp/filesystem
+
 #### Representing Data As Byte - `std::byte`
+
+- See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdbyte
+- See https://en.cppreference.com/w/cpp/types/byte
