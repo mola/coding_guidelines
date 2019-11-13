@@ -492,6 +492,29 @@ accidental runtime overhead and unintended conversion.
 
 #### Conversion Operators
 
+Similarly to single parameter constructors, conversion operations can be called
+by the compiler and introduce unexpected overhead.
+
+- Mark conversion operations as `explicit`.
+
+  ```cpp
+  // GOOD
+  struct S {
+      explicit operator int()
+      {
+          return 2;
+      }
+  };
+
+  // BAD
+  struct S {
+      operator int()
+      {
+          return 2;
+      }
+  };
+  ```
+
 #### Rule Of Five
 
 - The **special member function** are the default constructor, copy/move
