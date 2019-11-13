@@ -336,6 +336,20 @@ obeying scope, type and argument passing rules.
 
 #### Difference Between Char And String
 
+Single characters should use single quotes instead of double quotes. Double
+quote characters have to be parsed by the compiler as a `const char*` which has
+to do a range check for `\0`. Single quote characters on the other hand are
+known to be a single character and avoid many CPU instructions. If used
+inefficiently very many times it might have an impact on the performance.
+
+```cpp
+// GOOD
+std::cout << message() << '\n';
+
+// BAD
+std::cout << message() << "\n";
+```
+
 #### Use Early Exits
 
 ### Includes
