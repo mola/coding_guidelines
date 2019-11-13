@@ -358,6 +358,26 @@ std::cout << message() << "\n";
 
 #### Use Early Exits
 
+- Improves readability and reduces indentations.
+- Reduces temporary object, which would be needed for a late exit.
+- Do not use `else` or `else if` after something interrupts the control flow,
+  e.g. `return`, `throw`, `break`, `continue`, etc.
+
+```cpp
+int do_something(Instruction const& item)
+{
+    if (item.is_valid()) {
+        throw std::runtime_error{"..."};
+    }
+
+    if (item.is_terminator()) {
+        return 0;
+    }
+
+    return 1;
+}
+```
+
 ### Includes
 
 ### Classes
