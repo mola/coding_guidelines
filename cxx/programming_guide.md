@@ -441,6 +441,32 @@ int do_something(Instruction const& item)
 
 #### Initializer List
 
+- Performance of an initializer list is the same as manual initialization.
+- There is a performance gain for object which are not
+  *is\_trivially\_default\_constructible*.
+
+  ```cpp
+  // GOOD
+  class Foo {
+      Bar m_bar;
+  public:
+      Foo(Bar bar)
+        : m_bar{bar} // default constructor for m_bar is never called
+      {}
+  };
+
+  // BAD
+  class Foo {
+      Bar m_bar;
+  public:
+      Foo(Bar bar)
+      {
+          // leads to an additional constructor call for m_bar before the assignment
+          m_bar = bar;
+      }
+  };
+  ```
+
 #### Single Parameter Constructors
 
 #### Conversion Operators
