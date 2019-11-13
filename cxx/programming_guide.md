@@ -200,6 +200,11 @@ Consider the following order for pointers:
 
 #### Avoid Raw Memory Access
 
+Raw memory access, allocation and deallocation, are difficult to get correct
+without risking memory errors and leaks.
+
+- **Avoid raw memory** and use **smart pointer** instead.
+
 #### Prefer `std::unique_ptr`
 
 ### Use C++-style Casts
