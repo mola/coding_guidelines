@@ -183,6 +183,21 @@ code, isolate it behind a well defined and well documented interface.
 
 ### Pointer
 
+It is best to avoid using pointers as much as possible. The use of pointers can
+lead to confusion of ownership which can directly or indirectly lead to memory
+leaks. Also, by avoiding the use of pointers common security holes such as
+buffer overruns can be avoided and sometimes eliminated.
+
+Consider the following order for pointers:
+
+- Reference to T (`T&`)
+- Unique pointer (`std::unique_ptr<T>`)
+- Weak pointer (`std::weak_ptr<T>`)
+- Shared pointer (`std::shared_ptr<T>`)
+- raw pointer (`T*`)
+  - Useful for non owning access where the lifetime of the pointer is guaranteed
+  to outlive the object
+
 #### Avoid Raw Memory Access
 
 #### Prefer `std::unique_ptr`
