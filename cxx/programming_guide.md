@@ -284,6 +284,14 @@ obeying scope, type and argument passing rules.
 
 ### Avoid Boolean Parameters
 
+- They do not provide any additional meaning while reading the code.
+- Either create a **separate function** or pass an **enumeration** that makes the
+  meaning more clear.
+
+<div class="alert alert-warning">
+  <strong>TODO:</strong> provide a source code example.
+</div>
+
 ### Avoid `<iostream>`
 
 ### Never Use `std::bind`
