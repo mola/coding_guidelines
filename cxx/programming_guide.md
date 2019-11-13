@@ -304,6 +304,22 @@ obeying scope, type and argument passing rules.
 
 ### Never Use `std::bind`
 
+- `std::bind` is almost always way more overhead (both compile time and runtime)
+  than needed.
+- Use **lambdas** instead.
+
+  ```cpp
+  // GOOD
+  auto f = [](std::string const& s) {
+      return my_function("hello", s);
+  };
+  f("world");
+
+  // BAD
+  auto f = std::bind(&my_function, "hello", std::placeholders::_1);
+  f("world");
+  ```
+
 ### Never Use `using namespace` In Header Files
 
 ### Rules Of Thumb
