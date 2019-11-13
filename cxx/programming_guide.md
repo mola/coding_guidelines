@@ -437,6 +437,18 @@ https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 
 #### Beware Of Unnecessary Copies
 
+The convenience of `auto` makes it easy to forget that its default behavior is a
+copy. Particularly in ranged-based `for` loops, careless copies are expensive.
+
+```cpp
+// typically there is no reason to copy
+for (auto const& value : container) { observe(value); }
+for (auto& value : container) { value.change(); }
+
+// remove the reference if a new copy is really wanted
+for (auto value : container) { value.change(); save_somewhere(value); }
+```
+
 #### Beware Of `end()` Evaluation Every Time
 
 In cases where range-based `for` loops can not be used and it is necessary to
