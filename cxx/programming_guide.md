@@ -288,9 +288,29 @@ obeying scope, type and argument passing rules.
 - Either create a **separate function** or pass an **enumeration** that makes the
   meaning more clear.
 
-<div class="alert alert-warning">
-  <strong>TODO:</strong> provide a source code example.
-</div>
+  ```cpp
+  // somewhere calling a function with boolean parameter
+  send_text("Hello world", true);
+
+  // it is hard to remember every boolean parameter meaning and the function
+  // definition needs to be looked up:
+  void send_text(std::string const& msg, bool send_newline);
+
+  // alternative 1 - separate function:
+  void send_text(std::string const& msg);
+  void send_text_with_newline(std::string const& msg);
+
+  // alternative 2 - enumeration:
+  enum class NewLineDisposition { SEND_NEWLINE, NO_NEWLINE };
+  void send_text(std::string const& msg, NewLineDisposition flag);
+
+  send_text("Hello world", NewLineDisposition::SEND_NEWLINE);
+  ```
+
+- Some good reads to the topic:
+  - https://ariya.io/2011/08/hall-of-api-shame-boolean-trap
+  - https://www.drdobbs.com/conversationstruth-or-consequences/184403845
+  - https://blog.codinghorror.com/avoiding-booleans/
 
 ### Avoid `<iostream>`
 
