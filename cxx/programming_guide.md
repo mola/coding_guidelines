@@ -330,6 +330,18 @@ obeying scope, type and argument passing rules.
 
 ### Rules Of Thumb
 
+#### Use `noexcept`
+
+If an exception is not supposed to be thrown, the program cannot be assumed to
+cope with the error and should be terminated as soon as possible. Declaring a
+function `noexcept` helps optimizers by reducing the number of alternative
+execution paths. It also speeds up the exit after failure.
+
+- Put `noexcept` on every function which should not throw.
+
+> NOTE: Default constructors, destructors, move operations, and `swap` functions
+> should never throw. Mark them `noexcept`.
+
 #### Use `auto` Keyword
 
 #### Prefer Pre-Increment To Post-Increment
