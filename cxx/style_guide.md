@@ -193,6 +193,11 @@ for 'value-level' constructs (functions and variables). The advantage of
   }
   ```
 
+<div class="alert alert-warning">
+  <strong>TODO:</strong> rethink enumerators naming. See
+  https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#enum5-dont-use-all_caps-for-enumerators
+</div>
+
 - **Macros** and **Macro-Functions** should be uppercase and `SNAKE_CASE`
 
   ```cpp
