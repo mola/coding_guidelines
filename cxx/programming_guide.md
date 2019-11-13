@@ -220,6 +220,14 @@ not copyable. This makes it more efficient than the `std::shared_ptr`.
   auto shared_foo = std::shared_ptr<FooImpl>{factory()};
   ```
 
+#### Avoid `std::shared_ptr` Copies
+
+Objects of type `std::shared_ptr` are much more expensive to copy than one would
+think. This is because the **reference count** must be **atomic** and
+**thread-safe**.
+
+- Avoid temporaries and too many copies of objects.
+
 ### Use C++-style Casts
 
 ### Avoid Macros
