@@ -165,6 +165,12 @@ the **treat warnings as errors** settings, at least for the CI/CD setup.
 
 ### Portable Code
 
+In almost all cases, it is possible and within reason to write completely
+portable code. If there are cases where it isn't possible to write portable
+code, isolate it behind a well defined and well documented interface.
+
+- Try to write your code **as portable as possible**.
+
 ### Consider Your Return Types
 
 ### Use Smart Pointer
