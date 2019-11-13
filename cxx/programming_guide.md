@@ -149,6 +149,20 @@ much faster passing values in processor registers.
 
 ### Compiler Issues
 
+Start with very strict warning settings from the beginning. Trying to raise the
+warning level after the project is underway can be painful. Also consider using
+the **treat warnings as errors** settings, at least for the CI/CD setup.
+
+- If your code has compiler warnings, something is most probably wrong.
+  - e.g. casting values incorrectly, having 'questionable' constructs
+- Compiler warnings can cover up legitimate errors in output and make dealing
+  with a translation unit difficult.
+- Do not use compiler specific extensions like GCC extensions or
+  `#pragma region`
+- `#pragma clang diagnostic ignored "-Wshadow"` is ok behind compiler checks
+- **Use every available and reasonable set of warning options and treat these
+  compiler warnings like errors.**
+
 ### Portable Code
 
 ### Consider Your Return Types
