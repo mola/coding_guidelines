@@ -439,6 +439,18 @@ https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 
 #### Beware Of `end()` Evaluation Every Time
 
+In cases where range-based `for` loops can not be used and it is necessary to
+write an explicit iterator-based loop, pay close attention to whether `end()` is
+re-evaluated on each loop iteration.
+
+```cpp
+// GOOD
+for (auto i = Foo.begin(), e = Foo.end(); i != e; ++i) { ... }
+
+// BAD
+for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
+```
+
 ### Use C++17 Language Features If Possible
 
 #### Constexpr Lambda
