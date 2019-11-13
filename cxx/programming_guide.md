@@ -294,6 +294,14 @@ obeying scope, type and argument passing rules.
 
 ### Avoid `<iostream>`
 
+- Avoid `#include <iostream>` if possible, because many common implementations
+  transparently inject a static constructor into every translation unit that
+  includes it.
+- If `<iostream>` is used avoid `std::endl` which most of the time unnecessarily
+  flushes the output stream.
+- Alternative to `std::endl` without a flush: **End string with** `'\n'`
+  - Use `std::flush` if a flush is required
+
 ### Never Use `std::bind`
 
 ### Never Use `using namespace` In Header Files
