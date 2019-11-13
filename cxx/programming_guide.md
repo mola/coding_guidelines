@@ -390,8 +390,6 @@ int do_something(Instruction const& item)
 
 #### Conversion Operators
 
-#### Use `noexcept` And `const` On Functions
-
 #### Rule Of Five
 
 - The **special member function** are the default constructor, copy/move
