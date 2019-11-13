@@ -356,6 +356,53 @@ obeying scope, type and argument passing rules.
 
 #### Use Copy-And-Swap Idiom
 
+The copy-and-swap idiom is the solution, and elegantly assists the assignment
+operator in achieving two things: avoiding code duplication, and providing a
+strong exception guarantee.
+
+```cpp
+#include <cstddef>
+#include <utility>
+
+class DumbArray {
+    std::size_t m_size;
+    int* m_array;
+public:
+    DumbArray() = default;
+    DumbArray(DumbArray const&) = default;
+
+    DumbArray(DumbArray&& other) noexcept
+        : DumbArray()
+    {
+        swap(*this, other);
+    }
+
+    friend void swap(DumbArray& first, DumbArray& second) noexcept
+    {
+        using std::swap; // enable ADL
+
+        swap(first.m_size, second.m_size);
+        swap(first.m_array, second.m_array);
+    }
+
+    DumbArray& operator=(DumbArray other) noexcept
+    {
+        swap(*this, other);
+        return *this;
+    }
+
+    DumbArray& operator=(DumbArray const& other) noexcept
+    {
+        DumbArray temp(other);
+        swap(*this, temp);
+        return *this;
+    }
+};
+```
+
+For more detailed informations see the following stackoverflow post:
+https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
+
 ### Loop Pitfalls
 
 #### Beware Of Unnecessary Copies
