@@ -396,6 +396,49 @@ int do_something(Instruction const& item)
 
 #### Default Values With Brace Initialization
 
+- This ensures that no constructor ever forgets to initialize a member object.
+  - Typical source of undefined behavior bugs which are extremely hard to find.
+- Prefer `{}` initialization over `=` as it does not allow narrowing at compile
+  time.
+
+  ```cpp
+  // GOOD
+  class Foo {
+      int m_value{0}; // allowed
+      unsigned m_value_two{-1}; // narrowing not allowed, leads to a compile time error
+  };
+
+  // BAD
+  class Foo {
+      int m_value = 0; // allowed
+      unsigned m_value_two = -1; // narrowing allowed
+  };
+  ```
+
+- Constructors which only initialize data members can be defaulted and should
+  use brace initialization.
+
+  ```cpp
+  // GOOD
+  class Foo {
+      std::string m_name{"default"};
+      int m_count{1};
+  public:
+      Foo() = default;
+  };
+
+  // BAD
+  class FOO {
+      std::string m_name;
+      int m_count;
+  public:
+      Foo()
+        : m_name{"default"}
+        , m_count{1}
+      {}
+  };
+  ```
+
 #### Initializer List
 
 #### Single Parameter Constructors
