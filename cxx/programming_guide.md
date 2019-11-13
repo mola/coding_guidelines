@@ -230,6 +230,21 @@ think. This is because the **reference count** must be **atomic** and
 
 ### Use C++-style Casts
 
+- **Always** use **C++\-style casts** and never use C-style casts.
+- C++\-style casts allow more compiler checks and are considerably safer.
+- C++\-style casts are also more visible and have the possibility to search for
+  them.
+
+  ```cpp
+  auto x = double{1.5};
+
+  // GOOD
+  auto i = static_cast<int>(x);
+
+  // BAD
+  auto i = (int)x;
+  ```
+
 ### Avoid Macros
 
 ### Avoid Boolean Parameters
