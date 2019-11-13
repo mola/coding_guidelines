@@ -469,6 +469,27 @@ int do_something(Instruction const& item)
 
 #### Single Parameter Constructors
 
+Single parameter constructors can be applied at compile time to automatically
+convert between types. This should be avoided in general because they can add to
+accidental runtime overhead and unintended conversion.
+
+- Mark single parameter constructors as `explicit`, which requires them to be
+  explicitly called.
+
+  ```cpp
+  // GOOD
+  class String {
+  public:
+      explicit String(int);
+  };
+
+  // BAD
+  class String {
+  public:
+      String(int);
+  };
+  ```
+
 #### Conversion Operators
 
 #### Rule Of Five
