@@ -207,6 +207,19 @@ without risking memory errors and leaks.
 
 #### Prefer `std::unique_ptr`
 
+The `std::unique_ptr` does not need to keep track of its copies because it is
+not copyable. This makes it more efficient than the `std::shared_ptr`.
+
+- If possible use `std::unique_ptr` instead of `std::shared_ptr`.
+- Return `std::unique_ptr` from factory functions, then convert the
+  `std::unique_ptr` to a `std::shared_ptr` if necessary.
+
+  ```cpp
+  std::unique_ptr<FooImpl> factory();
+
+  auto shared_foo = std::shared_ptr<FooImpl>{factory()};
+  ```
+
 ### Use C++-style Casts
 
 ### Avoid Macros
