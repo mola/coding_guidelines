@@ -173,6 +173,14 @@ code, isolate it behind a well defined and well documented interface.
 
 ### Consider Your Return Types
 
+- Returning by **reference** (`&` or `const&`) can have significant performance
+  savings when the normal use of the returned value is only for observation.
+- Returning by **value** is better for **thread safety** and if the normal use
+  of the returned value is to make a copy anyhow, there is no performance lost.
+- If your API uses **covariant return types**, they must be returned by `&` or
+  `*`.
+- **Temporaries** and **local values** should always returned by value.
+
 ### Use Smart Pointer
 
 #### Avoid Raw Memory Access
