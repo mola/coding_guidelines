@@ -322,6 +322,12 @@ obeying scope, type and argument passing rules.
 
 ### Never Use `using namespace` In Header Files
 
+- Pollutes the namespace of any source file that `#include`s the header.
+- It could lead to namespace clashes, name collisions and decrease portability.
+- **Do not** use `using namespace XXX` anywhere in **global scope**.
+- Use the `using namespace XXX` directive only in **function scope** if
+  necessary.
+
 ### Rules Of Thumb
 
 #### Use `auto` Keyword
