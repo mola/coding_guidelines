@@ -350,6 +350,27 @@ obeying scope, type and argument passing rules.
 
 ### Rules Of Thumb
 
+- **Simplify the code** as it is cleaner and easier to read.
+- **Limit variable scope** and declare them as late as possible.
+- **Curly braces** (`{}`) are **required** for blocks. Leaving them off can lead
+  to semantic errors.
+- Always use **namespaces** because there is almost never a reason to declare an
+  identifier in the global namespace.
+- For precise-width integer types use `#include <cstdint>`.
+  - Do not forget the `std::` namespace on these types (e.g. `std::uint8_t`).
+- All parameters passed by lvalue reference must be labeled `const`.
+- Use `nullptr` instead of `NULL` or `0`.
+- Use `std::array` or `std::vector` instead of C\-style arrays.
+- Use ranged-based for loops, which where introduced in C++11, wherever possible.
+- Use **literal suffixes** if it improves readability.
+- Use **digit separators** to avoid long strings of digits and improve
+  readability.
+
+  ```cpp
+  auto c = 299'792'458;
+  auto q = 0b0000'1111'0000'0000;
+  ```
+
 #### Use `noexcept`
 
 If an exception is not supposed to be thrown, the program cannot be assumed to
