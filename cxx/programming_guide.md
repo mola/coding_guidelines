@@ -364,6 +364,43 @@ execution paths. It also speeds up the exit after failure.
 
 #### Use `auto` Keyword
 
+Declaring variables using `auto`, whether or not committing to a type is wanted,
+offers advantages for correctness, performance, maintainability, and robustness,
+as well as typing convenience.
+
+- Use `auto x = expr;`, when there is no need to explicitly commit to a type.
+
+  ```cpp
+  // GOOD
+  auto x = 42; // -> int
+  auto x = 42.f; // -> float
+  auto x = "42"; // -> const char*
+  auto x = "42"s; // -> std::string with C++14 literal suffixes
+
+  // BAD
+  int x = 42;
+  float x = 42.;
+  const char* x = "42";
+  std::string x = "42";
+  ```
+
+- Use `auto x = type{expr};`, when committing to a specific type is wanted.
+  - Use `()` instead of `{}` only when explicit narrowing is wanted.
+
+  ```cpp
+  // GOOD
+  auto x = std::size_t{42};
+  auto x = std::string{"42"};
+
+  // BAD
+  std::size_t x = 42;
+  std::string x = "42";
+  ```
+
+- Some good reads to the topic:
+  - https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+  - https://www.fluentcpp.com/2018/09/28/auto-stick-changing-style/
+
 #### Prefer Pre-Increment To Post-Increment
 
 The semantics of post-increment include making a copy of the value being
