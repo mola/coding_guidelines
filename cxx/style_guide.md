@@ -206,7 +206,8 @@ for 'value-level' constructs (functions and variables). The advantage of
 
 > In 'snake\_case' or 'SNAKE\_CASE', a word should never consist of a single
 > letter unless it is the last word. So, write `btree_map` rather than
-> `b_tree_map`, but `PI_2` rather than `PI2`.
+> `b_tree_map`, but `PI_2` rather than `PI2`. Prefixes are not part of a word
+> and must stay separated.
 
 #### Avoid Redundant Prefixes
 
