@@ -182,21 +182,17 @@ for 'value-level' constructs (functions and variables). The advantage of
   static constexpr char PATH_SEPARATOR = '/';
   ```
 
-- **Enumerators** should be uppercase and `SNAKE_CASE`
+- **Enumerators** should be prefixed with `e_` and follow otherwise the normal
+  variable naming.
 
   ```cpp
   enum Status {
-      ERROR,
-      SUCCESS,
-      IDLE,
-      IN_PROGRESS
+      e_error,
+      e_success,
+      e_idle,
+      e_in_progress
   }
   ```
-
-<div class="alert alert-warning">
-  <strong>TODO:</strong> rethink enumerators naming. See
-  https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#enum5-dont-use-all_caps-for-enumerators
-</div>
 
 - **Macros** and **Macro-Functions** should be uppercase and `SNAKE_CASE`
 
