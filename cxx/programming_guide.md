@@ -119,6 +119,8 @@ much faster passing values in processor registers.
   }
   ```
 
+  - Benchmark: http://quick-bench.com/cBEpSHE9pvJwm36-mDfYmlETcpc
+
 - For complex cases, use an **immediately-invoked lambda** to reduce reassignments.
 
   ```cpp
@@ -146,6 +148,8 @@ much faster passing values in processor registers.
       some_value = "Value C";
   }
   ```
+
+  - Benchmark: http://quick-bench.com/IJoIbgTUqGyiyMcRhKGiXCwhNBQ
 
 ### Compiler Issues
 
