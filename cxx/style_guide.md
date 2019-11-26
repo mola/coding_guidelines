@@ -430,6 +430,8 @@ struct SomeData
   ```cpp
   Foo const* const*& foo = make();
   // Ref to pointer, to a const pointer, to a const Foo
+
+  auto constexpr separator = '|';
   ```
 
 - When overriding functions only use the `override` specifier and not `virtual`.
