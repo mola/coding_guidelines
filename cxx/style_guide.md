@@ -176,10 +176,11 @@ for 'value-level' constructs (functions and variables). The advantage of
   } // namespace foo
   ```
 
-- **Constant variables** should be uppercase and `SNAKE_CASE`
+- **Global variables** should be prefixed with `g_` and follow otherwise the
+  normal variable naming.
 
   ```cpp
-  static constexpr char PATH_SEPARATOR = '/';
+  static char constexpr g_path_separator = '/';
   ```
 
 - **Enumerators** should be prefixed with `e_` and follow otherwise the normal
