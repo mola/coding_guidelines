@@ -77,8 +77,8 @@ compiler to optimize the code.
 - Use `constexpr` for values/functions that can be computed at compile time
 
   ```cpp
-  static constexpr char PATH_SEPARATOR = '/';
-  constexpr double z = calc(2); // if calc(2) is a constexpr function
+  static char constexpr g_path_separator = '/';
+  double constexpr z = calc(2); // if calc(2) is a constexpr function
   ```
 
 #### Const Ref Pitfall For Simple Types
@@ -268,9 +268,9 @@ obeying scope, type and argument passing rules.
 
   // use:
   enum class Color {
-      RED = 0,
-      BLUE = 1,
-      GREEN = 2
+      e_red = 0,
+      e_blue = 1,
+      e_green = 2
   };
   ```
 
@@ -282,7 +282,7 @@ obeying scope, type and argument passing rules.
 
   // use:
   namespace my_project {
-  static constexpr double PI = 3.14;
+  static double constexpr g_pi = 3.14;
   } // namespace my_project
   ```
 
@@ -305,10 +305,10 @@ obeying scope, type and argument passing rules.
   void send_text_with_newline(std::string const& msg);
 
   // alternative 2 - enumeration:
-  enum class NewLineDisposition { SEND_NEWLINE, NO_NEWLINE };
+  enum class NewLineDisposition { e_send_newline, e_no_newline };
   void send_text(std::string const& msg, NewLineDisposition flag);
 
-  send_text("Hello world", NewLineDisposition::SEND_NEWLINE);
+  send_text("Hello world", NewLineDisposition::e_send_newline);
   ```
 
 - Some good reads to the topic:
