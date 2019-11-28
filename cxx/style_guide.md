@@ -92,7 +92,9 @@ lengthy types and function names.
 
 ### Braces
 
-- Opening braces should go on the same line **except for functions**.
+Opening braces should **always** go on the **same line**. This reduces 'wasted'
+line because lines with only an opening brace do not help with the readability
+and distort the source code in its length.
 
   ```cpp
   namespace foo {
