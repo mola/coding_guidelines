@@ -294,7 +294,6 @@ the namespace and define the include style to avoid clashes.
   - "main" header (`#include "foo/foo.hpp"`)
   - "project" header (`#include "foo/bar.hpp"`)
   - "dependency" header (`#include "util/util.hpp"`)
-  - \<system dependency\> header (`#include <QtByteArray>`)
   - \<system\> header (`#include <iostream>`)
 - Separate each header section with an empty line:
 
