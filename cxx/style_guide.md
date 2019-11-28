@@ -245,12 +245,12 @@ for 'value-level' constructs (functions and variables). The advantage of
   ```cpp
   // GOOD
   namespace foo {
-      struct Error { ... }
+  struct Error { ... }
   } // namespace foo
 
   // BAD
   namespace foo {
-      struct FooError { ... }
+  struct FooError { ... }
   } // namespace foo
   ```
 
