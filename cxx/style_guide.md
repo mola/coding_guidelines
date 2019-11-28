@@ -469,3 +469,44 @@ struct SomeData
   // at derived class
   auto foo(Foo a, Foo b) override -> void;
   ```
+
+- **Access specifier** must only be used once per class and should be used in
+  the following order:
+  - `public`
+  - `protected`
+  - `private`
+
+  ```cpp
+  // GOOD
+  class Foo {
+  public:
+      Foo() = default;
+      auto do_something() -> void;
+      ...
+
+  protected:
+      ...
+
+  private:
+      int m_bar{1};
+      ...
+  };
+
+  // BAD
+  class Foo {
+      int m_bar{1};
+
+  public:
+      Foo() = default;
+      ...
+
+  protected:
+      ...
+
+  public:
+      auto do_something() -> void;
+
+  private:
+      ...
+  };
+  ```
