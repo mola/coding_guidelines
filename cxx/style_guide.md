@@ -163,6 +163,7 @@ for 'value-level' constructs (functions and variables). The advantage of
 
   ```cpp
   class Foo {
+  private:
       int m_number_of_bytes;
       std::string m_name;
   };
@@ -284,7 +285,6 @@ the namespace and define the include style to avoid clashes.
 
   ```cpp
   class Error {
-      int m_error_code;
   public:
       auto error_code() const noexcept -> int
       {
@@ -295,6 +295,9 @@ the namespace and define the include style to avoid clashes.
       {
           m_error_code = value;
       }
+
+  private:
+      int m_error_code;
   }
   ```
 

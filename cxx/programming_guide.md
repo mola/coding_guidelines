@@ -30,12 +30,14 @@ compiler to optimize the code.
 
   ```cpp
   class Foo {
-      int m_size;
   public:
       auto size() const -> int // does not modify the object's state
       {
           return m_size;
       }
+
+  private:
+      int m_size;
   }
   ```
 
@@ -44,11 +46,13 @@ compiler to optimize the code.
 
   ```cpp
   class Bar {
-      int const m_identifier{0};
   public:
       explicit Bar(int identifier)
         : m_identifier{identifier}
       {}
+
+  private:
+      int const m_identifier{0};
   }
   ```
 
@@ -511,12 +515,14 @@ times and result in fewer files needing recompilation when a header changes.
   ```cpp
   // GOOD
   class Foo {
+  private:
       int m_value{0}; // allowed
       unsigned m_value_two{-1}; // narrowing not allowed, leads to a compile time error
   };
 
   // BAD
   class Foo {
+  private:
       int m_value = 0; // allowed
       unsigned m_value_two = -1; // narrowing allowed
   };
@@ -528,21 +534,25 @@ times and result in fewer files needing recompilation when a header changes.
   ```cpp
   // GOOD
   class Foo {
-      std::string m_name{"default"};
-      int m_count{1};
   public:
       Foo() = default;
+
+  private:
+      std::string m_name{"default"};
+      int m_count{1};
   };
 
   // BAD
   class FOO {
-      std::string m_name;
-      int m_count;
   public:
       Foo()
         : m_name{"default"}
         , m_count{1}
       {}
+
+  private:
+      std::string m_name;
+      int m_count;
   };
   ```
 
@@ -555,22 +565,26 @@ times and result in fewer files needing recompilation when a header changes.
   ```cpp
   // GOOD
   class Foo {
-      Bar m_bar;
   public:
       Foo(Bar bar)
         : m_bar{bar} // default constructor for m_bar is never called
       {}
+
+  private:
+      Bar m_bar;
   };
 
   // BAD
   class Foo {
-      Bar m_bar;
   public:
       Foo(Bar bar)
       {
           // leads to an additional constructor call for m_bar before the assignment
           m_bar = bar;
       }
+
+  private:
+      Bar m_bar;
   };
   ```
 
@@ -665,9 +679,6 @@ strong exception guarantee.
 #include <utility>
 
 class DumbArray {
-    std::size_t m_size;
-    int* m_array;
-
 public:
     DumbArray() = default;
     DumbArray(DumbArray const&) = default;
@@ -694,6 +705,10 @@ public:
         swap(*this, temp);
         return *this;
     }
+
+private:
+    std::size_t m_size;
+    int* m_array;
 };
 ```
 
