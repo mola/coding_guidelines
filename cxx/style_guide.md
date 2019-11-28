@@ -70,8 +70,8 @@ lengthy types and function names.
   the code. The `\brief` specifier should not be added because Doxygen already
   interprets the first sentence as description.
 - All describing documentation comments (summary line/long description) should
-  begin with a capital letter and end with a period, question mark, or exclamation
-  point.
+  begin with a capital letter and end with a period, question mark, or
+  exclamation point.
 - Prefer full sentences to fragments.
 - Add an empty line between description, parameter and return documentation.
 - Wrap non-inline code examples in `\code` / `\endcode`.
@@ -250,8 +250,8 @@ the namespace and define the include style to avoid clashes.
 
 #### Getter/Setter Methods
 
-- **Getter methods** should **not** be prefixed with `get_`, instead just use the
-  corresponding variable name.
+- **Getter methods** should **not** be prefixed with `get_`, instead just use
+  the corresponding variable name.
 - **Setter methods** should be prefixed with `set_`.
 
   ```cpp
@@ -342,8 +342,8 @@ quasi-standard across many compilers. It is short and makes the intent clear.
   } // namespace foo
   ```
 
-- Indent preprocessor directives with the `#` character. Pre-ANSI C compiler would not
-  allow this but these days they are non-existent.
+- Indent preprocessor directives with the `#` character. Pre-ANSI C compiler
+  would not allow this but these days they are non-existent.
 
   ```cpp
   #if defined(__linux__)
