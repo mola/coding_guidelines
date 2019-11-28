@@ -119,25 +119,28 @@ Opening braces should **always** go on the **same line**. This reduces 'wasted'
 line because lines with only an opening brace do not help with the readability
 and distort the source code in its length.
 
-  ```cpp
-  namespace foo {
+```cpp
+namespace foo {
 
-  class X : public Y {
+class X : public Y {
+    ...
+}
+
+auto bar() -> void {
+    ...
+
+    if (x) {
+        ...
+    } else {
+        ...
+    }
+
+    do {
       ...
-  }
-
-  void bar()
-  {
-      ...
-
-      if (x) {
-          ...
-      } else {
-          ...
-      }
-  }
-  } // namespace foo
-  ```
+    } while (y);
+}
+} // namespace foo
+```
 
 ### Naming Conventions
 
