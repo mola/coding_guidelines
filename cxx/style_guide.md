@@ -16,10 +16,10 @@ This page provides style guidelines for the C++ programming language.
 
 ### Source Code Column Limit
 
-The source code must not exceed 100 character. This limit allows to have two
-splits open and still see the whole source code without resizing. The most used
-column width is 80 which is a little bit too short for C++ with lengthy types
-and function names.
+The source code must not exceed 100 character per line. This limit allows to
+have two splits open and still see the whole source code without resizing. The
+most used column width is 80 which is a little bit too short for C++ with
+lengthy types and function names.
 
 - Source Code Column Limit: 100
 
