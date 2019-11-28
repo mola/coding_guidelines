@@ -13,7 +13,7 @@ This page provides programming guidelines for the C++ programming language.
 
 By default, every object in C++ is mutable, which means it could change anytime.
 But race conditions can not occur on constants and it is easier to reason about
-a program when object cannot change their values. Immutability also helps the
+a program when objects cannot change their values. Immutability also helps the
 compiler to optimize the code.
 
 - Immutable objects and methods are easier to reason about, so make objects
