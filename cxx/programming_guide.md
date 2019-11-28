@@ -23,7 +23,8 @@ compiler to optimize the code.
 #### Const As Much As Possible
 
 - Tell the compiler with `const` that a variable or method is immutable.
-- Use const ref (`const&`) to prevent the compiler from copying data unnecessarily.
+- Use const ref (`const&`) to prevent the compiler from copying data
+  unnecessarily.
 - By default, make **member functions** `const`, unless it changes the object's
   observable state.
 
@@ -54,7 +55,8 @@ compiler to optimize the code.
 > Since a const member variable cannot be assigned a new value, such a class may
 > not have a meaningful copy assignment operator.
 
-- Define **objects** with values that **do not change after construction** `const`
+- Define **objects** with values that **do not change after construction**
+  `const`
 
   ```cpp
   void f()
@@ -121,7 +123,8 @@ much faster passing values in processor registers.
 
   - Benchmark: http://quick-bench.com/cBEpSHE9pvJwm36-mDfYmlETcpc
 
-- For complex cases, use an **immediately-invoked lambda** to reduce reassignments.
+- For complex cases, use an **immediately-invoked lambda** to reduce
+  reassignments.
 
   ```cpp
   // GOOD
@@ -251,8 +254,8 @@ think. This is because the **reference count** must be **atomic** and
 
 ### Avoid Macros
 
-Compiler definitions and macros are replaced/removed during preprocessing before the
-compiler is ever run. This can make debugging very difficult because the
+Compiler definitions and macros are replaced/removed during preprocessing before
+the compiler is ever run. This can make debugging very difficult because the
 debugger does not know where the source came from. Furthermore are macros not
 obeying scope, type and argument passing rules.
 
@@ -289,8 +292,8 @@ obeying scope, type and argument passing rules.
 ### Avoid Boolean Parameters
 
 - They do not provide any additional meaning while reading the code.
-- Either create a **separate function** or pass an **enumeration** that makes the
-  meaning more clear.
+- Either create a **separate function** or pass an **enumeration** that makes
+  the meaning more clear.
 
   ```cpp
   // somewhere calling a function with boolean parameter
@@ -365,7 +368,8 @@ obeying scope, type and argument passing rules.
 - All parameters passed by lvalue reference must be labeled `const`.
 - Use `nullptr` instead of `NULL` or `0`.
 - Use `std::array` or `std::vector` instead of C\-style arrays.
-- Use ranged-based for loops, which where introduced in C++11, wherever possible.
+- Use ranged-based for loops, which where introduced in C++11, wherever
+  possible.
 - Use **literal suffixes** if it improves readability.
 - Use **digit separators** to avoid long strings of digits and improve
   readability.
