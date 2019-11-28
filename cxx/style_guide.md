@@ -55,9 +55,9 @@ lengthy types and function names.
 
   ```cpp
   namespace foo {
-      ...
+  ...
   namespace bar {
-      ...
+  ...
   } // namespace bar
   } // namespace foo
   ```
@@ -87,7 +87,7 @@ lengthy types and function names.
   /// \param foo Foo object which should be checked
   ///
   /// \returns true if foo is valid
-  bool is_valid(Foo foo);
+  auto is_valid(Foo foo) -> bool;
   ```
 
 ### Trailing Return Type
@@ -207,9 +207,9 @@ for 'value-level' constructs (functions and variables). The advantage of
 - **Functions** should be lowercase and `snake_case`
 
   ```cpp
-  void clear();
-  void open_file();
-  void very_long_foo_bar();
+  auto clear() -> void;
+  auto open_file() -> void;
+  auto very_long_foo_bar() -> void;
   ```
 
 - **Namespaces** should be lowercase and `snake_case`
@@ -286,12 +286,12 @@ the namespace and define the include style to avoid clashes.
   class Error {
       int m_error_code;
   public:
-      int error_code() const noexcept
+      auto error_code() const noexcept -> int
       {
           return m_error_code;
       }
 
-      void set_error_code(int value) noexcept
+      auto set_error_code(int value) noexcept -> void
       {
           m_error_code = value;
       }
@@ -365,7 +365,7 @@ quasi-standard across many compilers. It is short and makes the intent clear.
   class InternalSample { ... };
   } // namespace detail
 
-  bool is_valid() noexcept;
+  auto is_valid() noexcept -> bool;
   } // namespace foo
   ```
 
@@ -386,11 +386,10 @@ quasi-standard across many compilers. It is short and makes the intent clear.
           #define FLASH_MEMORY_END 0x7DC0
       #endif
 
-  extern "C"
-  {
-      #include <sys/ioctl.h>
-      #include <sys/socket.h>
-      #include <sys/types.h>
+  extern "C" {
+  #include <sys/ioctl.h>
+  #include <sys/socket.h>
+  #include <sys/types.h>
   }
   #endif
   ```
@@ -399,7 +398,7 @@ quasi-standard across many compilers. It is short and makes the intent clear.
   them (if they are not nested).
 
   ```cpp
-  int some_functions(...) noexcept
+  auto some_functions(...) noexcept -> int
   {
       auto some_value = int{100};
 
@@ -449,7 +448,7 @@ struct SomeData
 
   ```cpp
   int* foo;
-  void bar(Foo const& a);
+  auto bar(Foo const& a) -> void;
   ```
 
 - Use East-const instead of West-const (easier to read from right to left).
@@ -465,8 +464,8 @@ struct SomeData
 
   ```cpp
   // on base class
-  virtual void foo(Foo a, Foo b) = 0;
+  virtual auto foo(Foo a, Foo b) -> void = 0;
 
   // at derived class
-  void foo(Foo a, Foo b) override;
+  auto foo(Foo a, Foo b) override -> void;
   ```

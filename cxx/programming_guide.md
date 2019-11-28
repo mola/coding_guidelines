@@ -32,7 +32,7 @@ compiler to optimize the code.
   class Foo {
       int m_size;
   public:
-      int size() const // does not modify the object's state
+      auto size() const -> int // does not modify the object's state
       {
           return m_size;
       }
@@ -72,8 +72,8 @@ compiler to optimize the code.
 - If possible, pass and return by const ref (`const&`)
 
   ```cpp
-  void do_something(std::string const& str);
-  std::string const& return_something();
+  auto do_something(std::string const& str) -> void;
+  auto return_something() -> std::string const&;
   ```
 
 - Use `constexpr` for values/functions that can be computed at compile time
@@ -222,7 +222,7 @@ not copyable. This makes it more efficient than the `std::shared_ptr`.
   `std::unique_ptr` to a `std::shared_ptr` if necessary.
 
   ```cpp
-  std::unique_ptr<FooImpl> factory();
+  auto factory() -> std::unique_ptr<FooImpl>;
 
   auto shared_foo = std::shared_ptr<FooImpl>{factory()};
   ```
@@ -301,15 +301,15 @@ obeying scope, type and argument passing rules.
 
   // it is hard to remember every boolean parameter meaning and the function
   // definition needs to be looked up:
-  void send_text(std::string const& msg, bool send_newline);
+  auto send_text(std::string const& msg, bool send_newline) -> void;
 
   // alternative 1 - separate function:
-  void send_text(std::string const& msg);
-  void send_text_with_newline(std::string const& msg);
+  auto send_text(std::string const& msg) -> void;
+  auto send_text_with_newline(std::string const& msg) -> void;
 
   // alternative 2 - enumeration:
   enum class NewLineDisposition { e_send_newline, e_no_newline };
-  void send_text(std::string const& msg, NewLineDisposition flag);
+  auto send_text(std::string const& msg, NewLineDisposition flag) -> void;
 
   send_text("Hello world", NewLineDisposition::e_send_newline);
   ```
@@ -462,7 +462,7 @@ std::cout << message() << "\n";
   e.g. `return`, `throw`, `break`, `continue`, etc.
 
 ```cpp
-int do_something(Instruction const& item)
+auto do_something(Instruction const& item) -> int
 {
     if (item.is_valid()) {
         throw std::runtime_error{"..."};
@@ -491,12 +491,12 @@ times and result in fewer files needing recompilation when a header changes.
   // GOOD
   class Foo;
 
-  void do_something(Foo const& foo);
+  auto do_something(Foo const& foo) -> void;
 
   // BAD
   #include "foo.hpp"
 
-  void do_something(Foo const& foo);
+  auto do_something(Foo const& foo) -> void;
   ```
 
 ### Classes
@@ -645,12 +645,12 @@ by the compiler and introduce unexpected overhead.
       /// Copy constructor.
       Foo(Foo const& other) = default;
       /// Copy assignment.
-      Foo& operator=(Foo const& other) = default;
+      auto operator=(Foo const& other) -> Foo& = default;
 
       /// Move constructor.
       Foo(Foo&& other) noexcept = default;
       /// Move assignment.
-      Foo& operator=(Foo&& other) noexcept = default;
+      auto operator=(Foo&& other) noexcept -> Foo& = default;
   };
   ```
 
@@ -667,32 +667,29 @@ strong exception guarantee.
 class DumbArray {
     std::size_t m_size;
     int* m_array;
+
 public:
     DumbArray() = default;
     DumbArray(DumbArray const&) = default;
 
     DumbArray(DumbArray&& other) noexcept
-        : DumbArray()
-    {
+      : DumbArray() {
         swap(*this, other);
     }
 
-    friend void swap(DumbArray& first, DumbArray& second) noexcept
-    {
+    friend auto swap(DumbArray& first, DumbArray& second) noexcept -> void {
         using std::swap; // enable ADL
 
         swap(first.m_size, second.m_size);
         swap(first.m_array, second.m_array);
     }
 
-    DumbArray& operator=(DumbArray other) noexcept
-    {
+    auto operator=(DumbArray other) noexcept -> DumbArray& {
         swap(*this, other);
         return *this;
     }
 
-    DumbArray& operator=(DumbArray const& other) noexcept
-    {
+    auto operator=(DumbArray const& other) noexcept -> DumbArray& {
         DumbArray temp(other);
         swap(*this, temp);
         return *this;
