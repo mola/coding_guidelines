@@ -140,6 +140,25 @@ for 'value-level' constructs (functions and variables). The advantage of
   };
   ```
 
+- **Global variables** should be prefixed with `g_` and follow otherwise the
+  normal variable naming.
+
+  ```cpp
+  static char constexpr g_path_separator = '/';
+  ```
+
+- **Enumerators** should be prefixed with `e_` and follow otherwise the normal
+  variable naming.
+
+  ```cpp
+  enum Status {
+      e_error,
+      e_success,
+      e_idle,
+      e_in_progress
+  }
+  ```
+
 - **Type names** (including classes, structs, enums, typedefs, etc.) should
   start with a uppercase letter and follow `CamelCase` afterwards
 
@@ -174,25 +193,6 @@ for 'value-level' constructs (functions and variables). The advantage of
   ...
   } // namespace bar
   } // namespace foo
-  ```
-
-- **Global variables** should be prefixed with `g_` and follow otherwise the
-  normal variable naming.
-
-  ```cpp
-  static char constexpr g_path_separator = '/';
-  ```
-
-- **Enumerators** should be prefixed with `e_` and follow otherwise the normal
-  variable naming.
-
-  ```cpp
-  enum Status {
-      e_error,
-      e_success,
-      e_idle,
-      e_in_progress
-  }
   ```
 
 - **Macros** and **Macro-Functions** should be uppercase and `SNAKE_CASE`
