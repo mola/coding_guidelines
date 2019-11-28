@@ -90,6 +90,29 @@ lengthy types and function names.
   bool is_valid(Foo foo);
   ```
 
+### Trailing Return Type
+
+**Always** use **trailing return type** to be consistent with all use cases e.g.
+lambdas, templates where the return type depends on the argument type.
+
+```cpp
+// requires 'trailing return type' to compile/work
+template<class T, class U>
+auto multiply(T const& lhs, U const& rhs) -> decltype(lhs * rhs) {
+  return lhs * rhs;
+}
+
+// can only use 'trailing return type' to indicate return type
+auto foo = [&](Foo a, Foo b) -> bool {
+  return a < b;
+};
+
+// use 'trailing return type' to be consistent
+auto do_something() -> void {
+	...
+}
+```
+
 ### Braces
 
 Opening braces should **always** go on the **same line**. This reduces 'wasted'
