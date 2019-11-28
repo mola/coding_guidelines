@@ -725,6 +725,10 @@ In cases where range-based `for` loops can not be used and it is necessary to
 write an explicit iterator-based loop, pay close attention to whether `end()` is
 re-evaluated on each loop iteration.
 
+> The 'GOOD' solution can only be used if the container is not modified in the
+> loop body. If the container in modified the 'BAD' solution is the only viable
+> solution.
+
 ```cpp
 // GOOD
 for (auto i = Foo.begin(), e = Foo.end(); i != e; ++i) { ... }
