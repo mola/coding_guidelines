@@ -16,7 +16,7 @@ fixing existing source code, use the style that is already being used.
 This allows the source code to stay uniform and easy to follow. The point of
 having coding guidelines is to have a common base for writing code. It should
 help to provide a uniform code base across a project or organization/company
-and help other developer to understand the code base more efficiently.
+and help other developers to understand the code base more efficiently.
 
 ### Guides
 
@@ -36,7 +36,7 @@ For Git Commit Messages
 
 ### Inspiration
 
-This coding guidelines were inspired by other already available guidelines
+These coding guidelines were inspired by other already available guidelines
 namely:
 
 For C++
