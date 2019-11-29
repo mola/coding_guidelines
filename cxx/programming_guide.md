@@ -799,38 +799,125 @@ for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
 
 #### Constexpr Lambda
 
+```cpp
+auto identity = [](int n) constexpr { return n; };
+static_assert(identity(123) == 123);
+
+auto constexpr add = [](int x, int y) {
+    auto l = [=] { return x; };
+    auto r = [=] { return y; };
+    return [=] { return l() + r(); };
+};
+
+static_assert(add(1, 2)() == 3);
+```
+
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#constexpr-lambda
 
 #### Nested Namespaces
 
+```cpp
+namespace A::B::C {
+    int i;
+} // namespace A::B::C
+```
+
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#nested-namespaces
 
 #### Structured Bindings
+
+```cpp
+using Coordinate = std::pair<int, int>;
+auto origin() -> Coordinate {
+    return Coordinate{0, 0};
+}
+
+auto const [ x, y ] = origin();
+x; // == 0
+y; // == 0
+```
 
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#structured-bindings
 - See https://en.cppreference.com/w/cpp/language/structured_binding
 
 #### Statements with Initializer
 
+```cpp
+if (std::lock_guard<std::mutex> lk(mx); v.empty()) {
+    v.push_back(val);
+}
+```
+
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#selection-statements-with-initializer
 - See https://en.cppreference.com/w/cpp/language/if
 
 #### New Standard Attributes
+
+```cpp
+// will warn if return of foo() is ignored
+[[nodiscard]] int foo();
+int main() {
+    int a{1};
+    switch (a) {
+    // indicates that falling through on case 1 is intentional
+    case 1:
+        [[fallthrough]] case 2
+          :
+          // indicates that b might be unused, such as on production builds
+          [[maybe_unused]] int b
+          = foo();
+        assert(b > 0);
+        break;
+    }
+}
+```
 
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#new-standard-attributes
 - See https://en.cppreference.com/w/cpp/language/attributes
 
 #### Non-Owning Reference To String - `std::string_view`
 
+```cpp
+// regular strings
+std::string_view cppstr {"foo"};
+// wide strings
+std::wstring_view wcstr_v {L"baz"};
+// character arrays
+char array[3] = {'b', 'a', 'r'};
+std::string_view array_v(array, std::size(array));
+```
+
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdstring_view
 - See https://en.cppreference.com/w/cpp/string/basic_string_view
 
 #### Standard For Filesystem Interaction - `std::filesystem`
 
+```cpp
+auto const bigFilePath {"bigFileToCopy"};
+if (std::filesystem::exists(bigFilePath)) {
+    auto const bigFileSize {std::filesystem::file_size(bigFilePath)};
+    std::filesystem::path tmpPath {"/tmp"};
+
+    if (std::filesystem::space(tmpPath).available > bigFileSize) {
+        std::filesystem::create_directory(tmpPath.append("example"));
+        std::filesystem::copy_file(bigFilePath, tmpPath.append("newFile"));
+  }
+}
+```
+
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdfilesystem
 - See https://en.cppreference.com/w/cpp/filesystem
 
 #### Representing Data As Byte - `std::byte`
+
+```cpp
+std::byte a {0};
+std::byte b {0xFF};
+int i = std::to_integer<int>(b); // 0xFF
+
+std::byte c = a & b;
+int j = std::to_integer<int>(c); // 0
+```
 
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdbyte
 - See https://en.cppreference.com/w/cpp/types/byte
