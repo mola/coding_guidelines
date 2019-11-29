@@ -749,6 +749,52 @@ for (auto i = Foo.begin(), e = Foo.end(); i != e; ++i) { ... }
 for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
 ```
 
+### Performance And Optimization
+
+- **Do not** optimize **without reason**. If there is not need for optimization,
+  the main result of the effort will be more errors and higher maintenance
+  costs.
+- **Do not** optimize something that is **not performance critical**. Optimizing
+  a **non-performance-critical** part of a program has no effect on system
+  performance.
+
+> If your program spends **4%** of its processing time doing computation **A**
+> and **40%** of its time doing computation **B**, a **50%** improvement on
+> **A** is only as impactful as a **5%** improvement on **B**.
+
+- **Do not** make claims about performance **without measurements**.
+
+> A few simple microbenchmarks using Unix `time` or the standard-library
+> `<chrono>` can help dispel the most obvious myths. If you can't measure your
+> complete system accurately, at least try to measure a few of your key
+> operations and algorithms. A profiler can help tell you which parts of yours
+> system are performance critical.
+
+- **Design** to **enable optimization** because the initial design often needs
+  to be optimized.
+- **Move** computation from *run-time* to *compile-time*. This can help to avoid
+  data races by using constants and allows to catch errors at compile-time.
+- **Performance** is very sensitive to **cache performance** and cache
+  algorithms favor simple (usually linear) access to adjacent data.
+
+  ```cpp
+  int matrix[rows][cols];
+
+  // GOOD
+  for (int r = 0; r < rows; ++r) {
+      for (int c = 0; c < cols; ++c) {
+          sum += matrix[r][c];
+      }
+  }
+
+  // BAD
+  for (int c = 0; c < cols; ++c) {
+      for (int r = 0; r < rows; ++r) {
+          sum += matrix[r][c];
+      }
+  }
+  ```
+
 ### Use C++17 Language Features If Possible
 
 #### Constexpr Lambda
