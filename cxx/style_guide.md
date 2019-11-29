@@ -66,7 +66,7 @@ lengthy types and function names.
   struct Foo { int x{0}; int y{1}; }
   ```
 
-### Alignment
+### Do Not Use Whitespace For Alignment
 
 Idiomatic code should not use extra whitespace in the middle of a line to
 provide alignment.
@@ -142,7 +142,7 @@ auto tmp = 1;
   auto is_valid(Foo foo) -> bool;
   ```
 
-### Trailing Return Type
+### Always Use Trailing Return Type
 
 **Always** use **trailing return type** to be consistent with all use cases e.g.
 lambdas, templates where the return type depends on the argument type.
@@ -165,7 +165,7 @@ auto do_something() -> void {
 }
 ```
 
-### Braces
+### Opening Braces Always Go On The Same Line
 
 Opening braces should **always** go on the **same line**. This reduces 'wasted'
 line because lines with only an opening brace do not help with the readability
@@ -396,7 +396,7 @@ the namespace and define the include style to avoid clashes.
 - Do not include *internal* header in public module header files. Only include
   them in the implementation file (.cpp).
 
-### Include Guards
+### Header/Include Guards
 
 Header files must contain a distinctly-named include guard to avoid problems
 with including the same header multiple times and to prevent conflicts with
@@ -485,7 +485,7 @@ struct SomeData
 };
 ```
 
-### Lambda Formatting
+### Format Lambdas Like Blocks Of Code
 
 - Try to format lambdas like normal blocks of code.
 - If useful define the return type of the lambda with the
