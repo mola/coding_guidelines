@@ -66,6 +66,31 @@ lengthy types and function names.
   struct Foo { int x{0}; int y{1}; }
   ```
 
+### Alignment
+
+Idiomatic code should not use extra whitespace in the middle of a line to
+provide alignment.
+
+```cpp
+// GOOD
+struct Foo {
+    int x = 42;
+    float some_value = 0.42f;
+};
+
+auto y = 0;
+auto tmp = 1;
+
+// BAD
+struct Foo {
+    int x            = 42;
+    float some_value = 0.42f;
+};
+
+auto y   = 0;
+auto tmp = 1;
+```
+
 ### Comments
 
 #### General
