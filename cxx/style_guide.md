@@ -31,12 +31,39 @@ lengthy types and function names.
 - Do not commit changes that include trailing whitespace at the end of lines or
   files. Let your editor of choice automatically remove trailing whitespace when
   saving a file.
-- Use **space** before opening parenthesis in control flow statements.
+- Use a **space** before opening parenthesis in control flow statements.
 
   ```cpp
   if (true) { ... }
   while (true) { ... }
   for (...) { ... }
+  ```
+
+- Use **spaces** around binary operations, including the equals sign.
+
+  ```cpp
+  auto foo = (1 << 8) | 2;
+
+  auto bar = x + y;
+
+  if (foo || x < 0) { ... }
+  ```
+
+- Use a **space** after colons and commas.
+
+  ```cpp
+  class Foo: public Bar {};
+
+  foo(bar, baz);
+  ```
+
+- Use a **space** after the opening and before the closing brace for single line
+  blocks.
+
+  ```cpp
+  auto do_something() -> int { return 42; }
+
+  struct Foo { int x{0}; int y{1}; }
   ```
 
 ### Comments
