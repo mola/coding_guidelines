@@ -9,6 +9,30 @@ This page provides programming guidelines for the C++ programming language.
   <strong>This page is still work in progress.</strong>
 </div>
 
+### Compiler Issues
+
+Start with very strict warning settings from the beginning. Trying to raise the
+warning level after the project is underway can be painful. Also consider using
+the **treat warnings as errors** settings, at least for the CI/CD setup.
+
+- If your code has compiler warnings, something is most probably wrong.
+  - e.g. casting values incorrectly, having 'questionable' constructs
+- Compiler warnings can cover up legitimate errors in output and make dealing
+  with a translation unit difficult.
+- Do not use compiler specific extensions like GCC extensions or
+  `#pragma region`.
+- `#pragma clang diagnostic ignored "-Wshadow"` is ok behind compiler checks.
+- **Use every available and reasonable set of warning options and treat these
+  compiler warnings like errors.**
+
+### Portable Code
+
+In almost all cases, it is possible and within reason to write completely
+portable code. If there are cases where it isn't possible to write portable
+code, isolate it behind a well defined and well documented interface.
+
+- Try to write your code **as portable as possible**.
+
 ### Think Immutable
 
 By default, every object in C++ is mutable, which means it could change anytime.
@@ -60,7 +84,7 @@ compiler to optimize the code.
 > not have a meaningful copy assignment operator.
 
 - Define **objects** with values that **do not change after construction**
-  `const`
+  `const`.
 
   ```cpp
   void f()
@@ -73,14 +97,14 @@ compiler to optimize the code.
   }
   ```
 
-- If possible, pass and return by const ref (`const&`)
+- If possible, pass and return by const ref (`const&`).
 
   ```cpp
   auto do_something(std::string const& str) -> void;
   auto return_something() -> std::string const&;
   ```
 
-- Use `constexpr` for values/functions that can be computed at compile time
+- Use `constexpr` for values/functions that can be computed at compile time.
 
   ```cpp
   static char constexpr g_path_separator = '/';
@@ -157,351 +181,6 @@ much faster passing values in processor registers.
   ```
 
   - Benchmark: http://quick-bench.com/IJoIbgTUqGyiyMcRhKGiXCwhNBQ
-
-### Compiler Issues
-
-Start with very strict warning settings from the beginning. Trying to raise the
-warning level after the project is underway can be painful. Also consider using
-the **treat warnings as errors** settings, at least for the CI/CD setup.
-
-- If your code has compiler warnings, something is most probably wrong.
-  - e.g. casting values incorrectly, having 'questionable' constructs
-- Compiler warnings can cover up legitimate errors in output and make dealing
-  with a translation unit difficult.
-- Do not use compiler specific extensions like GCC extensions or
-  `#pragma region`
-- `#pragma clang diagnostic ignored "-Wshadow"` is ok behind compiler checks
-- **Use every available and reasonable set of warning options and treat these
-  compiler warnings like errors.**
-
-### Portable Code
-
-In almost all cases, it is possible and within reason to write completely
-portable code. If there are cases where it isn't possible to write portable
-code, isolate it behind a well defined and well documented interface.
-
-- Try to write your code **as portable as possible**.
-
-### Consider Your Return Types
-
-- Returning by **reference** (`&` or `const&`) can have significant performance
-  savings when the normal use of the returned value is only for observation.
-- Returning by **value** is better for **thread safety** and if the normal use
-  of the returned value is to make a copy anyhow, there is no performance lost.
-- If your API uses **covariant return types**, they must be returned by `&` or
-  `*`.
-- **Temporaries** and **local values** should always returned by value.
-
-### Pointer
-
-It is best to avoid using pointers as much as possible. The use of pointers can
-lead to confusion of ownership which can directly or indirectly lead to memory
-leaks. Also, by avoiding the use of pointers common security holes such as
-buffer overruns can be avoided and sometimes eliminated.
-
-Consider the following order for pointers:
-
-- Reference to T (`T&`)
-- Unique pointer (`std::unique_ptr<T>`)
-- Weak pointer (`std::weak_ptr<T>`)
-- Shared pointer (`std::shared_ptr<T>`)
-- raw pointer (`T*`)
-  - Useful for non owning access where the lifetime of the pointer is guaranteed
-  to outlive the object
-
-#### Avoid Raw Memory Access
-
-Raw memory access, allocation and deallocation, are difficult to get correct
-without risking memory errors and leaks.
-
-- **Avoid raw memory** and use **smart pointer** instead.
-
-#### Prefer `std::unique_ptr`
-
-The `std::unique_ptr` does not need to keep track of its copies because it is
-not copyable. This makes it more efficient than the `std::shared_ptr`.
-
-- If possible use `std::unique_ptr` instead of `std::shared_ptr`.
-- Return `std::unique_ptr` from factory functions, then convert the
-  `std::unique_ptr` to a `std::shared_ptr` if necessary.
-
-  ```cpp
-  auto factory() -> std::unique_ptr<FooImpl>;
-
-  auto shared_foo = std::shared_ptr<FooImpl>{factory()};
-  ```
-
-#### Avoid `std::shared_ptr` Copies
-
-Objects of type `std::shared_ptr` are much more expensive to copy than one would
-think. This is because the **reference count** must be **atomic** and
-**thread-safe**.
-
-- Avoid temporaries and too many copies of objects.
-
-### Use C++-style Casts
-
-- **Always** use **C++\-style casts** and never use C-style casts.
-- C++\-style casts allow more compiler checks and are considerably safer.
-- C++\-style casts are also more visible and have the possibility to search for
-  them.
-
-  ```cpp
-  auto x = double{1.5};
-
-  // GOOD
-  auto i = static_cast<int>(x);
-
-  // BAD
-  auto i = (int)x;
-  ```
-
-### Avoid Macros
-
-Compiler definitions and macros are replaced/removed during preprocessing before
-the compiler is ever run. This can make debugging very difficult because the
-debugger does not know where the source came from. Furthermore are macros not
-obeying scope, type and argument passing rules.
-
-- If not necessary, avoid writing macros and try to decrease the usage of
-  macros as much as possible.
-- Use **enumerations** over macros.
-
-  ```cpp
-  // instead of:
-  #define RED 0
-  #define BLUE 1
-  #define GREEN 2
-
-  // use:
-  enum class Color {
-      e_red = 0,
-      e_blue = 1,
-      e_green = 2
-  };
-  ```
-
-- Use **static constants** over macros.
-
-  ```cpp
-  // instead of:
-  #define PI 3.14
-
-  // use:
-  namespace my_project {
-  static double constexpr g_pi = 3.14;
-  } // namespace my_project
-  ```
-
-### Avoid Boolean Parameters
-
-- They do not provide any additional meaning while reading the code.
-- Either create a **separate function** or pass an **enumeration** that makes
-  the meaning more clear.
-
-  ```cpp
-  // somewhere calling a function with boolean parameter
-  send_text("Hello world", true);
-
-  // it is hard to remember every boolean parameter meaning and the function
-  // definition needs to be looked up:
-  auto send_text(std::string const& msg, bool send_newline) -> void;
-
-  // alternative 1 - separate function:
-  auto send_text(std::string const& msg) -> void;
-  auto send_text_with_newline(std::string const& msg) -> void;
-
-  // alternative 2 - enumeration:
-  enum class NewLineDisposition { e_send_newline, e_no_newline };
-  auto send_text(std::string const& msg, NewLineDisposition flag) -> void;
-
-  send_text("Hello world", NewLineDisposition::e_send_newline);
-  ```
-
-- Some good reads to the topic:
-  - https://ariya.io/2011/08/hall-of-api-shame-boolean-trap
-  - https://www.drdobbs.com/conversationstruth-or-consequences/184403845
-  - https://blog.codinghorror.com/avoiding-booleans/
-
-### Avoid `<iostream>`
-
-- Avoid `#include <iostream>` if possible, because many common implementations
-  transparently inject a static constructor into every translation unit that
-  includes it.
-- If `<iostream>` is used avoid `std::endl` which most of the time unnecessarily
-  flushes the output stream.
-- Alternative to `std::endl` without a flush: **End string with** `'\n'`
-  - Use `std::flush` if a flush is required
-
-### Never Use `std::bind`
-
-- `std::bind` is almost always way more overhead (both compile time and runtime)
-  than needed.
-- Use **lambdas** instead.
-
-  ```cpp
-  // GOOD
-  auto f = [](std::string const& s) {
-      return my_function("hello", s);
-  };
-  f("world");
-
-  // BAD
-  auto f = std::bind(&my_function, "hello", std::placeholders::_1);
-  f("world");
-  ```
-
-### Never Use `using namespace` In Header Files
-
-- Pollutes the namespace of any source file that `#include`s the header.
-- It could lead to namespace clashes, name collisions and decrease portability.
-- **Do not** use `using namespace XXX` anywhere in **global scope**.
-- Use the `using namespace XXX` directive only in **function scope** if
-  necessary.
-
-### Rules Of Thumb
-
-- **Simplify the code** as it is cleaner and easier to read.
-- **Limit variable scope** and declare them as late as possible.
-- **Curly braces** (`{}`) are **required** for blocks. Leaving them off can lead
-  to semantic errors.
-- Always use **namespaces** because there is almost never a reason to declare an
-  identifier in the global namespace.
-- For precise-width integer types use `#include <cstdint>`.
-  - Do not forget the `std::` namespace on these types (e.g. `std::uint8_t`).
-- All parameters passed by lvalue reference must be labeled `const`.
-- Use `nullptr` instead of `NULL` or `0`.
-- Use `std::array` or `std::vector` instead of C\-style arrays.
-- Use ranged-based for loops, which where introduced in C++11, wherever
-  possible.
-- Use **literal suffixes** if it improves readability.
-- Use **digit separators** to avoid long strings of digits and improve
-  readability.
-
-  ```cpp
-  auto c = 299'792'458;
-  auto q = 0b0000'1111'0000'0000;
-  ```
-
-#### Use `noexcept`
-
-If an exception is not supposed to be thrown, the program cannot be assumed to
-cope with the error and should be terminated as soon as possible. Declaring a
-function `noexcept` helps optimizers by reducing the number of alternative
-execution paths. It also speeds up the exit after failure.
-
-- Put `noexcept` on every function which should not throw.
-
-> NOTE: Default constructors, destructors, move operations, and `swap` functions
-> should never throw. Mark them `noexcept`.
-
-#### Use `auto` Keyword
-
-Declaring variables using `auto`, whether or not committing to a type is wanted,
-offers advantages for correctness, performance, maintainability, and robustness,
-as well as typing convenience.
-
-- Use `auto x = expr;`, when there is no need to explicitly commit to a type.
-
-  ```cpp
-  // GOOD
-  auto x = 42; // -> int
-  auto x = 42.f; // -> float
-  auto x = "42"; // -> const char*
-  auto x = "42"s; // -> std::string with C++14 literal suffixes
-
-  // BAD
-  int x = 42;
-  float x = 42.;
-  const char* x = "42";
-  std::string x = "42";
-  ```
-
-- Use `auto x = type{expr};`, when committing to a specific type is wanted.
-  - Use `()` instead of `{}` only when explicit narrowing is wanted.
-
-  ```cpp
-  // GOOD
-  auto x = std::size_t{42};
-  auto x = std::string{"42"};
-
-  // BAD
-  std::size_t x = 42;
-  std::string x = "42";
-  ```
-
-- Some good reads to the topic:
-  - https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
-  - https://www.fluentcpp.com/2018/09/28/auto-stick-changing-style/
-
-#### Prefer Pre-Increment To Post-Increment
-
-The semantics of post-increment include making a copy of the value being
-incremented, returning it, and then pre-incrementing the 'work value'. This can
-be a huge issue for iterators.
-
-- Prefer pre-increment (`++y`) to post-increment (`y++`).
-
-#### Difference Between Char And String
-
-Single characters should use single quotes instead of double quotes. Double
-quote characters have to be parsed by the compiler as a `const char*` which has
-to do a range check for `\0`. Single quote characters on the other hand are
-known to be a single character and avoid many CPU instructions. If used
-inefficiently very many times it might have an impact on the performance.
-
-```cpp
-// GOOD
-std::cout << message() << '\n';
-
-// BAD
-std::cout << message() << "\n";
-```
-
-#### Use Early Exits
-
-- Improves readability and reduces indentations.
-- Reduces temporary object, which would be needed for a late exit.
-- Do not use `else` or `else if` after something interrupts the control flow,
-  e.g. `return`, `throw`, `break`, `continue`, etc.
-
-```cpp
-auto do_something(Instruction const& item) -> int
-{
-    if (item.is_valid()) {
-        throw std::runtime_error{"..."};
-    }
-
-    if (item.is_terminator()) {
-        return 0;
-    }
-
-    return 1;
-}
-```
-
-### Includes
-
-Be aware that there are many cases where the full definition of a class is not
-required. If a **pointer** of **reference** to a class is used, the header file
-is not needed and a forward declaration is sufficient. This can reduce compile
-times and result in fewer files needing recompilation when a header changes.
-
-- Only include the minimum number of required files. **Don't duplicate includes
-  in header and source files!**
-- Whenever possible use **forward declaration** in header files.
-
-  ```cpp
-  // GOOD
-  class Foo;
-
-  auto do_something(Foo const& foo) -> void;
-
-  // BAD
-  #include "foo.hpp"
-
-  auto do_something(Foo const& foo) -> void;
-  ```
 
 ### Classes
 
@@ -715,39 +394,326 @@ private:
 For more detailed informations see the following stackoverflow post:
 https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 
-### Loop Pitfalls
+### Pointer
 
-#### Beware Of Unnecessary Copies
+It is best to avoid using pointers as much as possible. The use of pointers can
+lead to confusion of ownership which can directly or indirectly lead to memory
+leaks. Also, by avoiding the use of pointers common security holes such as
+buffer overruns can be avoided and sometimes eliminated.
 
-The convenience of `auto` makes it easy to forget that its default behavior is a
-copy. Particularly in ranged-based `for` loops, careless copies are expensive.
+Consider the following order for pointers:
 
-```cpp
-// typically there is no reason to copy
-for (auto const& value : container) { observe(value); }
-for (auto& value : container) { value.change(); }
+- Reference to T (`T&`)
+- Unique pointer (`std::unique_ptr<T>`)
+- Weak pointer (`std::weak_ptr<T>`)
+- Shared pointer (`std::shared_ptr<T>`)
+- raw pointer (`T*`)
+  - Useful for non owning access where the lifetime of the pointer is guaranteed
+  to outlive the object.
 
-// remove the reference if a new copy is really wanted
-for (auto value : container) { value.change(); save_somewhere(value); }
-```
+#### Avoid Raw Memory Access
 
-#### Beware Of `end()` Evaluation Every Time
+Raw memory access, allocation and deallocation, are difficult to get correct
+without risking memory errors and leaks.
 
-In cases where range-based `for` loops can not be used and it is necessary to
-write an explicit iterator-based loop, pay close attention to whether `end()` is
-re-evaluated on each loop iteration.
+- **Avoid raw memory** and use **smart pointer** instead.
 
-> The 'GOOD' solution can only be used if the container is not modified in the
-> loop body. If the container in modified the 'BAD' solution is the only viable
-> solution.
+#### Prefer `std::unique_ptr`
+
+The `std::unique_ptr` does not need to keep track of its copies because it is
+not copyable. This makes it more efficient than the `std::shared_ptr`.
+
+- If possible use `std::unique_ptr` instead of `std::shared_ptr`.
+- Return `std::unique_ptr` from factory functions, then convert the
+  `std::unique_ptr` to a `std::shared_ptr` if necessary.
+
+  ```cpp
+  auto factory() -> std::unique_ptr<FooImpl>;
+
+  auto shared_foo = std::shared_ptr<FooImpl>{factory()};
+  ```
+
+#### Avoid `std::shared_ptr` Copies
+
+Objects of type `std::shared_ptr` are much more expensive to copy than one would
+think. This is because the **reference count** must be **atomic** and
+**thread-safe**.
+
+- Avoid temporaries and too many copies of objects.
+
+### Rules Of Thumb
+
+- **Simplify the code** as it is cleaner and easier to read.
+- **Limit variable scope** and declare them as late as possible.
+- **Curly braces** (`{}`) are **required** for blocks. Leaving them off can lead
+  to semantic errors.
+- Always use **namespaces** because there is almost never a reason to declare an
+  identifier in the global namespace.
+- For precise-width integer types use `#include <cstdint>`.
+  - Do not forget the `std::` namespace on these types (e.g. `std::uint8_t`).
+- All parameters passed by lvalue reference must be labeled `const`.
+- Use `nullptr` instead of `NULL` or `0`.
+- Use `std::array` or `std::vector` instead of C\-style arrays.
+- Use ranged-based for loops, which where introduced in C++11, wherever
+  possible.
+- Use **literal suffixes** if it improves readability.
+- Use **digit separators** to avoid long strings of digits and improve
+  readability.
+
+  ```cpp
+  auto c = 299'792'458;
+  auto q = 0b0000'1111'0000'0000;
+  ```
+
+#### Use `noexcept`
+
+If an exception is not supposed to be thrown, the program cannot be assumed to
+cope with the error and should be terminated as soon as possible. Declaring a
+function `noexcept` helps optimizers by reducing the number of alternative
+execution paths. It also speeds up the exit after failure.
+
+- Put `noexcept` on every function which should not throw.
+
+> NOTE: Default constructors, destructors, move operations, and `swap` functions
+> should never throw. Mark them `noexcept`.
+
+#### Use `auto` Keyword
+
+Declaring variables using `auto`, whether or not committing to a type is wanted,
+offers advantages for correctness, performance, maintainability, and robustness,
+as well as typing convenience.
+
+- Use `auto x = expr;`, when there is no need to explicitly commit to a type.
+
+  ```cpp
+  // GOOD
+  auto x = 42; // -> int
+  auto x = 42.f; // -> float
+  auto x = "42"; // -> const char*
+  auto x = "42"s; // -> std::string with C++14 literal suffixes
+
+  // BAD
+  int x = 42;
+  float x = 42.;
+  const char* x = "42";
+  std::string x = "42";
+  ```
+
+- Use `auto x = type{expr};`, when committing to a specific type is wanted.
+  - Use `()` instead of `{}` only when explicit narrowing is wanted.
+
+  ```cpp
+  // GOOD
+  auto x = std::size_t{42};
+  auto x = std::string{"42"};
+
+  // BAD
+  std::size_t x = 42;
+  std::string x = "42";
+  ```
+
+- Some good reads to the topic:
+  - https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
+  - https://www.fluentcpp.com/2018/09/28/auto-stick-changing-style/
+
+#### Use C++-style Casts
+
+- **Always** use **C++\-style casts** and never use C-style casts.
+- C++\-style casts allow more compiler checks and are considerably safer.
+- C++\-style casts are also more visible and have the possibility to search for
+  them.
+
+  ```cpp
+  auto x = double{1.5};
+
+  // GOOD
+  auto i = static_cast<int>(x);
+
+  // BAD
+  auto i = (int)x;
+  ```
+
+#### Prefer Pre-Increment To Post-Increment
+
+The semantics of post-increment include making a copy of the value being
+incremented, returning it, and then pre-incrementing the 'work value'. This can
+be a huge issue for iterators.
+
+- Prefer pre-increment (`++y`) to post-increment (`y++`).
+
+#### Difference Between Char And String
+
+Single characters should use single quotes instead of double quotes. Double
+quote characters have to be parsed by the compiler as a `const char*` which has
+to do a range check for `\0`. Single quote characters on the other hand are
+known to be a single character and avoid many CPU instructions. If used
+inefficiently very many times it might have an impact on the performance.
 
 ```cpp
 // GOOD
-for (auto i = Foo.begin(), e = Foo.end(); i != e; ++i) { ... }
+std::cout << message() << '\n';
 
 // BAD
-for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
+std::cout << message() << "\n";
 ```
+
+#### Use Early Exits
+
+- Improves readability and reduces indentations.
+- Reduces temporary object, which would be needed for a late exit.
+- Do not use `else` or `else if` after something interrupts the control flow,
+  e.g. `return`, `throw`, `break`, `continue`, etc.
+
+```cpp
+auto do_something(Instruction const& item) -> int
+{
+    if (item.is_valid()) {
+        throw std::runtime_error{"..."};
+    }
+
+    if (item.is_terminator()) {
+        return 0;
+    }
+
+    return 1;
+}
+```
+
+#### Avoid Macros
+
+Compiler definitions and macros are replaced/removed during preprocessing before
+the compiler is ever run. This can make debugging very difficult because the
+debugger does not know where the source came from. Furthermore are macros not
+obeying scope, type and argument passing rules.
+
+- If not necessary, avoid writing macros and try to decrease the usage of
+  macros as much as possible.
+- Use **enumerations** over macros.
+
+  ```cpp
+  // instead of:
+  #define RED 0
+  #define BLUE 1
+  #define GREEN 2
+
+  // use:
+  enum class Color {
+      e_red = 0,
+      e_blue = 1,
+      e_green = 2
+  };
+  ```
+
+- Use **static constants** over macros.
+
+  ```cpp
+  // instead of:
+  #define PI 3.14
+
+  // use:
+  namespace my_project {
+  static double constexpr g_pi = 3.14;
+  } // namespace my_project
+  ```
+
+#### Avoid Boolean Parameters
+
+- They do not provide any additional meaning while reading the code.
+- Either create a **separate function** or pass an **enumeration** that makes
+  the meaning more clear.
+
+  ```cpp
+  // somewhere calling a function with boolean parameter
+  send_text("Hello world", true);
+
+  // it is hard to remember every boolean parameter meaning and the function
+  // definition needs to be looked up:
+  auto send_text(std::string const& msg, bool send_newline) -> void;
+
+  // alternative 1 - separate function:
+  auto send_text(std::string const& msg) -> void;
+  auto send_text_with_newline(std::string const& msg) -> void;
+
+  // alternative 2 - enumeration:
+  enum class NewLineDisposition { e_send_newline, e_no_newline };
+  auto send_text(std::string const& msg, NewLineDisposition flag) -> void;
+
+  send_text("Hello world", NewLineDisposition::e_send_newline);
+  ```
+
+- Some good reads to the topic:
+  - https://ariya.io/2011/08/hall-of-api-shame-boolean-trap
+  - https://www.drdobbs.com/conversationstruth-or-consequences/184403845
+  - https://blog.codinghorror.com/avoiding-booleans/
+
+#### Avoid `<iostream>`
+
+- Avoid `#include <iostream>` if possible, because many common implementations
+  transparently inject a static constructor into every translation unit that
+  includes it.
+- If `<iostream>` is used avoid `std::endl` which most of the time unnecessarily
+  flushes the output stream.
+- Alternative to `std::endl` without a flush: **End string with** `'\n'`.
+  - Use `std::flush` if a flush is required.
+
+#### Never Use `std::bind`
+
+- `std::bind` is almost always way more overhead (both compile time and runtime)
+  than needed.
+- Use **lambdas** instead.
+
+  ```cpp
+  // GOOD
+  auto f = [](std::string const& s) {
+      return my_function("hello", s);
+  };
+  f("world");
+
+  // BAD
+  auto f = std::bind(&my_function, "hello", std::placeholders::_1);
+  f("world");
+  ```
+
+#### Never Use `using namespace` In Header Files
+
+- Pollutes the namespace of any source file that `#include`s the header.
+- It could lead to namespace clashes, name collisions and decrease portability.
+- **Do not** use `using namespace XXX` anywhere in **global scope**.
+- Use the `using namespace XXX` directive only in **function scope** if
+  necessary.
+
+### Consider Your Return Types
+
+- Returning by **reference** (`&` or `const&`) can have significant performance
+  savings when the normal use of the returned value is only for observation.
+- Returning by **value** is better for **thread safety** and if the normal use
+  of the returned value is to make a copy anyhow, there is no performance lost.
+- If your API uses **covariant return types**, they must be returned by `&` or
+  `*`.
+- **Temporaries** and **local values** should always be returned by value.
+
+### Includes And Forward Declarations
+
+Be aware that there are many cases where the full definition of a class is not
+required. If a **pointer** of **reference** to a class is used, the header file
+is not needed and a forward declaration is sufficient. This can reduce compile
+times and result in fewer files needing recompilation when a header changes.
+
+- Only include the minimum number of required files. **Don't duplicate includes
+  in header and source files!**
+- Whenever possible use **forward declaration** in header files.
+
+  ```cpp
+  // GOOD
+  class Foo;
+
+  auto do_something(Foo const& foo) -> void;
+
+  // BAD
+  #include "foo.hpp"
+
+  auto do_something(Foo const& foo) -> void;
+  ```
 
 ### Performance And Optimization
 
@@ -794,6 +760,40 @@ for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
       }
   }
   ```
+
+### Loop Pitfalls
+
+#### Beware Of Unnecessary Copies
+
+The convenience of `auto` makes it easy to forget that its default behavior is a
+copy. Particularly in ranged-based `for` loops, careless copies are expensive.
+
+```cpp
+// typically there is no reason to copy
+for (auto const& value : container) { observe(value); }
+for (auto& value : container) { value.change(); }
+
+// remove the reference if a new copy is really wanted
+for (auto value : container) { value.change(); save_somewhere(value); }
+```
+
+#### Beware Of `end()` Evaluation Every Time
+
+In cases where range-based `for` loops can not be used and it is necessary to
+write an explicit iterator-based loop, pay close attention to whether `end()` is
+re-evaluated on each loop iteration.
+
+> The 'GOOD' solution can only be used if the container is not modified in the
+> loop body. If the container in modified the 'BAD' solution is the only viable
+> solution.
+
+```cpp
+// GOOD
+for (auto i = Foo.begin(), e = Foo.end(); i != e; ++i) { ... }
+
+// BAD
+for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
+```
 
 ### Use C++17 Language Features If Possible
 
