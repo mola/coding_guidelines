@@ -161,17 +161,17 @@ lambdas, templates where the return type depends on the argument type.
 // requires 'trailing return type' to compile/work
 template<class T, class U>
 auto multiply(T const& lhs, U const& rhs) -> decltype(lhs * rhs) {
-  return lhs * rhs;
+    return lhs * rhs;
 }
 
 // can only use 'trailing return type' to indicate return type
 auto foo = [&](Foo a, Foo b) -> bool {
-  return a < b;
+    return a < b;
 };
 
 // use 'trailing return type' to be consistent
 auto do_something() -> void {
-	...
+    ...
 }
 ```
 
@@ -224,7 +224,7 @@ auto bar() -> void {
       }
   #endif
 
-    return "42";
+      return "42";
   }
 
   // BAD
@@ -238,7 +238,7 @@ auto bar() -> void {
       }
   */
 
-    return "42";
+      return "42";
   }
   ```
 
@@ -256,9 +256,9 @@ auto bar() -> void {
 
 #### Use Doxygen For Documentation Comments
 
-- Header files should be documented **properly** with Doxygen comments. This
-  helps other people to figure out the use of the interface without reading the
-  actual implementation.
+- Header files should **always** be documented **properly** with Doxygen
+  comments. This helps other people to figure out the use of the interface
+  without reading the actual implementation.
 - Doxygen comments are prefixed with **three slashes** (`///`)
 - Use Latex-style `\` instead of Javadoc-style `@` for Doxygen commands.
 - The first line should be a single-line short sentence providing a summary of
@@ -327,7 +327,7 @@ for 'value-level' constructs (functions and variables). The advantage of
   variable naming.
 
   ```cpp
-  enum Status {
+  enum class Status {
       e_error,
       e_success,
       e_idle,
@@ -341,7 +341,7 @@ for 'value-level' constructs (functions and variables). The advantage of
   ```cpp
   class Foo { ... }
   struct FooBar { ... }
-  enum Buz { ... }
+  enum class Buz { ... }
   ```
 
 - **Template parameter** should start with a uppercase letter and follow
@@ -403,13 +403,11 @@ for 'value-level' constructs (functions and variables). The advantage of
   ```cpp
   class Error {
   public:
-      auto error_code() const noexcept -> int
-      {
+      auto error_code() const noexcept -> int {
           return m_error_code;
       }
 
-      auto set_error_code(int value) noexcept -> void
-      {
+      auto set_error_code(int value) noexcept -> void {
           m_error_code = value;
       }
 
@@ -426,8 +424,7 @@ be used for POD (Plain Old Data), meaning a data structure which does not
 contain any logic on his own.
 
 ```cpp
-struct SomeData
-{
+struct SomeData {
     std::uint32_t address;
     std::uint16_t reserved;
     std::uint16_t count;

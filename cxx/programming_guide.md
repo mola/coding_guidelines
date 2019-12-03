@@ -55,8 +55,11 @@ compiler to optimize the code.
   ```cpp
   class Foo {
   public:
-      auto size() const -> int // does not modify the object's state
-      {
+      auto set_size(int size) -> void { // does modify the object's state (can not be 'const')
+          m_size = size;
+      }
+
+      auto size() const -> int { // does not modify the object's state
           return m_size;
       }
 
@@ -87,8 +90,7 @@ compiler to optimize the code.
   `const`.
 
   ```cpp
-  void f()
-  {
+  auto f() -> void {
       auto x = int{7};
       auto const y = int{9};
 
@@ -97,7 +99,8 @@ compiler to optimize the code.
   }
   ```
 
-- If possible, pass and return by const ref (`const&`).
+- If possible, pass and return by const ref (`const&`) or pass by value and use
+  `std::move` inside the function.
 
   ```cpp
   auto do_something(std::string const& str) -> void;
@@ -300,16 +303,14 @@ by the compiler and introduce unexpected overhead.
   ```cpp
   // GOOD
   struct S {
-      explicit operator int()
-      {
+      explicit operator int() {
           return 2;
       }
   };
 
   // BAD
   struct S {
-      operator int()
-      {
+      operator int() {
           return 2;
       }
   };
@@ -359,9 +360,12 @@ strong exception guarantee.
 
 class DumbArray {
 public:
+    /// Constructor.
     DumbArray() = default;
+    /// Copy constructor.
     DumbArray(DumbArray const&) = default;
 
+    /// Move constructor.
     DumbArray(DumbArray&& other) noexcept
       : DumbArray() {
         swap(*this, other);
@@ -374,14 +378,9 @@ public:
         swap(first.m_array, second.m_array);
     }
 
+    /// Copy assignment.
     auto operator=(DumbArray other) noexcept -> DumbArray& {
         swap(*this, other);
-        return *this;
-    }
-
-    auto operator=(DumbArray const& other) noexcept -> DumbArray& {
-        DumbArray temp(other);
-        swap(*this, temp);
         return *this;
     }
 
@@ -428,9 +427,9 @@ not copyable. This makes it more efficient than the `std::shared_ptr`.
   `std::unique_ptr` to a `std::shared_ptr` if necessary.
 
   ```cpp
-  auto factory() -> std::unique_ptr<FooImpl>;
+  auto factory() -> std::unique_ptr<FooInterface>;
 
-  auto shared_foo = std::shared_ptr<FooImpl>{factory()};
+  auto shared_foo = std::shared_ptr<FooInterface>{factory()};
   ```
 
 #### Avoid `std::shared_ptr` Copies
@@ -451,7 +450,7 @@ think. This is because the **reference count** must be **atomic** and
   identifier in the global namespace.
 - For precise-width integer types use `#include <cstdint>`.
   - Do not forget the `std::` namespace on these types (e.g. `std::uint8_t`).
-- All parameters passed by lvalue reference must be labeled `const`.
+- Parameters passed by lvalue reference should be labeled `const`.
 - Use `nullptr` instead of `NULL` or `0`.
 - Use `std::array` or `std::vector` instead of C\-style arrays.
 - Use ranged-based for loops, which where introduced in C++11, wherever
@@ -513,13 +512,13 @@ as well as typing convenience.
   // GOOD
   auto x = 42; // -> int
   auto x = 42.f; // -> float
-  auto x = "42"; // -> const char*
+  auto x = "42"; // -> char const*
   auto x = "42"s; // -> std::string with C++14 literal suffixes
 
   // BAD
   int x = 42;
   float x = 42.;
-  const char* x = "42";
+  char const* x = "42";
   std::string x = "42";
   ```
 
@@ -568,7 +567,7 @@ be a huge issue for iterators.
 #### Difference Between Char And String
 
 Single characters should use single quotes instead of double quotes. Double
-quote characters have to be parsed by the compiler as a `const char*` which has
+quote characters have to be parsed by the compiler as a `char const*` which has
 to do a range check for `\0`. Single quote characters on the other hand are
 known to be a single character and avoid many CPU instructions. If used
 inefficiently very many times it might have an impact on the performance.
@@ -628,7 +627,7 @@ obeying scope, type and argument passing rules.
   };
   ```
 
-- Use **static constants** over macros.
+- Use **static constants** in a namespace over macros.
 
   ```cpp
   // instead of:
@@ -739,6 +738,9 @@ times and result in fewer files needing recompilation when a header changes.
   auto do_something(Foo const& foo) -> void;
   ```
 
+- Tool which can help:
+  https://github.com/include-what-you-use/include-what-you-use
+
 ### Performance And Optimization
 
 - **Do not** optimize **without reason**. If there is not need for optimization,
@@ -808,7 +810,7 @@ write an explicit iterator-based loop, pay close attention to whether `end()` is
 re-evaluated on each loop iteration.
 
 > The 'GOOD' solution can only be used if the container is not modified in the
-> loop body. If the container in modified the 'BAD' solution is the only viable
+> loop body. If the container is modified the 'BAD' solution is the only viable
 > solution.
 
 ```cpp
@@ -935,10 +937,10 @@ if (std::filesystem::exists(bigFilePath)) {
 ```cpp
 std::byte a {0};
 std::byte b {0xFF};
-int i = std::to_integer<int>(b); // 0xFF
+auto i = std::to_integer<int>(b); // 0xFF
 
 std::byte c = a & b;
-int j = std::to_integer<int>(c); // 0
+auto j = std::to_integer<int>(c); // 0
 ```
 
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdbyte
