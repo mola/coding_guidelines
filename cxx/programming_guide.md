@@ -878,18 +878,16 @@ if (std::lock_guard<std::mutex> lk(mx); v.empty()) {
 #### New Standard Attributes
 
 ```cpp
-// will warn if return of foo() is ignored
-[[nodiscard]] int foo();
-int main() {
-    int a{1};
+// Will warn if return of foo() is ignored
+[[nodiscard]] auto foo() -> int;
+auto main() -> int {
+    auto a = 1;
     switch (a) {
-    // indicates that falling through on case 1 is intentional
-    case 1:
-        [[fallthrough]] case 2
-          :
-          // indicates that b might be unused, such as on production builds
-          [[maybe_unused]] int b
-          = foo();
+    // Indicates that falling through on case 1 is intentional
+    case 1: [[fallthrough]]
+    case 2:
+        // Indicates that b might be unused, such as on production builds
+        [[maybe_unused]] auto b = foo();
         assert(b > 0);
         break;
     }
