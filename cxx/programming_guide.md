@@ -456,6 +456,30 @@ think. This is because the **reference count** must be **atomic** and
 - Use `std::array` or `std::vector` instead of C\-style arrays.
 - Use ranged-based for loops, which where introduced in C++11, wherever
   possible.
+- Use **class enums** over 'plain' enums to minimize surprises.
+
+  ```cpp
+  auto print_color(int color) -> void;
+
+  // GOOD
+  enum class WebColor { e_red = 0xFF0000, e_green = 0x00FF00, e_blue = 0x0000FF };
+  enum class ProductInfo { e_red = 0, e_purple = 1, e_blue = 2 };
+
+  auto webby = WebColor::e_blue;
+  print_color(webby);  // Error: cannot convert WebColor to int.
+  print_color(ProductInfo::e_red);  // Error: cannot convert ProductInfo to int.
+
+  // BAD
+  enum WebColor { e_red = 0xFF0000, e_green = 0x00FF00, e_blue = 0x0000FF };
+  enum ProductInfo { e_red = 0, e_purple = 1, e_blue = 2 };
+
+  auto webby = WebColor::e_blue;
+
+  // clearly at least one of these calls is buggy.
+  print_color(webby);
+  print_color(ProductInfo::e_blue);
+  ```
+
 - Use **literal suffixes** if it improves readability.
 - Use **digit separators** to avoid long strings of digits and improve
   readability.
