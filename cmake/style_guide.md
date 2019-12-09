@@ -200,3 +200,67 @@ set(meta_project_description "description for sample_project")
       ...
   endif()
   ```
+
+### Naming Conventions
+
+Poorly-chosen names can mislead the reader and cause bugs. Pick names that match
+the semantics and role of the underlying entities, withing reason. Avoid
+abbreviations unless they are well known e.g from a protocol specification.
+
+#### General Conventions
+
+Use descriptive names, and be consistent in the style. In general, use
+`SNAKE_CASE` for *CMake provided variables* and properties. Use `snake_case` for
+commands and *custom variables*.
+
+- **Commands** should be lowercase and `snake_case`.
+
+  ```cmake
+  add_executable()
+  install()
+  if()
+  else()
+  endif()
+
+  function(do_something) ... endfunction()
+  ```
+
+- **CMake provided variables** should be uppercase and `SNAKE_CASE`.
+
+  ```cmake
+  CMAKE_MODULE_PATH
+  CMAKE_CURRENT_BINARY_DIR
+  CMAKE_SOURCE_DIR
+  PROJECT_SOURCE_DIR
+  ```
+
+- **Local variables** should be lowercase and `snake_case`.
+
+  ```cmake
+  my_var
+  my_compiler_flags
+  my_target
+  ```
+
+- **Global options**, which can be configured from outside, should be uppercase
+  and `SNAKE_CASE`.
+
+  ```cmake
+  ENABLE_TESTS
+  USE_CLANG_TIDY
+  ```
+
+- **Properties / Function Keywords** should be uppercase and `SNAKE_CASE`.
+
+  ```cmake
+  if("..." STREQUAL "...")
+  install(TARGETS ... DESTINATION ... OPTIONAL ...)
+  ```
+
+- **Module filenames** should be lowercase and `snake_case`.
+
+  ```cmake
+  build_type_handler.cmake
+  clang_tidy.cmake
+  git_revision_description.cmake
+  ```
