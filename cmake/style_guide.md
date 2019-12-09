@@ -39,3 +39,18 @@ have two splits open and still see the whole source code without resizing.
       some_command (...)
   endif ()
   ```
+
+#### Do Not Use Whitespace For Alignment
+
+Idiomatic code should not use extra whitespace in the middle of a line to
+provide alignment.
+
+```cmake
+# GOOD
+set(meta_project_name "sample_project")
+set(meta_project_description "description for sample_project")
+
+# BAD
+set(meta_project_name        "sample_project")
+set(meta_project_description "description for sample_project")
+```
