@@ -207,12 +207,6 @@ Poorly-chosen names can mislead the reader and cause bugs. Pick names that match
 the semantics and role of the underlying entities, withing reason. Avoid
 abbreviations unless they are well known e.g from a protocol specification.
 
-#### General Conventions
-
-Use descriptive names, and be consistent in the style. In general, use
-`SNAKE_CASE` for *CMake provided variables* and properties. Use `snake_case` for
-commands and *custom variables*.
-
 - **Commands** should be lowercase and `snake_case`.
 
   ```cmake
