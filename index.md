@@ -47,3 +47,12 @@ For C++
 - [C++ Best Practices](https://lefticus.gitbooks.io/cpp-best-practices/content/)
 - [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md)
 - [Rust Style Guidelines](https://doc.rust-lang.org/1.12.0/style/README.html)
+
+For CMake
+
+- [cmake-developer](https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html)
+- [cmake-language](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html)
+- [KDE CMake Coding Style](https://community.kde.org/Policies/CMake_Coding_Style)
+- [ROS CMake Coding Standards](https://docs.ros.org/jade/api/catkin/html/user_guide/standards.html)
+- [boost-cmake](https://github.com/boost-cmake/bcm/wiki/Cmake-best-practices-and-guidelines)
+- [Modern CMake](https://cliutils.gitlab.io/modern-cmake/)
