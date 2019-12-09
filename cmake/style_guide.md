@@ -145,7 +145,7 @@ set(meta_project_description "description for sample_project")
   set(var_path "${foo_path}${my_var}")
   ```
 
-- Use `list(APPEND <var> ...)` over `set(<var> "${<var>} ..."` as this appends
+- Use `list(APPEND <var> ...)` over `set(<var> "${<var>} ...")` as this appends
   to the variable instead of overwriting the original content.
 
   ```cmake
