@@ -54,3 +54,35 @@ set(meta_project_description "description for sample_project")
 set(meta_project_name        "sample_project")
 set(meta_project_description "description for sample_project")
 ```
+
+### Indentation
+
+- In general, reduce indentation wherever possible.
+- **Indent** values **according to** the properties they belong, as this helps
+  to see on the first glance which values are for which property.
+
+  ```cmake
+  # GOOD
+  install(
+      TARGETS
+          ${sample_target}
+      RUNTIME
+          DESTINATION ${CMAKE_INSTALL_BINDIR}
+      LIBRARY
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      ARCHIVE
+          DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  )
+
+  # BAD
+  install(
+      TARGETS
+      ${sample_target}
+      RUNTIME
+      DESTINATION ${CMAKE_INSTALL_BINDIR}
+      LIBRARY
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      ARCHIVE
+      DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  )
+  ```
