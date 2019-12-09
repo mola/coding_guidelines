@@ -20,12 +20,12 @@ and help other developers to understand the code base more efficiently.
 
 ### Guides
 
-For C++
+For C++:
 
 - [Style Guide](cxx/style_guide.md)
 - [Programming Guide](cxx/programming_guide.md)
 
-For CMake
+For CMake:
 
 - [Style Guide](cmake/style_guide.md)
 
@@ -34,7 +34,7 @@ For CMake
 These coding guidelines were inspired by other already available guidelines
 namely:
 
-For C++
+For C++:
 
 - [LLVM Code Standards](https://llvm.org/docs/CodingStandards.html)
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
@@ -43,7 +43,7 @@ For C++
 - [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md)
 - [Rust Style Guidelines](https://doc.rust-lang.org/1.12.0/style/README.html)
 
-For CMake
+For CMake:
 
 - [cmake-developer](https://cmake.org/cmake/help/latest/manual/cmake-developer.7.html)
 - [cmake-language](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html)
