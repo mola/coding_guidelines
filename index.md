@@ -28,11 +28,6 @@ For C++
 For CMake
 
 - [Style Guide](cmake/style_guide.md)
-- [Programming Guide](cmake/programming_guide.md)
-
-For Git Commit Messages
-
-- [Style Guide](git/style_guide.md)
 
 ### Inspiration
 
