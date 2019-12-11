@@ -85,3 +85,9 @@ code.
 - `/w14826` warns if conversion from one type to another is sign-extended. This
   may cause unexpected runtime behavior.
 - `/w14928` warns on illegal copy-initialization.
+
+#### Treat Warnings As Errors
+
+To enforce the compiler flags it is advised to treat the warnings given by the
+compilers as errors. Use `-Werror` with Clang/GCC and `/Wx` with MSVC which will
+turn all warnings into errors.
