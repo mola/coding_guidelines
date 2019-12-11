@@ -9,21 +9,19 @@ This page provides programming guidelines for the CMake programming language.
   <strong>This page is still work in progress.</strong>
 </div>
 
-### General
-
-#### Minimum CMake Version
+### Minimum CMake Version
 
 - **Prefer** the **latest** version of CMake.
 - **Do not** target any CMake version less than 3.0, as earlier versions of
   CMake did not provide target-based configurations.
 
-#### Treat CMake Code Like Production Code
+### Treat CMake Code Like Production Code
 
 The 'CMake language' is a programming language. Therefore, it should use the
 same principles as the rest of the codebase. This means it should be written in
 a simple, structured, documented and readable form.
 
-#### Think In Targets And Properties
+### Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
 the system at the target level. The developers do not need to understand the
@@ -53,7 +51,7 @@ differently to the rest of the project without pollution the global scope.
   add_library(Foo::Bar ALIAS Bar)
   ```
 
-#### Functions And Macros
+### Functions And Macros
 
 **Prefer function** over **macros** whenever reasonable. In addition to
 directory-base scope, CMake function have their own scope. This means variables
@@ -63,7 +61,7 @@ macros.
 The most important part is to combine **common functionality** into clearly
 **documented** functions or macros.
 
-#### Avoid Message Pollution
+### Avoid Message Pollution
 
 - **Do not** print every information with `STATUS` or `NOTICE` if the
   information only serves as a debug message (e.g. file entries). Normal users
@@ -80,7 +78,7 @@ The most important part is to combine **common functionality** into clearly
 
 - See https://cmake.org/cmake/help/latest/command/message.html
 
-#### Do Not Use `file(GLOB)`
+### Do Not Use `file(GLOB)`
 
 CMake is a build system generator, not a build system. It evaluates the `GLOB`
 expression to a list of files when generating the build system. The build system
