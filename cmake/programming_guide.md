@@ -79,3 +79,12 @@ The most important part is to combine **common functionality** into clearly
   ```
 
 - See https://cmake.org/cmake/help/latest/command/message.html
+
+#### Do Not Use `file(GLOB)`
+
+CMake is a build system generator, not a build system. It evaluates the `GLOB`
+expression to a list of files when generating the build system. The build system
+then operates on this list of files. Therefore, the build system cannot detect
+that something changed on the file system.
+
+
