@@ -28,6 +28,7 @@ For C++:
 For CMake:
 
 - [Style Guide](cmake/style_guide.md)
+- [Programming Guide](cmake/programming_guide.md)
 
 ### Inspiration
 
