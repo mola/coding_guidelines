@@ -51,3 +51,4 @@ For CMake:
 - [ROS CMake Coding Standards](https://docs.ros.org/jade/api/catkin/html/user_guide/standards.html)
 - [boost-cmake](https://github.com/boost-cmake/bcm/wiki/Cmake-best-practices-and-guidelines)
 - [Modern CMake](https://cliutils.gitlab.io/modern-cmake/)
+- [Effective Modern CMake](https://gist.github.com/mbinna/c61dbb39bca0e4fb7d1f73b0d66a4fd1)
