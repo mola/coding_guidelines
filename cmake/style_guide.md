@@ -258,3 +258,69 @@ abbreviations unless they are well known e.g from a protocol specification.
   clang_tidy.cmake
   git_revision_description.cmake
   ```
+
+### Comments
+
+- CMake files should **always** be documented **properly**.
+- Add a **describing comment** at the **beginning** of a module file e.g. what
+  is the purpose of the file, which variables will be globally defined, which
+  targets will be provided etc.
+
+  ```cmake
+  # Finds the Foo library.
+  #
+  # This module provides the following imported targets, if found:
+  #     Foo::Foo - The Foo library
+  #
+  # This will define the following variables:
+  #     Foo_FOUND - True if the system has the Foo library.
+  #     Foo_VERSION - The version of the Foo library which was found.
+  #     ...
+  #
+  # The following cache variables may also be set:
+  #     Foo_INCLUDE_DIR - The directory containing 'foo.hpp'.
+  #     Foo_LIBRARY - The path to the Foo library.
+  ```
+
+- Add a **describing comment** in front of a function in the following style:
+  - Use **multiline** comments for function/macro documentation.
+  - **Variables** should be enclosed in angled brackets. (e.g. `<var>`)
+  - **Optional fields** should be enclosed in brackets.
+    (e.g. `[RESULT <result>]`)
+  - **List fields** should be indicated with three dots at the end.
+    (e.g. `LANGUAGES <lang>...`)
+  - **XOR dependencies** should be separated with a 'bar' character.
+    (e.g. `TYPE <SHARED|MODULE|STATIC>`)
+
+  ```cmake
+  #[[
+
+  Define sample module with given name and specific language.
+
+  sample_add_library(<name>
+                    [TYPE <SHARED|MODULE|STATIC>]
+                    LANGUAGE <language>
+                    [NO_PROXY]
+                    [OUTPUT_DIR <directory>]
+                    SOURCES <file>...
+  )
+
+  Here can follow a longer and more detailed documentation.
+
+  - TYPE
+  ...
+
+  - LANGUAGE
+  Specify the target language.
+
+  - NO_PROXY
+  Prevent the generation of the wrapper layer.
+
+  - OUTPUT_DIR
+  Specify where to write the language specific files.
+
+  - SOURCES
+  List of sources for the library.
+
+  #]]
+  ```
