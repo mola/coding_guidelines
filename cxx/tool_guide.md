@@ -75,3 +75,13 @@ code.
 - `-Wdocumentation` turns on compiler flags which warn about problems with the
   provided documentation e.g. parameter mismatch, missing parameter
   documentation, etc.
+
+#### MSVC Compiler Flags
+
+- `/permissive-` specifies standard conformance mode to the compiler.
+- `/W4` turns on a lot of reasonable warnings.
+- `/w14640` warns on thread un-safe static member initialization.
+- `/w14265` warns if class has virtual functions but destructor is not virtual.
+- `/w14826` warns if conversion from one type to another is sign-extended. This
+  may cause unexpected runtime behavior.
+- `/w14928` warns on illegal copy-initialization.
