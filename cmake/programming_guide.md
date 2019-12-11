@@ -114,3 +114,68 @@ that something changed on the file system.
   clients to use CMake**.
 - Use `cmake_policy` sparingly as policies change for a reason.
 - Use the **testing** and **packaging** functionality provided by CMake.
+
+### Project Layout
+
+<div class="alert alert-info">
+  The following section is quiet controversial as there is no right or wrong.
+  The section just shows my personal preference and can be adjusted if wanted.
+</div>
+
+- **cmake** folder: Contains custom CMake modules and template files which will
+  be used in the context of the CMake modules files.
+- **doc** folder: Contains documentation related files e.g. Doxygen config etc.
+- **include** folder: Contains all header files (public and private). The
+  separation should be handled by the installation step.
+- **src** folder: Contains all source files.
+- **test** folder: Contains tests written for the project e.g. unit tests.
+- **example** folder: Contains examples which would help other users to get a
+  better understanding for the usage of a library.
+- **third_party** folder: Contains libraries which come from a third party. The
+  libraries are mainly added via `git submodules` or directly copied if they are
+  header only.
+
+```sh
+# example layout of a sample project
+.
+├── cmake
+│  ├── analyzer
+│  │  ├── ...
+│  │  └── clang_tidy.cmake
+│  ├── meta_information.hxx.in
+│  ├── package_helper
+│  │  ├── ...
+│  │  └── xcb.cmake
+│  ├── third_party
+│  │  ├── ...
+│  │  └── glfw.cmake
+│  └── utilities
+│     ├── ...
+│     └── target_configuration.cmake
+├── doc
+│  ├── CMakeLists.txt
+│  ├── Doxyfile.in
+│  └── redesign
+│     ├── ...
+│     └── style.css
+├── include
+│  └── foo.hpp
+├── src
+│  └── main.cpp
+├── test
+│  ├── CMakeLists.txt
+│  ├── include
+│  │  └── sample_test.hpp
+│  └── src
+│     └── sample_test.cpp
+├── example
+│  ├── CMakeLists.txt
+│  └── example.cpp
+├── third_party
+│  ├── CMakeLists.txt
+│  └── a_used_third_party_lib
+│     └── ...
+├── LICENSE
+├── README.md
+└── CMakeLists.txt
+```
