@@ -52,3 +52,13 @@ differently to the rest of the project without pollution the global scope.
   ```cmake
   add_library(Foo::Bar ALIAS Bar)
   ```
+
+#### Functions And Macros
+
+**Prefer function** over **macros** whenever reasonable. In addition to
+directory-base scope, CMake function have their own scope. This means variables
+set inside functions are not visible in the parent scope, which is not true for
+macros.
+
+The most important part is to combine **common functionality** into clearly
+**documented** functions or macros.
