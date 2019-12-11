@@ -61,6 +61,15 @@ macros.
 The most important part is to combine **common functionality** into clearly
 **documented** functions or macros.
 
+#### Argument Handling
+
+**Do not** reinvent the wheel for argument handling. Use `cmake_parse_arguments`
+as this is the recommended way to handle complex argument-based behaviors or
+optional arguments in any function.
+
+See https://cmake.org/cmake/help/latest/command/cmake_parse_arguments.html for
+more informations regarding the `cmake_parse_arguments` command.
+
 ### Avoid Message Pollution
 
 - **Do not** print every information with `STATUS` or `NOTICE` if the
