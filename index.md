@@ -24,6 +24,7 @@ For C++:
 
 - [Style Guide](cxx/style_guide.md)
 - [Programming Guide](cxx/programming_guide.md)
+- [Tool Guide](cxx/tool_guide.md)
 
 For CMake:
 
