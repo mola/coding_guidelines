@@ -62,3 +62,20 @@ macros.
 
 The most important part is to combine **common functionality** into clearly
 **documented** functions or macros.
+
+#### Avoid Message Pollution
+
+- **Do not** print every information with `STATUS` or `NOTICE` if the
+  information only serves as a debug message (e.g. file entries). Normal users
+  do not care which file is currently processed or what happens internally.
+  It is therefore discouraged to pollute the output for the user.
+
+  ```cmake
+  # GOOD
+  message(DEBUG "[${PROJECT_NAME}] -- Processing ${CMAKE_CURRENT_LIST_FILE}")
+
+  # BAD
+  message(STATUS "[${PROJECT_NAME}] -- Processing ${CMAKE_CURRENT_LIST_FILE}")
+  ```
+
+- See https://cmake.org/cmake/help/latest/command/message.html
