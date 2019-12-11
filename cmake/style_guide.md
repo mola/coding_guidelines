@@ -156,9 +156,6 @@ set(meta_project_description "description for sample_project")
   set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake")
   ```
 
-- Functions with multiple arguments should use `cmake_parse_arguments`.
-  - See documentation: https://cmake.org/cmake/help/latest/command/cmake_parse_arguments.html
-
 #### Quotes
 
 - **Always** use quotes around variables that represent a string.
