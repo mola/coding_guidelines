@@ -94,4 +94,23 @@ expression to a list of files when generating the build system. The build system
 then operates on this list of files. Therefore, the build system cannot detect
 that something changed on the file system.
 
+### Rules Of Thumb
 
+- Use **out-of-source** builds as this helps to keep the generated files
+  separated from the file which should be tracked by git.
+- Use modern `foreach` syntax.
+
+  ```cmake
+  foreach(var IN ITEMS foo bar baz) ...
+  foreach(var in LISTS my_list) ...
+  foreach(var IN LISTS my_list ITEMS foo bar baz) ...
+  ```
+
+- Use **toolchain files** for cross compiling.
+- **Export** your library's interface, if you are a library author. Furthermore,
+  write a 'Config.cmake' file, as this is the job of a library author.
+- **Do not** touch `CMAKE_<LANG>_FLAGS`.
+- Use a *'Find module'* for **third party** libraries that do not **support
+  clients to use CMake**.
+- Use `cmake_policy` sparingly as policies change for a reason.
+- Use the **testing** and **packaging** functionality provided by CMake.
