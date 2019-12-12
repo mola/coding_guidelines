@@ -120,3 +120,29 @@ needed for the give file (both `.cpp` and `.hpp` files), and replacing
 `#includes` with **forward declarations** when possible.
 
 - Website: https://include-what-you-use.org/
+
+#### Clang-Format
+
+The **clang-format** standalone tool is built on top of **LibFormat**, which is
+a library that implements automatic source code formatting based on **Clang**.
+
+- Website: https://clang.llvm.org/docs/ClangFormat.html
+
+The **clang-format** tool **can** help with:
+
+- Alignment
+- Column Limit
+- Brace Placement
+- Space Placement
+- Include Sorting
+- Indentation
+
+The **clang-format** tool **can not** help with:
+
+- Naming Convention
+- Trailing Return Type
+- East-/West-Const
+- Function Prefixes
+- Access Specifier
+- Braces Around Statements
+- Comment Style
