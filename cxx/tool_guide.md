@@ -196,3 +196,20 @@ code analysis to detect bugs and focuses on detecting undefined behavior and
 dangerous coding constructs.
 
 - Website: http://cppcheck.sourceforge.net/
+
+### Testing
+
+**CMake** has a built in framework for executing test. The **ctest** executable
+is the CMake test driver program. It can run the test added with `add_test()`
+and report the results.
+
+- Website: https://cmake.org/cmake/help/latest/manual/ctest.1.html
+
+To further aid in executing test, consider a specialized library to help
+organizing the tests. A few well known test frameworks:
+
+- [Doctest](https://github.com/onqtam/doctest)
+- [Catch2](https://github.com/catchorg/Catch2)
+- [Google Test](https://github.com/google/googletest)
+- [CppUTest](https://github.com/cpputest/cpputest)
+- [Boost.Test](https://www.boost.org/doc/libs/1_72_0/libs/test/doc/html/index.html)
