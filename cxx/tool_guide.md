@@ -91,3 +91,15 @@ code.
 To enforce the compiler flags it is advised to treat the warnings given by the
 compilers as errors. Use `-Werror` with Clang/GCC and `/Wx` with MSVC which will
 turn all warnings into errors.
+
+### LLVM-based Tools
+
+LLVM-based tools work best with a build system that can output a compile
+commands database. For other build systems there is
+[Build EAR](https://github.com/rizsotto/Bear) which will hook into the build
+system and generate a compile command database.
+
+```sh
+# cmake example on how to enable compile commands output
+$ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+```
