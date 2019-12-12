@@ -189,6 +189,14 @@ The **clang-tidy** tool **can not** help with:
 - Access Specifier
 - Comment Style
 
+#### Clazy
+
+**clazy** is a Qt oriented code checker based on the clang framework. It has
+more than 50 Qt related compiler warning, ranging from unneeded memory
+allocations to misusage of the API.
+
+- Website: https://github.com/KDE/clazy
+
 ### Cppcheck
 
 **Cppcheck** is a static analysis tool for C and C++ code. It provides unique
