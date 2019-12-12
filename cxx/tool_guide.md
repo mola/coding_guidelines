@@ -146,3 +146,32 @@ The **clang-format** tool **can not** help with:
 - Access Specifier
 - Braces Around Statements
 - Comment Style
+
+#### Clang-Tidy
+
+**clang-tidy** is a clang-based C++ *linter* tool. Its purpose is to provide an
+extensible framework for diagnosing and fixing typical programming errors, like
+style violations, interface misuse, or bugs that can be deduced via static
+analysis.
+
+- Website: https://clang.llvm.org/extra/clang-tidy/
+
+The **clang-tidy** tool **can** help with:
+
+- Naming Convention
+- Braces Around Statements
+- Trailing Return Types
+- Use of modern constructs (e.g. constants over macros, no C-style casts,
+  noexcept, etc.)
+- No `else` after control flow interrupts
+- Finding typical programming error
+
+The **clang-tidy** tool **can not** help with:
+
+- Think Immutable (making thing as much `const` as possible)
+- Pointer Order Usage
+- `auto` Keyword Enforcement
+- East-/West-Const
+- Function Prefixes
+- Access Specifier
+- Comment Style
