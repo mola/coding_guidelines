@@ -123,7 +123,7 @@ The **include-what-you-use tool** is a program that can be built with the clang
 libraries in order to analyze `#include` of source files to find
 **include-what-you-use violations**.
 
-> *Include what you use* means: for ever symbol (type, function variable, or
+> *Include what you use* means: for every symbol (type, function variable, or
 > macro) that is used in `foo.cpp`, either `foo.cpp` or `foo.hpp` should
 > `#include` a header file that exports the declaration of that symbol.
 
