@@ -205,6 +205,13 @@ dangerous coding constructs.
 
 - Website: http://cppcheck.sourceforge.net/
 
+### Heaptrack
+
+**heaptrack** is a heap memory profiler for Linux. It traces all memory
+allocations and annotates these events with stack traces.
+
+- Website: https://github.com/KDE/heaptrack
+
 ### Testing
 
 **CMake** has a built in framework for executing test. The **ctest** executable
