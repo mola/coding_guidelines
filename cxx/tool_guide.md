@@ -103,3 +103,20 @@ system and generate a compile command database.
 # cmake example on how to enable compile commands output
 $ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
+
+#### Include-What-You-Use
+
+The **include-what-you-use tool** is a program that can be built with the clang
+libraries in order to analyze `#include` of source files to find
+**include-what-you-use violations**.
+
+> *Include what you use* means: for ever symbol (type, function variable, or
+> macro) that is used in `foo.cpp`, either `foo.cpp` or `foo.hpp` should
+> `#include` a header file that exports the declaration of that symbol.
+
+The main goal of the **include-what-you-use tool** is to remove superfluous
+`#includes`. It does this both by figuring out what `#includes` are not actually
+needed for the give file (both `.cpp` and `.hpp` files), and replacing
+`#includes` with **forward declarations** when possible.
+
+- Website: https://include-what-you-use.org/
