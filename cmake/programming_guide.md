@@ -25,9 +25,9 @@ a simple, structured, documented and readable form.
 
 By defining properties in terms of targets, it helps developers to reason about
 the system at the target level. The developers do not need to understand the
-whole system in order reason about a single target. Furthermore can a target
+whole system in order reason about a single target. Furthermore a target can
 handle its properties (e.g. compile definitions, features, dependencies)
-differently to the rest of the project without pollution the global scope.
+differently to the rest of the project without polluting the global scope.
 
 - **Do not** use **global** functions like `include_directories`,
   `link_directories`, and similar.
