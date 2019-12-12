@@ -92,6 +92,19 @@ To enforce the compiler flags it is advised to treat the warnings given by the
 compilers as errors. Use `-Werror` with Clang/GCC and `/Wx` with MSVC which will
 turn all warnings into errors.
 
+#### Sanitizer
+
+These tools provide runtime code analysis that can detect memory leaks, race
+conditions, and other associated problems. The sanitizers are built into the
+**Clang** and **GCC** compiler and to do not require extra tooling.
+
+- [Clang AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html)
+- [Clang ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html)
+- [Clang MemorySanitizer](https://clang.llvm.org/docs/MemorySanitizer.html)
+- [Clang UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html)
+- [Clang DataFlowSanitizer](https://clang.llvm.org/docs/DataFlowSanitizer.html)
+- [Clang LeakSanitizer](https://clang.llvm.org/docs/LeakSanitizer.html)
+
 ### LLVM-based Tools
 
 LLVM-based tools work best with a build system that can output a compile
