@@ -213,3 +213,14 @@ organizing the tests. A few well known test frameworks:
 - [Google Test](https://github.com/google/googletest)
 - [CppUTest](https://github.com/cpputest/cpputest)
 - [Boost.Test](https://www.boost.org/doc/libs/1_72_0/libs/test/doc/html/index.html)
+
+#### Code Coverage Analysis
+
+A coverage analysis tool shall be run when tests are executed to make sure the
+entire application is being tested.
+
+- [gcov](https://gcc.gnu.org/onlinedocs/gcc/Gcov.html)
+- [gcovr](https://gcovr.com/en/stable/)
+- [kcov](https://simonkagstrom.github.io/kcov/index.html)
+- [llvm-cov](https://llvm.org/docs/CommandGuide/llvm-cov.html)
+- [Clang Source-based Code Coverage](https://clang.llvm.org/docs/SourceBasedCodeCoverage.html)
