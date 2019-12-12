@@ -175,3 +175,11 @@ The **clang-tidy** tool **can not** help with:
 - Function Prefixes
 - Access Specifier
 - Comment Style
+
+### Cppcheck
+
+**Cppcheck** is a static analysis tool for C and C++ code. It provides unique
+code analysis to detect bugs and focuses on detecting undefined behavior and
+dangerous coding constructs.
+
+- Website: http://cppcheck.sourceforge.net/
