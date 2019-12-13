@@ -230,15 +230,14 @@ abbreviations unless they are well known e.g from a protocol specification.
   ```cmake
   my_var
   my_compiler_flags
-  my_target
   ```
 
-- **Global options**, which can be configured from outside, should be uppercase
-  and `SNAKE_CASE`.
+- **Variables holding a target name** should be prefixed with `target_` and
+  follow otherwise the local variable naming.
 
   ```cmake
-  ENABLE_TESTS
-  USE_CLANG_TIDY
+  set(target_foo "libfoo")
+  set(target_bar_baz "bar_baz")
   ```
 
 - **Properties / Function Keywords** should be uppercase and `SNAKE_CASE`.
