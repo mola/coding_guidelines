@@ -136,13 +136,16 @@ that something changed on the file system.
 - **src** folder: Contains all source files.
 - **test** folder: Contains tests written for the project e.g. unit tests.
 - **example** folder: Contains examples which would help other users to get a
-  better understanding for the usage of a library.
+  better understanding for the usage of a library. *It is not advised to
+  separate the header and source files for the examples.*
+- **script** folder: Contains project related scripts to help a developer e.g
+  script to format the whole code, update changelog etc.
 - **third_party** folder: Contains libraries which come from a third party. The
   libraries are mainly added via `git submodules` or directly copied if they are
   header only.
 
 ```sh
-# example layout of a sample project
+# example layout of a project
 .
 ├── cmake
 │  ├── analyzer
@@ -177,6 +180,9 @@ that something changed on the file system.
 ├── example
 │  ├── CMakeLists.txt
 │  └── example.cpp
+├── script
+│  ├── ...
+│  └── helper.py
 ├── third_party
 │  ├── CMakeLists.txt
 │  └── a_used_third_party_lib
