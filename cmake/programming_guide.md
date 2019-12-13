@@ -38,17 +38,17 @@ differently to the rest of the project without polluting the global scope.
 
   ```cmake
   # GOOD (if namespaced target is available)
-  target_link_libraries(${foo_target} Bar::Bar)
+  target_link_libraries(${target_foo} bar::bar)
 
   # BAD (if namespaced target is available)
-  target_include_directories(${foo_target} PRIVATE ${Bar_INCLUDE_DIRS})
-  target_link_libraries(${foo_target} ${Bar_LIBRARY})
+  target_include_directories(${target_foo} PRIVATE ${bar_INCLUDE_DIRS})
+  target_link_libraries(${target_foo} ${bar_LIBRARY})
   ```
 
 - Make `ALIAS` targets to keep the usage consistent.
 
   ```cmake
-  add_library(Foo::Bar ALIAS Bar)
+  add_library(bar::bar ALIAS bar)
   ```
 
 ### Functions And Macros
