@@ -100,6 +100,27 @@ that something changed on the file system.
   work **reliably** on all generators. Even if it works reliably, there is still
   a cost to perform the check on every rebuild.
 
+### Do Not `include()` With File Path
+
+To reduce repetition and to simplify the `include()` call **append** the file
+path to the `CMAKE_MODULE_PATH` variable. Once the file path is appended,
+including a file can be realized via `include(<modulename>)` which searches for
+a `<modulename>.cmake` file in the `CMAKE_MODULE_PATH`.
+
+```cmake
+# GOOD
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+
+include(utilities/build_type_handler)
+include(analyzer/analyzer_check)
+include(package_helper/threads)
+
+# BAD
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/utilities/build_type_handler.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/analyzer/analyzer_check.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/package_helper/threads.cmake)
+```
+
 ### Rules Of Thumb
 
 - Use **out-of-source** builds as this helps to keep the generated files
