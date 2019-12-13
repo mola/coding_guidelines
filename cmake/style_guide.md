@@ -198,6 +198,28 @@ set(meta_project_description "description for sample_project")
   endif()
   ```
 
+#### Use Variable For Target
+
+To make the CMake code more readable and less error-prone, on later target name
+related changes, a **separated variable** should be used to **define a target
+name**. This has the benefit that the code can reference back to this variable
+and spelling errors can not occur when a target name is needed multiple times,
+e.g. on target configuration, install step, etc.
+
+```cmake
+# GOOD
+set(target_foo "libfoo")
+
+add_library(${target_foo})
+add_library(foo::${target_foo} ALIAS ${target_foo})
+target_source(${target_foo} PUBLIC foo.hpp PRIVATE foo.cpp)
+
+# BAD
+add_library(libfoo)
+add_library(foo::libfoo ALIAS libfoo)
+target_source(libfoo PUBLIC foo.hpp PRIVATE foo.cpp)
+```
+
 ### Naming Conventions
 
 Poorly-chosen names can mislead the reader and cause bugs. Pick names that match
