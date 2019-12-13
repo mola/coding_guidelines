@@ -94,6 +94,12 @@ expression to a list of files when generating the build system. The build system
 then operates on this list of files. Therefore, the build system cannot detect
 that something changed on the file system.
 
+- **Never** use `file(GLOB)` to collect a list of source files from the source
+  tree.
+- The `CONFIGURE_DEPENDS` flag (CMake >= 3.12) is an improvement but **may not**
+  work **reliably** on all generators. Even if it works reliably, there is still
+  a cost to perform the check on every rebuild.
+
 ### Rules Of Thumb
 
 - Use **out-of-source** builds as this helps to keep the generated files
