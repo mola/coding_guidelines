@@ -5,10 +5,6 @@ toc: true
 
 This page provides programming guidelines for the C++ programming language.
 
-<div class="alert alert-warning">
-  <strong>This page is still work in progress.</strong>
-</div>
-
 ### Compiler Issues
 
 Start with very strict warning settings from the beginning. Trying to raise the
