@@ -598,6 +598,8 @@ quasi-standard across many compilers. It is short and makes the intent clear.
 
 ### Sample Of Formatted Source Code
 
+The source file can be found under [cxx/assets/clang_format_sample.cpp](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/clang_format_sample.cpp).
+
 ```cpp
 // This is a sample file to demonstrate the clang-format config.
 
