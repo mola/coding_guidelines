@@ -192,6 +192,9 @@ The **clang-tidy** tool **can not** help with:
 - Access Specifier
 - Comment Style
 
+The clang-tidy config file which conforms the guidelines can be found under
+[cxx/assets/.clang-tidy](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-tidy).
+
 #### Clazy
 
 **clazy** is a Qt oriented code checker based on the clang framework. It has
