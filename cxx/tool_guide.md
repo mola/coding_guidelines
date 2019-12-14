@@ -160,6 +160,9 @@ The **clang-format** tool **can not** help with:
 - Braces Around Statements
 - Comment Style
 
+The clang-format config file which conforms the guidelines can be found under
+[cxx/assets/.clang-format](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-format).
+
 #### Clang-Tidy
 
 **clang-tidy** is a clang-based C++ *linter* tool. Its purpose is to provide an
