@@ -160,8 +160,8 @@ The **clang-format** tool **can not** help with:
 - Braces Around Statements
 - Comment Style
 
-The clang-format config file which conforms the guidelines can be found under
-[cxx/assets/.clang-format](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-format).
+> The clang-format config file which conforms the guidelines can be found under
+> [cxx/assets/.clang-format](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-format).
 
 #### Clang-Tidy
 
@@ -192,8 +192,8 @@ The **clang-tidy** tool **can not** help with:
 - Access Specifier
 - Comment Style
 
-The clang-tidy config file which conforms the guidelines can be found under
-[cxx/assets/.clang-tidy](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-tidy).
+> The clang-tidy config file which conforms the guidelines can be found under
+> [cxx/assets/.clang-tidy](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-tidy).
 
 #### Clazy
 
