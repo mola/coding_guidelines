@@ -5,10 +5,6 @@ toc: false
 
 This wiki holds guidelines for a range of different programming languages
 
-<div class="alert alert-warning">
-  <strong>This page is still work in progress.</strong>
-</div>
-
 ### Golden Rule
 
 Use common sense and be consistent. If your are extending, enhancing, or bug
