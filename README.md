@@ -3,7 +3,7 @@
 This repository holds guidelines for a range of different programming languages.
 These guidelines consist of a **style guide** which defines the general source
 code format and naming of e.g. variables. Furthermore there is a **programming
-guide** which defines general rules, does and don'ts to follow when writing
+guide** which defines general rules, do's and don'ts to follow when writing
 source code.
 
 > The purpose of this repository is to help developers to achieve a more uniform
