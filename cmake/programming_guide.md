@@ -139,6 +139,19 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/analyzer/analyzer_check.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/package_helper/threads.cmake)
 ```
 
+### Use Project-Relative Variables
+
+There are various scenarios where paths relative to a location in the source or
+build directory need to be constructed. Variables like `CMAKE_SOURCE_DIR` or
+`CMAKE_BINARY_DIR` seem to be a natural fit, but if the project is later
+incorporated into another parent project these variables will point to the
+*parent* project, which would be the wrong location. In the vast majority of
+cases, `PROJECT_SOURCE_DIR` and `PROJECT_BINARY_DIR`, or their project-specific
+equivalents are more appropriate variables to use.
+
+- **Prefer** project specific variables (`PROJECT_SOURCE_DIR` /
+  `PROJECT_BINARY_DIR` / etc.) over `CMAKE_SOURCE_DIR` / `CMAKE_BINARY_DIR`.
+
 ### Rules Of Thumb
 
 - Use **out-of-source** builds as this helps to keep the generated files
