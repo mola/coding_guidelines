@@ -187,65 +187,158 @@ equivalents are more appropriate variables to use.
   The section just shows my personal preference and can be adjusted if wanted.
 </div>
 
-- **cmake** folder: Contains custom CMake modules and template files which will
-  be used in the context of the CMake modules files.
-- **doc** folder: Contains documentation related files e.g. Doxygen config etc.
-- **include** folder: Contains all header files (public and private). The
-  separation should be handled by the installation step.
-- **src** folder: Contains all source files.
-- **test** folder: Contains tests written for the project e.g. unit tests.
+#### Common Top Level Subdirectories
+
+- **cmake** folder: Contains CMake helper scripts and template files which will
+  be used in the context of the CMake scripts.
+- **doc** folder: Contains documentation related files e.g. Doxygen config,
+  Markdown files, etc.
+- **include** folder: Contains a folder with the `target` name, which in return
+  contains all **public header** files associated with the `target`.
+
+> The **include** folder is only used for **library projects**, as **executable
+> projects** do not have **public header**.
+
+- **src** folder: Contains **all source** and **private header** files.
+- **test** folder: Contains tests written for the project e.g. integration
+  tests.
 - **example** folder: Contains examples which would help other users to get a
-  better understanding for the usage of a library. *It is not advised to
-  separate the header and source files for the examples.*
+  better understanding for the usage of a library.
 - **script** folder: Contains project related scripts to help a developer e.g
   script to format the whole code, update changelog etc.
-- **third_party** folder: Contains libraries which come from a third party. The
+- **dependency** folder: Contains libraries which come from a third party. The
   libraries are mainly added via `git submodules` or directly copied if they are
   header only.
+- **packaging**: folder: Contains files which are only relevant for the
+  packaging e.g. resource files, installer images, etc.
+
+#### Target Sources And The `src` Folder
+
+When the number of source files increases, having them all in the one directory
+can make them more difficult to work with. This is generally addressed by
+placing them under subdirectories grouped by functionality. **Each** directory
+**must** contain a `CMakeLists.txt` file, which adds the files in its level via
+`target_sources()` to the target. This helps keep things local to the code they
+relate to and allows other `target_...()` commands to be moved into the
+subdirectories.
+
+```cmake
+# CMakeLists.txt
+# ---------------------------
+# define the target at the top-level
+add_executable(${target_foo})
+
+# 'include' subdirectory which adds sources and related options to the target
+add_subdirectory(src)
+
+# configure target with things which are source file 'independent'
+target_compile_features(${TPRE_TARGET}
+    PUBLIC
+        cxx_std_17
+)
+
+# src/CMakeLists.txt
+# ---------------------------
+target_sources(${target_foo}
+    PRIVATE
+        main.cpp
+)
+
+add_subdirectory(coffee)
+
+# src/coffee/CMakeLists.txt
+# ---------------------------
+target_sources(${target_foo}
+    PRIVATE
+        coffee.cpp
+        coffee.hpp
+)
+
+target_compile_definitions(${target_foo}
+    PUBLIC
+        COFFEE_FAMILY=Robusta
+)
+```
+
+> **Always** add header files to the `target_sources()` call. This is needed
+> because some IDE's will not show the header files otherwise.
+
+#### Example For A Executable Project
 
 ```sh
-# example layout of a project
+# example layout of a executable project
 .
 ├── cmake
 │  ├── analyzer
-│  │  ├── ...
 │  │  └── clang_tidy.cmake
 │  ├── meta_information.hxx.in
-│  ├── package_helper
-│  │  ├── ...
-│  │  └── xcb.cmake
-│  ├── third_party
-│  │  ├── ...
-│  │  └── glfw.cmake
 │  └── utilities
-│     ├── ...
 │     └── target_configuration.cmake
 ├── doc
 │  ├── CMakeLists.txt
 │  ├── Doxyfile.in
 │  └── redesign
-│     ├── ...
 │     └── style.css
-├── include
-│  └── foo.hpp
 ├── src
+│  ├── CMakeLists.txt
+│  ├── bar.hpp
 │  └── main.cpp
 ├── test
 │  ├── CMakeLists.txt
-│  ├── include
-│  │  └── sample_test.hpp
 │  └── src
+│     ├── CMakeLists.txt
 │     └── sample_test.cpp
 ├── example
 │  ├── CMakeLists.txt
 │  └── example.cpp
 ├── script
-│  ├── ...
 │  └── helper.py
-├── third_party
+├── dependency
 │  ├── CMakeLists.txt
-│  └── a_used_third_party_lib
-│     └── ...
+│  └── libfoo
+│     └── foo.hpp
+├── LICENSE
+├── README.md
+└── CMakeLists.txt
+```
+
+#### Example For A Library Project
+
+```sh
+# example layout of a library project
+.
+├── cmake
+│  ├── analyzer
+│  │  └── clang_tidy.cmake
+│  ├── meta_information.hxx.in
+│  └── utilities
+│     └── target_configuration.cmake
+├── doc
+│  ├── CMakeLists.txt
+│  ├── Doxyfile.in
+│  └── redesign
+│     └── style.css
+├── include
+│  └── foo
+│     └── foo.hpp
+├── src
+│  ├── CMakeLists.txt
+│  ├── baz.hpp
+│  ├── baz.cpp
+│  └── foo.cpp
+├── test
+│  ├── CMakeLists.txt
+│  └── src
+│     ├── CMakeLists.txt
+│     └── sample_test.cpp
+├── example
+│  ├── CMakeLists.txt
+│  └── example.cpp
+├── script
+│  └── helper.py
+├── packaging
+│  ├── CMakeLists.txt
+│  └── logo.svg
 ├── LICENSE
 ├── README.md
 └── CMakeLists.txt
