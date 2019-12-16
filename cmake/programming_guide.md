@@ -21,6 +21,13 @@ The 'CMake language' is a programming language. Therefore, it should use the
 same principles as the rest of the codebase. This means it should be written in
 a simple, structured, documented and readable form.
 
+### Scripted CMake
+
+If the project is being **scripted** (e.g. in CI/CD), invoke the **configure
+step** via `cmake -S <source-dir> -B <build-dir>`, the **build step** via
+`cmake --build` and the **install step** via `cmake --install`. This allows the
+script to easily switch between generator types without having to be modified.
+
 ### Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
