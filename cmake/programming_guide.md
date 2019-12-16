@@ -51,6 +51,24 @@ differently to the rest of the project without polluting the global scope.
   add_library(bar::bar ALIAS bar)
   ```
 
+#### Library Targets
+
+- When naming targets of libraries, **do not** start or end the name with `lib`.
+
+> On all platforms except *'Windows'*, a leading `lib` will be prefixed
+> automatically when construction the actual library name to make it conform to
+> the platform's usual convention. If the target name already begins with `lib`,
+> the resultant file name would end up with the form `liblibsomething...`. This
+> is often assumed to be a mistake and by all means bad practice.
+
+- **Try to avoid** specifying the `STATIC` or `SHARED` keyword for a library
+  until it is known to be needed.
+
+> Avoiding it allows greater flexibility in choosing between static or dynamic
+> libraries as an overall project-wide strategy. The `BUILD_SHARED_LIBS`
+> variable can be used to change the default (`STATIC`) in on place instead of
+> having to modify every call to `add_library()`.
+
 ### Functions And Macros
 
 **Prefer function** over **macros** whenever reasonable. In addition to
