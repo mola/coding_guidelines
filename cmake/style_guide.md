@@ -262,6 +262,19 @@ abbreviations unless they are well known e.g from a protocol specification.
   set(target_bar_baz "bar_baz")
   ```
 
+- **Cache variables** should be prefixed with the project name and follow
+  otherwise the local variable naming.
+
+  ```cmake
+  project("libfoo")
+
+  set(libfoo_enable_tests OFF
+    CACHE
+        BOOL "Enable tests which can be run with 'ctest' ..."
+    FORCE
+  )
+  ```
+
 - **Properties / Function Keywords** should be uppercase and `SNAKE_CASE`.
 
   ```cmake
