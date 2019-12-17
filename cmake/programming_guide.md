@@ -242,7 +242,7 @@ add_executable(${target_foo})
 add_subdirectory(src)
 
 # configure target with things which are source file 'independent'
-target_compile_features(${TPRE_TARGET}
+target_compile_features(${target_foo}
     PUBLIC
         cxx_std_17
 )
