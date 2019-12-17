@@ -65,7 +65,7 @@ set(meta_project_description "description for sample_project")
   # GOOD
   install(
       TARGETS
-          ${sample_target}
+          ${target_sample}
       RUNTIME
           DESTINATION ${CMAKE_INSTALL_BINDIR}
       LIBRARY
@@ -77,7 +77,7 @@ set(meta_project_description "description for sample_project")
   # BAD
   install(
       TARGETS
-      ${sample_target}
+      ${target_sample}
       RUNTIME
       DESTINATION ${CMAKE_INSTALL_BINDIR}
       LIBRARY
@@ -94,13 +94,13 @@ set(meta_project_description "description for sample_project")
 
   ```cmake
   # GOOD
-  set_target_properties(${sample_target}
+  set_target_properties(${target_sample}
       PROPERTIES
           CXX_EXTENSIONS OFF
   )
 
   # BAD
-  set_target_properties(${sample_target}
+  set_target_properties(${target_sample}
       PROPERTIES
           CXX_EXTENSIONS OFF)
   ```
