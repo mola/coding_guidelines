@@ -205,7 +205,7 @@ equivalents are more appropriate variables to use.
   contains all **public header** files associated with the `target`.
 
 > The **include** folder is only used for **library projects**, as **executable
-> projects** do not have **public header**.
+> projects** do not have **public header** files.
 
 - **src** folder: Contains **all source** and **private header** files.
 - **test** folder: Contains tests written for the project e.g. integration
