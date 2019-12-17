@@ -209,16 +209,16 @@ e.g. on target configuration, install step, etc.
 
 ```cmake
 # GOOD
-set(target_foo "libfoo")
+set(target_foo "foo")
 
 add_library(${target_foo})
 add_library(foo::${target_foo} ALIAS ${target_foo})
 target_source(${target_foo} PUBLIC foo.hpp PRIVATE foo.cpp)
 
 # BAD
-add_library(libfoo)
-add_library(foo::libfoo ALIAS libfoo)
-target_source(libfoo PUBLIC foo.hpp PRIVATE foo.cpp)
+add_library(foo)
+add_library(foo::foo ALIAS foo)
+target_source(foo PUBLIC foo.hpp PRIVATE foo.cpp)
 ```
 
 ### Naming Conventions
