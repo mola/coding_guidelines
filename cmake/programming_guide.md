@@ -14,6 +14,8 @@ This page provides programming guidelines for the CMake programming language.
 - **Prefer** the **latest** version of CMake.
 - **Do not** target any CMake version less than 3.0, as earlier versions of
   CMake did not provide target-based configurations.
+- The `cmake_minimum_required_version()` **should** reflect the used CMake
+  version and **should** be tested via CI/CD.
 
 ### Treat CMake Code Like Production Code
 
