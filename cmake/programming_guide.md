@@ -64,7 +64,7 @@ differently to the rest of the project without polluting the global scope.
 - When naming targets of libraries, **do not** start or end the name with `lib`.
 
 > On all platforms except *'Windows'*, a leading `lib` will be prefixed
-> automatically when construction the actual library name to make it conform to
+> automatically when constructing the actual library name to make it conform to
 > the platform's usual convention. If the target name already begins with `lib`,
 > the resultant file name would end up with the form `liblibsomething...`. This
 > is often assumed to be a mistake and by all means bad practice.
