@@ -92,7 +92,7 @@ The most important part is to combine **common functionality** into clearly
 **Do not** reinvent the wheel for argument handling. Use `cmake_parse_arguments`
 as this is the recommended way to handle complex argument-based behaviors or
 optional arguments in any function. It leads to **better usability** and
-**improved robustness** of calling code (e.g. little change of getting arguments
+**improved robustness** of calling code (e.g. little chance of getting arguments
 mixed up). It also allows the function to be more **easily extended** in the
 future because there is no reliance on argument ordering or for all arguments to
 always be provided, even if not relevant.
