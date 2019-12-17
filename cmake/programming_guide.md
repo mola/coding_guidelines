@@ -100,7 +100,7 @@ future because there is no reliance on argument ordering or for all arguments to
 always be provided, even if not relevant.
 
 See https://cmake.org/cmake/help/latest/command/cmake_parse_arguments.html for
-more informations regarding the `cmake_parse_arguments` command.
+more information regarding the `cmake_parse_arguments` command.
 
 ### Avoid Message Pollution
 
@@ -214,7 +214,7 @@ equivalents are more appropriate variables to use.
   tests.
 - **example** folder: Contains examples which would help other users to get a
   better understanding for the usage of a library.
-- **script** folder: Contains project related scripts to help a developer e.g
+- **script** folder: Contains project related scripts to help a developer e.g.
   script to format the whole code, update changelog etc.
 - **dependency** folder: Contains libraries which come from a third party. The
   libraries are mainly added via `git submodules` or directly copied if they are
