@@ -25,8 +25,9 @@ a simple, structured, documented and readable form.
 
 If the project is being **scripted** (e.g. in CI/CD), invoke the **configure
 step** via `cmake -S <source-dir> -B <build-dir>`, the **build step** via
-`cmake --build` and the **install step** via `cmake --install`. This allows the
-script to easily switch between generator types without having to be modified.
+`cmake --build <build-dir>` and the **install step** via
+`cmake --install <build-dir>`. This allows the script to easily switch between
+generator types without having to be modified.
 
 ### Think In Targets And Properties
 
