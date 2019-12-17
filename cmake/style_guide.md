@@ -178,7 +178,8 @@ set(meta_project_description "description for sample_project")
   endif()
   ```
 
-- Read https://stackoverflow.com/questions/35847655/when-should-i-quote-variables/35853080#35853080
+- For more information on 'When to quote variables' see
+  https://stackoverflow.com/questions/35847655/when-should-i-quote-variables/35853080#35853080
 
 #### Conditions
 
