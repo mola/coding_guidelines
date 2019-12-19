@@ -107,6 +107,15 @@ conditions, and other associated problems. The sanitizers are built into the
 
 ### Linker
 
+#### GNU Gold Linker
+
+The **GNU gold** linker was designed as an ELF-specific linker, with the
+intention of producing a more maintainable and faster linker than BFD **ld**
+(the 'traditional' GNU linker).
+
+> To use the **GNU gold** linker add the following flag to your compiler call
+> `-fuse-ld=gold`.
+
 ### LLVM-based Tools
 
 LLVM-based tools work best with a build system that can output a compile
