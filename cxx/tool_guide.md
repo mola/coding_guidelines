@@ -218,6 +218,15 @@ allocations and annotates these events with stack traces.
 
 - Website: https://github.com/KDE/heaptrack
 
+### Valgrind
+
+**Valgrind** is an instrumentation framework for building dynamic analysis
+tools. There are **Valgrind tools** that can automatically detect many memory
+management and threading bugs, and profile programs in detail. It is supported
+on various **Unix** platforms.
+
+- Website: https://www.valgrind.org/
+
 ### Testing
 
 **CMake** has a built in framework for executing test. The **ctest** executable
