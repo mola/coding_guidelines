@@ -227,6 +227,18 @@ on various **Unix** platforms.
 
 - Website: https://www.valgrind.org/
 
+### Dr. Memory
+
+**Dr. Memory** is a memory monitoring tool capable of identifying memory-related
+programming errors such as accesses of uninitialized/unaddressable/freed memory.
+**Dr. Memory** operates on unmodified application binaries running on
+**Windows**, **Linux**, **Mac**, or **Android**.
+
+> The **Dr. Memory package** includes a system call tracing tool for
+> **Windows**, or *'strace for Windows'*, called `drstrace`.
+
+- Website: https://www.drmemory.org/
+
 ### Testing
 
 **CMake** has a built in framework for executing test. The **ctest** executable
