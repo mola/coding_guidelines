@@ -105,6 +105,8 @@ conditions, and other associated problems. The sanitizers are built into the
 - [Clang DataFlowSanitizer](https://clang.llvm.org/docs/DataFlowSanitizer.html)
 - [Clang LeakSanitizer](https://clang.llvm.org/docs/LeakSanitizer.html)
 
+### Linker
+
 ### LLVM-based Tools
 
 LLVM-based tools work best with a build system that can output a compile
