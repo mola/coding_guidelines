@@ -116,6 +116,15 @@ intention of producing a more maintainable and faster linker than BFD **ld**
 > To use the **GNU gold** linker add the following flag to your compiler call
 > `-fuse-ld=gold`.
 
+#### LLD
+
+**LLD** is a linker from the LLVM project that is a drop-in replacement for
+system linkers and runs much faster than them.
+
+> To use **LLD** add the following flag to your compiler call `-fuse-ld=lld`.
+
+- Website: https://lld.llvm.org/
+
 ### LLVM-based Tools
 
 LLVM-based tools work best with a build system that can output a compile
