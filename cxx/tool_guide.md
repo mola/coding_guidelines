@@ -211,6 +211,15 @@ dangerous coding constructs.
 
 - Website: http://cppcheck.sourceforge.net/
 
+### rr
+
+**rr** is a lightweight tool for recording, replaying and debugging execution of
+applications (trees of processes and threads). Record a failure once, then debug
+the recording, deterministically, as many times as wanted. The same execution is
+replayed every time.
+
+- Website: https://rr-project.org/
+
 ### Heaptrack
 
 **heaptrack** is a heap memory profiler for Linux. It traces all memory
