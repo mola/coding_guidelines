@@ -27,6 +27,137 @@ step** via `cmake -S <source-dir> -B <build-dir>`, the **build step** via
 `cmake --install <build-dir>`. This allows the script to easily switch between
 generator types without having to be modified.
 
+### Scoping Issue
+
+CMake does not provide namespaces for variables. Furthermore, all variables from
+the parent scope will be copied into the child scope (e.g. functions,
+`add_subdirectory`, etc). This can lead to really bad problems when dependencies
+are used. Dependencies added via `add_subdirectory` will get all variables from
+the 'main' project and if both projects use the same variables (e.g. a list) the
+behavior of the dependency can vary.
+
+```cmake
+# in 'main' project
+# -> variable 'compiler_flags' = NOT DEFINED
+list(APPEND compiler_flags
+    -Weverything
+	  -Werror
+)
+
+# -> variable 'compiler_flags' = [-Weverything, -Werror]
+
+# add dependency to 'main' project
+add_subdirectory(
+	  ${path_to_dependency}/<dependency>
+	  ${CMAKE_CURRENT_BINARY_DIR}/<dependency>
+)
+
+# in '<dependency>' project
+# -> variable 'compiler_flags' = [-Weverything, -Werror]
+# ERROR: variable is expected to be not defined
+list(APPEND compiler_flags
+	  -Wall
+	  -Wextra
+)
+
+# -> variable 'compiler_flags' = [-Weverything, -Werror, -Wall, -Wextra]
+# ERROR: variable does contain flags which should not be used in dependency
+```
+
+Such problems can be hard to spot and can lead to undesired behavior. To prevent
+the child scope pollution the **following three functions should be used** in
+the `CMakeLists.txt`.
+
+- `main()`: function which should be called from the root scope, calls the other
+  functions and defines global variables
+
+  ```cmake
+  function(main)
+      # global variables
+      # -------------------------------------
+      get_filename_component(${PROJECT_NAME}_top_level_workspace
+          "${CMAKE_CURRENT_LIST_DIR}/.."
+          ABSOLUTE
+      )
+
+      set(${PROJECT_NAME}_target_bar "bar")
+
+      # append custom cmake paths to module search
+      # -------------------------------------
+      list(APPEND CMAKE_MODULE_PATH
+          "${${PROJECT_NAME}_top_level_workspace}/cmake_utils"
+      )
+
+      # call function which handles the project related initialization
+      # e.g. creation of targets
+      initialize_project()
+
+      # unset module path to not pollute third party projects
+      unset(CMAKE_MODULE_PATH)
+
+      # call function which handles dependencies e.g. with 'add_subdirectory'
+      configure_dependencies()
+  endfunction()
+  ```
+
+- `initialize_project()`: function which should handle the current project
+  related initialization e.g. create targets.
+
+  ```cmake
+  function(initialize_project)
+      # generate a compile_commands.json
+      set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+      # define cache variables
+      # -------------------------------------
+      set(${PROJECT_NAME}_enable_documentation OFF
+          CACHE
+              BOOL "Create and install the HTML based documentation"
+      )
+
+      # define compiler/linker flags
+      # -------------------------------------
+      include(common_compiler_flags)
+      get_common_cxx_compiler_flags(compiler_flags_to_test)
+
+      # check which flags are supported by the compiler
+      check_supported_cxx_compiler_flags("${compiler_flags_to_test}" cxx_compiler_flags)
+
+      # create executable target
+      add_executable(${${PROJECT_NAME}_target_bar})
+      add_executable(
+          ${${PROJECT_NAME}_target_bar}::${${PROJECT_NAME}_target_bar}
+          ALIAS
+          ${${PROJECT_NAME}_target_bar}
+      )
+
+      # ....
+  endfunction()
+  ```
+
+- `configure_dependencies()`: function handles dependencies and related target
+  configuration e.g. `add_subdirectory`, `target_link_libraries`.
+
+  ```cmake
+  function(configure_dependencies)
+      # add third party dependencies
+      # -------------------------------------
+      # set(BUILD_SHARED_LIBS ON)
+      add_subdirectory(
+          ${${PROJECT_NAME}_top_level_workspace}/libfoo
+          ${CMAKE_CURRENT_BINARY_DIR}/libfoo
+      )
+
+      target_link_libraries(${${PROJECT_NAME}_target_bar} foo::foo)
+      # unset(BUILD_SHARED_LIBS)
+  endfunction()
+  ```
+
+<div class="alert alert-info">
+  The call to `project()` needs to occur outside of the `main()` function which
+  is a CMake restriction.
+</div>
+
 ### Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
