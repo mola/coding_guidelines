@@ -104,9 +104,9 @@ auto tmp = 1;
   ```cpp
   #if defined(__linux__)
       #ifdef DEBUGGING == 1
-          #if defined (pic18f2480)
+          #if defined(pic18f2480)
               #define FLASH_MEMORY_END 0x3DC0
-          #elif defined (pic18f2580)
+          #elif defined(pic18f2580)
               #define FLASH_MEMORY_END 0x7DC0
           #else
               #error "Can't set  up flash memory end!"
@@ -116,9 +116,9 @@ auto tmp = 1;
       #endif
 
   extern "C" {
-  #include <sys/ioctl.h>
-  #include <sys/socket.h>
-  #include <sys/types.h>
+      #include <sys/ioctl.h>
+      #include <sys/socket.h>
+      #include <sys/types.h>
   }
   #endif
   ```
