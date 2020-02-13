@@ -313,15 +313,14 @@ for 'value-level' constructs (functions and variables). The advantage of
   static char constexpr path_separator = '/';
   ```
 
-- **Enumerators** should be prefixed with `e_` and follow otherwise the normal
-  variable naming.
+- **Enumerators** should follow the normal variable naming.
 
   ```cpp
   enum class Status {
-      e_error,
-      e_success,
-      e_idle,
-      e_in_progress
+      error,
+      success,
+      idle,
+      in_progress
   }
   ```
 
