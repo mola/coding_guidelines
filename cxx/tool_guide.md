@@ -144,8 +144,8 @@ libraries in order to analyze `#include` of source files to find
 > `#include` a header file that exports the declaration of that symbol.
 
 The main goal of the **include-what-you-use tool** is to remove superfluous
-`#includes`. It does this both by figuring out what `#includes` are not actually
-needed for the give file (both `.cpp` and `.hpp` files), and replacing
+`#includes`. It does this by figuring out which `#includes` are not actually
+needed for the given file (both `.cpp` and `.hpp` files), and by replacing
 `#includes` with **forward declarations** when possible.
 
 - Website: https://include-what-you-use.org/
