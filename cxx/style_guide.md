@@ -307,11 +307,10 @@ for 'value-level' constructs (functions and variables). The advantage of
   };
   ```
 
-- **Global variables** should be prefixed with `g_` and follow otherwise the
-  normal variable naming.
+- **Global / Static variables** should follow the normal variable naming.
 
   ```cpp
-  static char constexpr g_path_separator = '/';
+  static char constexpr path_separator = '/';
   ```
 
 - **Enumerators** should be prefixed with `e_` and follow otherwise the normal
