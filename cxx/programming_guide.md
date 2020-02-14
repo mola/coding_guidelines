@@ -106,7 +106,7 @@ compiler to optimize the code.
 - Use `constexpr` for values/functions that can be computed at compile time.
 
   ```cpp
-  static char constexpr g_path_separator = '/';
+  static char constexpr path_separator = '/';
   double constexpr z = calc(2); // if calc(2) is a constexpr function
   ```
 
@@ -457,22 +457,22 @@ think. This is because the **reference count** must be **atomic** and
   auto print_color(int color) -> void;
 
   // GOOD
-  enum class WebColor { e_red = 0xFF0000, e_green = 0x00FF00, e_blue = 0x0000FF };
-  enum class ProductInfo { e_red = 0, e_purple = 1, e_blue = 2 };
+  enum class WebColor { red = 0xFF0000, green = 0x00FF00, blue = 0x0000FF };
+  enum class ProductInfo { red = 0, purple = 1, blue = 2 };
 
-  auto webby = WebColor::e_blue;
+  auto webby = WebColor::blue;
   print_color(webby);  // Error: cannot convert WebColor to int.
-  print_color(ProductInfo::e_red);  // Error: cannot convert ProductInfo to int.
+  print_color(ProductInfo::red);  // Error: cannot convert ProductInfo to int.
 
   // BAD
-  enum WebColor { e_red = 0xFF0000, e_green = 0x00FF00, e_blue = 0x0000FF };
-  enum ProductInfo { e_red = 0, e_purple = 1, e_blue = 2 };
+  enum WebColor { red = 0xFF0000, green = 0x00FF00, blue = 0x0000FF };
+  enum ProductInfo { red = 0, purple = 1, blue = 2 };
 
-  auto webby = WebColor::e_blue;
+  auto webby = WebColor::blue;
 
   // clearly at least one of these calls is buggy.
   print_color(webby);
-  print_color(ProductInfo::e_blue);
+  print_color(ProductInfo::blue);
   ```
 
 - Use **literal suffixes** if it improves readability.
@@ -617,9 +617,9 @@ obeying scope, type and argument passing rules.
 
   // use:
   enum class Color {
-      e_red = 0,
-      e_blue = 1,
-      e_green = 2
+      red = 0,
+      blue = 1,
+      green = 2
   };
   ```
 
@@ -631,7 +631,7 @@ obeying scope, type and argument passing rules.
 
   // use:
   namespace my_project {
-  static double constexpr g_pi = 3.14;
+  static double constexpr pi = 3.14;
   } // namespace my_project
   ```
 
@@ -654,10 +654,10 @@ obeying scope, type and argument passing rules.
   auto send_text_with_newline(std::string const& msg) -> void;
 
   // alternative 2 - enumeration:
-  enum class NewLineDisposition { e_send_newline, e_no_newline };
+  enum class NewLineDisposition { send_newline, no_newline };
   auto send_text(std::string const& msg, NewLineDisposition flag) -> void;
 
-  send_text("Hello world", NewLineDisposition::e_send_newline);
+  send_text("Hello world", NewLineDisposition::send_newline);
   ```
 
 - Some good reads to the topic:
