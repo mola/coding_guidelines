@@ -73,6 +73,9 @@ the `CMakeLists.txt`.
 
   ```cmake
   function(main)
+      # unset module path to not get polluted from including projects
+      unset(CMAKE_MODULE_PATH)
+
       # global variables
       # -------------------------------------
       get_filename_component(${PROJECT_NAME}_top_level_workspace
