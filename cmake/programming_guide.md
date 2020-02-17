@@ -105,9 +105,6 @@ the `CMakeLists.txt`.
 
   ```cmake
   function(initialize_project)
-      # generate a compile_commands.json
-      set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
       # define cache variables
       # -------------------------------------
       set(${PROJECT_NAME}_enable_documentation OFF
@@ -153,10 +150,16 @@ the `CMakeLists.txt`.
   endfunction()
   ```
 
-<div class="alert alert-info">
-  The call to `project()` needs to occur outside of the `main()` function which
-  is a CMake restriction.
-</div>
+#### Scoping CMake Restrictions
+
+Not every function / option can be set inside a function to take effect. This is
+a restriction of CMake without a clear understandable reason.
+
+The following things need to be outside of a function:
+
+- `project()`
+- `set(CMAKE_EXPORT_COMPILE_COMMANDS ON)`
+- `enable_testing()`
 
 ### Think In Targets And Properties
 
