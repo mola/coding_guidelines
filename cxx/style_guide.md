@@ -1,18 +1,15 @@
----
-title: C++ Style Guide
-toc: true
----
-
 This page provides style guidelines for the C++ programming language.
 
-### Source Code Column Limit
+[[_TOC_]]
+
+# Source Code Column Limit
 
 The source code must not exceed **100 character per line**. This limit allows to
 have two splits open and still see the whole source code without resizing. The
 most used column width is 80 which is a little bit too short for C++ with
 lengthy types and function names.
 
-### Whitespace
+# Whitespace
 
 - Use **spaces** instead of tabs.
 - Use **4 spaces** for indentation and do not re-indent a whole source file if
@@ -55,7 +52,7 @@ lengthy types and function names.
   struct Foo { int x{0}; int y{1}; }
   ```
 
-#### Do Not Use Whitespace For Alignment
+## Do Not Use Whitespace For Alignment
 
 Idiomatic code should not use extra whitespace in the middle of a line to
 provide alignment.
@@ -80,7 +77,7 @@ auto y   = 0;
 auto tmp = 1;
 ```
 
-### Indentation
+# Indentation
 
 - In general, reduce indentation wherever possible.
 - **Do not** indent source code **inside** namespaces. This can avoid some
@@ -143,7 +140,7 @@ auto tmp = 1;
   }
   ```
 
-### Always Use Trailing Return Type
+# Always Use Trailing Return Type
 
 **Always** use **trailing return type** to be consistent with all use cases e.g.
 lambdas, templates where the return type depends on the argument type.
@@ -166,7 +163,7 @@ auto do_something() -> void {
 }
 ```
 
-### Opening Braces Always Go On The Same Line
+# Opening Braces Always Go On The Same Line
 
 Opening braces should **always** go on the **same line**. This reduces 'wasted'
 line because lines with only an opening brace do not help with the readability
@@ -195,7 +192,7 @@ auto bar() -> void {
 } // namespace foo
 ```
 
-### Comments
+# Comments
 
 - Avoid C style block comments (`/* ... */`), which have nesting problems.
 - Prefer C++ style comments (`//` for normal comments, `///` for documentation
@@ -245,7 +242,7 @@ auto bar() -> void {
   } // namespace foo
   ```
 
-#### Use Doxygen For Documentation Comments
+## Use Doxygen For Documentation Comments
 
 - Header files should **always** be documented **properly** with Doxygen
   comments. This helps other people to figure out the use of the interface
@@ -276,13 +273,13 @@ auto bar() -> void {
   auto is_valid(Foo foo) -> bool;
   ```
 
-### Naming Conventions
+# Naming Conventions
 
 Poorly-chosen names can mislead the reader and cause bugs. Pick names that match
 the semantics and role of the underlying entities, withing reason. Avoid
 abbreviations unless they are well known e.g from a protocol specification.
 
-#### General Conventions
+## General Conventions
 
 Use descriptive names, and be consistent in the style. In general, use
 `CamelCase` for 'type-level' constructs (classes and enums) and `snake_case`
@@ -374,7 +371,7 @@ for 'value-level' constructs (functions and variables). The advantage of
 > `b_tree_map`, but `PI_2` rather than `PI2`. Prefixes are not part of a word
 > and must stay separated.
 
-#### Variable/Function Prefixes
+## Variable/Function Prefixes
 
 - Simple boolean predicates should be prefixed with `is_` or another short
   question word, e.g. `is_empty`.
@@ -383,7 +380,7 @@ for 'value-level' constructs (functions and variables). The advantage of
   - Prefix `as_` has no costs and gives a view to the data, which is a no-op.
   - Prefix `to_` is expensive because it copies the data to a new type.
 
-#### Getter/Setter Methods
+## Getter/Setter Methods
 
 - **Getter methods** should **not** be prefixed with `get_`, instead just use
   the corresponding variable name.
@@ -405,7 +402,7 @@ for 'value-level' constructs (functions and variables). The advantage of
   }
   ```
 
-#### class/struct Keywords
+## class/struct Keywords
 
 In C++, the `class` and `struct` keywords can be used almost interchangeably.
 The only difference is in the default access scope. The `struct` keyword should
@@ -420,7 +417,7 @@ struct SomeData {
 };
 ```
 
-#### File Naming / Extensions
+## File Naming / Extensions
 
 - **File names** should be written lowercase and `snake_case`.
 - **User-generated** files should use `.cpp` and `.hpp` extensions, which are
@@ -428,7 +425,7 @@ struct SomeData {
 - **Tool-generated** files should use `.cxx` and `.hxx` extensions, which helps
   to differentiate them from normal files.
 
-#### Avoid Redundant Namespace/Filename Prefixes
+## Avoid Redundant Namespace/Filename Prefixes
 
 - Names of items within a namespace should not be prefixed with that namespace's
   name.
@@ -467,7 +464,7 @@ struct SomeData {
 This convention avoids stuttering (like io::IoError). Library clients can rename
 the namespace and define the include style to avoid clashes.
 
-### Includes
+# Includes
 
 - Use double quotes for *local header* and angle brackets for *system header*.
 - Preferred **#include** order:
@@ -493,7 +490,7 @@ the namespace and define the include style to avoid clashes.
 - **Do not** include *internal* header in public module header files. Only
   include them in the implementation file (.cpp).
 
-#### Include Guards
+## Include Guards
 
 Header files must contain a **distinctly-named** include guard to avoid problems
 with including the same header multiple times and to prevent conflicts with
@@ -503,7 +500,7 @@ quasi-standard across many compilers. It is short and makes the intent clear.
 
 - Use `#pragma once` instead of C-style header guards.
 
-### Specifier Placement
+# Specifier Placement
 
 - Put `*` and `&` by the type rather than the variable name.
 
@@ -573,7 +570,7 @@ quasi-standard across many compilers. It is short and makes the intent clear.
   };
   ```
 
-### Format Lambdas Like Blocks Of Code
+# Format Lambdas Like Blocks Of Code
 
 - Try to format lambdas like normal blocks of code.
 - If useful define the return type of the lambda with the
@@ -585,7 +582,7 @@ quasi-standard across many compilers. It is short and makes the intent clear.
   };
   ```
 
-### Sample Of Formatted Source Code
+# Sample Of Formatted Source Code
 
 The source file can be found under [cxx/assets/clang\_format\_sample.cpp](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/clang_format_sample.cpp).
 

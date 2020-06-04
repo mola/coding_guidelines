@@ -1,16 +1,13 @@
----
-title: CMake Style Guide
-toc: true
----
-
 This page provides style guidelines for the CMake programming language.
 
-### Source Code Column Limit
+[[_TOC_]]
+
+# Source Code Column Limit
 
 The source code must not exceed **100 character per line**. This limit allows to
 have two splits open and still see the whole source code without resizing.
 
-### Whitespace
+# Whitespace
 
 - Use **spaces** instead of tabs.
 - Use **4 spaces** for indentation and do not re-indent a whole source file if
@@ -36,7 +33,7 @@ have two splits open and still see the whole source code without resizing.
   endif ()
   ```
 
-#### Do Not Use Whitespace For Alignment
+## Do Not Use Whitespace For Alignment
 
 Idiomatic code should not use extra whitespace in the middle of a line to
 provide alignment.
@@ -51,7 +48,7 @@ set(meta_project_name        "sample_project")
 set(meta_project_description "description for sample_project")
 ```
 
-### Indentation
+# Indentation
 
 - In general, reduce indentation wherever possible.
 - **Indent** values **according to** the properties they belong, as this helps
@@ -83,7 +80,7 @@ set(meta_project_description "description for sample_project")
   )
   ```
 
-### Rules Of Thumb
+# Rules Of Thumb
 
 - On multiline commands **put** the closing parenthesis on a **separate line**
   and align it with the command.
@@ -152,7 +149,7 @@ set(meta_project_description "description for sample_project")
   set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/cmake")
   ```
 
-#### Quotes
+## Quotes
 
 - **Always** use quotes around variables that represent a string.
 
@@ -177,7 +174,7 @@ set(meta_project_description "description for sample_project")
 - For more information on 'When to quote variables' see
   https://stackoverflow.com/questions/35847655/when-should-i-quote-variables/35853080#35853080
 
-#### Conditions
+## Conditions
 
 - Use `if(DEFINED <var>)` to check if a variable is set.
 
@@ -195,7 +192,7 @@ set(meta_project_description "description for sample_project")
   endif()
   ```
 
-#### Use Variable For Target
+## Use Variable For Target
 
 To make the CMake code more readable and less error-prone, on later target name
 related changes, a **separated variable** should be used to **define a target
@@ -217,7 +214,7 @@ add_library(foo::foo ALIAS foo)
 target_source(foo PUBLIC foo.hpp PRIVATE foo.cpp)
 ```
 
-### Naming Conventions
+# Naming Conventions
 
 Poorly-chosen names can mislead the reader and cause bugs. Pick names that match
 the semantics and role of the underlying entities, withing reason. Avoid
@@ -287,7 +284,7 @@ abbreviations unless they are well known e.g from a protocol specification.
   git_revision_description.cmake
   ```
 
-### Comments
+# Comments
 
 - CMake files should **always** be documented **properly**.
 - Add a **describing comment** at the **beginning** of a module file e.g. what

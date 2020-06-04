@@ -1,11 +1,8 @@
----
-title: C++ Programming Guide
-toc: true
----
-
 This page provides programming guidelines for the C++ programming language.
 
-### Compiler Issues
+[[_TOC_]]
+
+# Compiler Issues
 
 Start with very strict warning settings from the beginning. Trying to raise the
 warning level after the project is underway can be painful. Also consider using
@@ -21,7 +18,7 @@ the **treat warnings as errors** settings, at least for the CI/CD setup.
 - **Use every available and reasonable set of warning options and treat these
   compiler warnings like errors.**
 
-### Portable Code
+# Portable Code
 
 In almost all cases, it is possible and within reason to write completely
 portable code. If there are cases where it isn't possible to write portable
@@ -29,7 +26,7 @@ code, isolate it behind a well defined and well documented interface.
 
 - Try to write your code **as portable as possible**.
 
-### Think Immutable
+# Think Immutable
 
 By default, every object in C++ is mutable, which means it could change anytime.
 But race conditions can not occur on constants and it is easier to reason about
@@ -40,7 +37,7 @@ compiler to optimize the code.
   non-const only when there is a need to change their value.
 - Prevents accidental or hard-to-notice change of values.
 
-#### Const As Much As Possible
+## Const As Much As Possible
 
 - Tell the compiler with `const` that a variable or method is immutable.
 - Use const ref (`const&`) to prevent the compiler from copying data
@@ -110,14 +107,14 @@ compiler to optimize the code.
   double constexpr z = calc(2); // if calc(2) is a constexpr function
   ```
 
-#### Const Ref Pitfall For Simple Types
+## Const Ref Pitfall For Simple Types
 
 Passing and returning by reference leads to pointer operations instead by
 much faster passing values in processor registers.
 
 - Do not pass and return simple types by const ref.
 
-#### Reduce Moves, Copies And Reassignments
+## Reduce Moves, Copies And Reassignments
 
 - Reduce temporary object, which will prevent the compiler from performing a
   move operation.
@@ -181,9 +178,9 @@ much faster passing values in processor registers.
 
   - Benchmark: http://quick-bench.com/IJoIbgTUqGyiyMcRhKGiXCwhNBQ
 
-### Classes
+# Classes
 
-#### Default Values With Brace Initialization
+## Default Values With Brace Initialization
 
 - This ensures that no constructor ever forgets to initialize a member object.
   - Typical source of undefined behavior bugs which are extremely hard to find.
@@ -234,7 +231,7 @@ much faster passing values in processor registers.
   };
   ```
 
-#### Initializer List
+## Initializer List
 
 - Performance of an initializer list is the same as manual initialization.
 - There is a performance gain for object which are not
@@ -266,7 +263,7 @@ much faster passing values in processor registers.
   };
   ```
 
-#### Single Parameter Constructors
+## Single Parameter Constructors
 
 Single parameter constructors can be applied at compile time to automatically
 convert between types. This should be avoided in general because they can add to
@@ -289,7 +286,7 @@ accidental runtime overhead and unintended conversion.
   };
   ```
 
-#### Conversion Operators
+## Conversion Operators
 
 Similarly to single parameter constructors, conversion operations can be called
 by the compiler and introduce unexpected overhead.
@@ -312,7 +309,7 @@ by the compiler and introduce unexpected overhead.
   };
   ```
 
-#### Rule Of Five
+## Rule Of Five
 
 - The **special member function** are the default constructor, copy/move
   constructor, copy/move assignment operator and destructor.
@@ -344,7 +341,7 @@ by the compiler and introduce unexpected overhead.
   };
   ```
 
-#### Use Copy-And-Swap Idiom
+## Use Copy-And-Swap Idiom
 
 The copy-and-swap idiom is the solution, and elegantly assists the assignment
 operator in achieving two things: avoiding code duplication, and providing a
@@ -389,7 +386,7 @@ private:
 For more detailed informations see the following stackoverflow post:
 https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 
-### Pointer
+# Pointer
 
 It is best to avoid using pointers as much as possible. The use of pointers can
 lead to confusion of ownership which can directly or indirectly lead to memory
@@ -406,14 +403,14 @@ Consider the following order for pointers:
   - Useful for non owning access where the lifetime of the pointer is guaranteed
   to outlive the object.
 
-#### Avoid Raw Memory Access
+## Avoid Raw Memory Access
 
 Raw memory access, allocation and deallocation, are difficult to get correct
 without risking memory errors and leaks.
 
 - **Avoid raw memory** and use **smart pointer** instead.
 
-#### Prefer `std::unique_ptr`
+## Prefer `std::unique_ptr`
 
 The `std::unique_ptr` does not need to keep track of its copies because it is
 not copyable. This makes it more efficient than the `std::shared_ptr`.
@@ -428,7 +425,7 @@ not copyable. This makes it more efficient than the `std::shared_ptr`.
   auto shared_foo = std::shared_ptr<FooInterface>{factory()};
   ```
 
-#### Avoid `std::shared_ptr` Copies
+## Avoid `std::shared_ptr` Copies
 
 Objects of type `std::shared_ptr` are much more expensive to copy than one would
 think. This is because the **reference count** must be **atomic** and
@@ -436,7 +433,7 @@ think. This is because the **reference count** must be **atomic** and
 
 - Avoid temporaries and too many copies of objects.
 
-### Rules Of Thumb
+# Rules Of Thumb
 
 - **Simplify the code** as it is cleaner and easier to read.
 - **Limit variable scope** and declare them as late as possible.
@@ -484,7 +481,7 @@ think. This is because the **reference count** must be **atomic** and
   auto q = 0b0000'1111'0000'0000;
   ```
 
-#### Use `noexcept`
+## Use `noexcept`
 
 If an exception is not supposed to be thrown, the program cannot be assumed to
 cope with the error and should be terminated as soon as possible. Declaring a
@@ -496,7 +493,7 @@ execution paths. It also speeds up the exit after failure.
 > NOTE: Default constructors, destructors, move operations, and `swap` functions
 > should never throw. Mark them `noexcept`.
 
-#### Use `auto` Keyword
+## Use `auto` Keyword
 
 Declaring variables using `auto`, whether or not committing to a type is wanted,
 offers advantages for correctness, performance, maintainability, and robustness,
@@ -535,7 +532,7 @@ as well as typing convenience.
   - https://herbsutter.com/2013/08/12/gotw-94-solution-aaa-style-almost-always-auto/
   - https://www.fluentcpp.com/2018/09/28/auto-stick-changing-style/
 
-#### Use C++-style Casts
+## Use C++-style Casts
 
 - **Always** use **C++\-style casts** and never use C-style casts.
 - C++\-style casts allow more compiler checks and are considerably safer.
@@ -552,7 +549,7 @@ as well as typing convenience.
   auto i = (int)x;
   ```
 
-#### Prefer Pre-Increment To Post-Increment
+## Prefer Pre-Increment To Post-Increment
 
 The semantics of post-increment include making a copy of the value being
 incremented, returning it, and then pre-incrementing the 'work value'. This can
@@ -560,7 +557,7 @@ be a huge issue for iterators.
 
 - Prefer pre-increment (`++y`) to post-increment (`y++`).
 
-#### Difference Between Char And String
+## Difference Between Char And String
 
 Single characters should use single quotes instead of double quotes. Double
 quote characters have to be parsed by the compiler as a `char const*` which has
@@ -576,7 +573,7 @@ std::cout << message() << '\n';
 std::cout << message() << "\n";
 ```
 
-#### Use Early Exits
+## Use Early Exits
 
 - Improves readability and reduces indentations.
 - Reduces temporary object, which would be needed for a late exit.
@@ -598,7 +595,7 @@ auto do_something(Instruction const& item) -> int
 }
 ```
 
-#### Avoid Macros
+## Avoid Macros
 
 Compiler definitions and macros are replaced/removed during preprocessing before
 the compiler is ever run. This can make debugging very difficult because the
@@ -635,7 +632,7 @@ obeying scope, type and argument passing rules.
   } // namespace my_project
   ```
 
-#### Avoid Boolean Parameters
+## Avoid Boolean Parameters
 
 - They do not provide any additional meaning while reading the code.
 - Either create a **separate function** or pass an **enumeration** that makes
@@ -665,7 +662,7 @@ obeying scope, type and argument passing rules.
   - https://www.drdobbs.com/conversationstruth-or-consequences/184403845
   - https://blog.codinghorror.com/avoiding-booleans/
 
-#### Avoid `<iostream>`
+## Avoid `<iostream>`
 
 - Avoid `#include <iostream>` if possible, because many common implementations
   transparently inject a static constructor into every translation unit that
@@ -675,7 +672,7 @@ obeying scope, type and argument passing rules.
 - Alternative to `std::endl` without a flush: **End string with** `'\n'`.
   - Use `std::flush` if a flush is required.
 
-#### Never Use `std::bind`
+## Never Use `std::bind`
 
 - `std::bind` is almost always way more overhead (both compile time and runtime)
   than needed.
@@ -693,7 +690,7 @@ obeying scope, type and argument passing rules.
   f("world");
   ```
 
-#### Never Use `using namespace` In Header Files
+## Never Use `using namespace` In Header Files
 
 - Pollutes the namespace of any source file that `#include`s the header.
 - It could lead to namespace clashes, name collisions and decrease portability.
@@ -701,7 +698,7 @@ obeying scope, type and argument passing rules.
 - Use the `using namespace XXX` directive only in **function scope** if
   necessary.
 
-### Consider Your Return Types
+# Consider Your Return Types
 
 - Returning by **reference** (`&` or `const&`) can have significant performance
   savings when the normal use of the returned value is only for observation.
@@ -711,7 +708,7 @@ obeying scope, type and argument passing rules.
   `*`.
 - **Temporaries** and **local values** should always be returned by value.
 
-### Includes And Forward Declarations
+# Includes And Forward Declarations
 
 Be aware that there are many cases where the full definition of a class is not
 required. If a **pointer** of **reference** to a class is used, the header file
@@ -737,7 +734,7 @@ times and result in fewer files needing recompilation when a header changes.
 - Tool which can help:
   https://github.com/include-what-you-use/include-what-you-use
 
-### Performance And Optimization
+# Performance And Optimization
 
 - **Do not** optimize **without reason**. If there is not need for optimization,
   the main result of the effort will be more errors and higher maintenance
@@ -783,9 +780,9 @@ times and result in fewer files needing recompilation when a header changes.
   }
   ```
 
-### Loop Pitfalls
+# Loop Pitfalls
 
-#### Beware Of Unnecessary Copies
+## Beware Of Unnecessary Copies
 
 The convenience of `auto` makes it easy to forget that its default behavior is a
 copy. Particularly in ranged-based `for` loops, careless copies are expensive.
@@ -799,7 +796,7 @@ for (auto& value : container) { value.change(); }
 for (auto value : container) { value.change(); save_somewhere(value); }
 ```
 
-#### Beware Of `end()` Evaluation Every Time
+## Beware Of `end()` Evaluation Every Time
 
 In cases where range-based `for` loops can not be used and it is necessary to
 write an explicit iterator-based loop, pay close attention to whether `end()` is
@@ -817,9 +814,9 @@ for (auto i = Foo.begin(), e = Foo.end(); i != e; ++i) { ... }
 for (auto i = Foo.begin(); i != Foo.end(); ++i) { ... }
 ```
 
-### Use C++17 Language Features If Possible
+# Use C++17 Language Features If Possible
 
-#### Constexpr Lambda
+## Constexpr Lambda
 
 ```cpp
 auto identity = [](int n) constexpr { return n; };
@@ -836,7 +833,7 @@ static_assert(add(1, 2)() == 3);
 
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#constexpr-lambda
 
-#### Nested Namespaces
+## Nested Namespaces
 
 ```cpp
 namespace A::B::C {
@@ -846,7 +843,7 @@ namespace A::B::C {
 
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#nested-namespaces
 
-#### Structured Bindings
+## Structured Bindings
 
 ```cpp
 using Coordinate = std::pair<int, int>;
@@ -862,7 +859,7 @@ y; // == 0
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#structured-bindings
 - See https://en.cppreference.com/w/cpp/language/structured_binding
 
-#### Statements with Initializer
+## Statements with Initializer
 
 ```cpp
 if (std::lock_guard<std::mutex> lk(mx); v.empty()) {
@@ -873,7 +870,7 @@ if (std::lock_guard<std::mutex> lk(mx); v.empty()) {
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#selection-statements-with-initializer
 - See https://en.cppreference.com/w/cpp/language/if
 
-#### New Standard Attributes
+## New Standard Attributes
 
 ```cpp
 // Will warn if return of foo() is ignored
@@ -895,7 +892,7 @@ auto main() -> int {
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#new-standard-attributes
 - See https://en.cppreference.com/w/cpp/language/attributes
 
-#### Non-Owning Reference To String - `std::string_view`
+## Non-Owning Reference To String - `std::string_view`
 
 ```cpp
 // regular strings
@@ -910,7 +907,7 @@ std::string_view array_v(array, std::size(array));
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdstring_view
 - See https://en.cppreference.com/w/cpp/string/basic_string_view
 
-#### Standard For Filesystem Interaction - `std::filesystem`
+## Standard For Filesystem Interaction - `std::filesystem`
 
 ```cpp
 auto const bigFilePath {"bigFileToCopy"};
@@ -928,7 +925,7 @@ if (std::filesystem::exists(bigFilePath)) {
 - See https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md#stdfilesystem
 - See https://en.cppreference.com/w/cpp/filesystem
 
-#### Representing Data As Byte - `std::byte`
+## Representing Data As Byte - `std::byte`
 
 ```cpp
 std::byte a {0};

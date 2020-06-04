@@ -1,11 +1,8 @@
----
-title: CMake Programming Guide
-toc: true
----
-
 This page provides programming guidelines for the CMake programming language.
 
-### Minimum CMake Version
+[[_TOC_]]
+
+# Minimum CMake Version
 
 - **Prefer** the **latest** version of CMake.
 - **Do not** target any CMake version less than 3.0, as earlier versions of
@@ -13,13 +10,13 @@ This page provides programming guidelines for the CMake programming language.
 - The `cmake_minimum_required_version()` **should** reflect the used CMake
   version and **should** be tested via CI/CD.
 
-### Treat CMake Code Like Production Code
+# Treat CMake Code Like Production Code
 
 The 'CMake language' is a programming language. Therefore, it should use the
 same principles as the rest of the codebase. This means it should be written in
 a simple, structured, documented and readable form.
 
-### Scripted CMake
+# Scripted CMake
 
 If the project is being **scripted** (e.g. in CI/CD), invoke the **configure
 step** via `cmake -S <source-dir> -B <build-dir>`, the **build step** via
@@ -27,7 +24,7 @@ step** via `cmake -S <source-dir> -B <build-dir>`, the **build step** via
 `cmake --install <build-dir>`. This allows the script to easily switch between
 generator types without having to be modified.
 
-### Scoping Issue
+# Scoping Issue
 
 CMake does not provide namespaces for variables. Furthermore, all variables from
 the parent scope will be copied into the child scope (e.g. functions,
@@ -153,7 +150,7 @@ the `CMakeLists.txt`.
   endfunction()
   ```
 
-#### Scoping CMake Restrictions
+## Scoping CMake Restrictions
 
 Not every function / option can be set inside a function to take effect. This is
 a restriction of CMake without a clear understandable reason.
@@ -164,7 +161,7 @@ The following things need to be outside of a function:
 - `set(CMAKE_EXPORT_COMPILE_COMMANDS ON)`
 - `enable_testing()`
 
-### Think In Targets And Properties
+# Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
 the system at the target level. The developers do not need to understand the
@@ -194,7 +191,7 @@ differently to the rest of the project without polluting the global scope.
   add_library(bar::bar ALIAS bar)
   ```
 
-#### Library Targets
+## Library Targets
 
 - When naming targets of libraries, **do not** start or end the name with `lib`.
 
@@ -212,7 +209,7 @@ differently to the rest of the project without polluting the global scope.
 > variable can be used to change the default (`STATIC`) in on place instead of
 > having to modify every call to `add_library()`.
 
-### Functions And Macros
+# Functions And Macros
 
 **Prefer function** over **macros** whenever reasonable. In addition to
 directory-base scope, CMake function have their own scope. This means variables
@@ -222,7 +219,7 @@ macros.
 The most important part is to combine **common functionality** into clearly
 **documented** functions or macros.
 
-#### Argument Handling
+## Argument Handling
 
 **Do not** reinvent the wheel for argument handling. Use `cmake_parse_arguments`
 as this is the recommended way to handle complex argument-based behaviors or
@@ -235,7 +232,7 @@ always be provided, even if not relevant.
 See https://cmake.org/cmake/help/latest/command/cmake_parse_arguments.html for
 more information regarding the `cmake_parse_arguments` command.
 
-### Avoid Message Pollution
+# Avoid Message Pollution
 
 - **Do not** print every information with `STATUS` or `NOTICE` if the
   information only serves as a debug message (e.g. file entries). Normal users
@@ -252,7 +249,7 @@ more information regarding the `cmake_parse_arguments` command.
 
 - See https://cmake.org/cmake/help/latest/command/message.html
 
-### Do Not Use `file(GLOB)`
+# Do Not Use `file(GLOB)`
 
 CMake is a build system generator, not a build system. It evaluates the `GLOB`
 expression to a list of files when generating the build system. The build system
@@ -265,7 +262,7 @@ that something changed on the file system.
   work **reliably** on all generators. Even if it works reliably, there is still
   a cost to perform the check on every rebuild.
 
-### Do Not `include()` With File Path
+# Do Not `include()` With File Path
 
 To reduce repetition and to simplify the `include()` call **append** the file
 path to the `CMAKE_MODULE_PATH` variable. Once the file path is appended,
@@ -286,7 +283,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/analyzer/analyzer_check.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/package_helper/threads.cmake)
 ```
 
-### Use Project-Relative Variables
+# Use Project-Relative Variables
 
 There are various scenarios where paths relative to a location in the source or
 build directory need to be constructed. Variables like `CMAKE_SOURCE_DIR` or
@@ -299,7 +296,7 @@ equivalents are more appropriate variables to use.
 - **Prefer** project specific variables (`PROJECT_SOURCE_DIR` /
   `PROJECT_BINARY_DIR` / etc.) over `CMAKE_SOURCE_DIR` / `CMAKE_BINARY_DIR`.
 
-### Rules Of Thumb
+# Rules Of Thumb
 
 - Use **out-of-source** builds as this helps to keep the generated files
   separated from the file which should be tracked by git.
@@ -323,14 +320,14 @@ equivalents are more appropriate variables to use.
   **optional parts** of the build instead of encoding the logic in build scripts
   outside of CMake.
 
-### Project Layout
+# Project Layout
 
 <div class="alert alert-info">
   The following section is quiet controversial as there is no right or wrong.
   The section just shows my personal preference and can be adjusted if wanted.
 </div>
 
-#### Common Top Level Subdirectories
+## Common Top Level Subdirectories
 
 - **cmake** folder: Contains CMake helper scripts and template files which will
   be used in the context of the CMake scripts.
@@ -355,7 +352,7 @@ equivalents are more appropriate variables to use.
 - **packaging**: folder: Contains files which are only relevant for the
   packaging e.g. resource files, installer images, etc.
 
-#### Target Sources And The `src` Folder
+## Target Sources And The `src` Folder
 
 When the number of source files increases, having them all in the one directory
 can make them more difficult to work with. This is generally addressed by
@@ -406,7 +403,7 @@ target_compile_definitions(${target_foo}
 > **Always** add header files to the `target_sources()` call. This is needed
 > because some IDE's will not show the header files otherwise.
 
-#### Example For A Executable Project
+## Example For A Executable Project
 
 ```sh
 # example layout of a executable project
@@ -445,7 +442,7 @@ target_compile_definitions(${target_foo}
 └── CMakeLists.txt
 ```
 
-#### Example For A Library Project
+## Example For A Library Project
 
 ```sh
 # example layout of a library project

@@ -1,19 +1,16 @@
----
-title: C++ Tool Guide
-toc: true
----
-
 This page provides tools with can and should be used to improve the C++ source
 code.
 
-### Compiler
+[[_TOC_]]
+
+# Compiler
 
 It is advised to compile and test the source code with **multiple** different
 compilers. Each compiler implements the standard slightly differently and
 supporting multiple compiler will help ensure the most portable, most reliable
 code.
 
-#### Clang / GCC Compiler Flags
+## Clang / GCC Compiler Flags
 
 - `-pedantic` issues warnings whenever there are compiler extensions
   non-compliant to the ISO C or C++ standard.
@@ -72,7 +69,7 @@ code.
   provided documentation e.g. parameter mismatch, missing parameter
   documentation, etc.
 
-#### MSVC Compiler Flags
+## MSVC Compiler Flags
 
 - `/permissive-` specifies standard conformance mode to the compiler.
 - `/W4` turns on a lot of reasonable warnings.
@@ -82,13 +79,13 @@ code.
   may cause unexpected runtime behavior.
 - `/w14928` warns on illegal copy-initialization.
 
-#### Treat Warnings As Errors
+## Treat Warnings As Errors
 
 To enforce the compiler flags it is advised to treat the warnings given by the
 compilers as errors. Use `-Werror` with Clang/GCC and `/Wx` with MSVC which will
 turn all warnings into errors.
 
-#### Sanitizer
+## Sanitizer
 
 These tools provide runtime code analysis that can detect memory leaks, race
 conditions, and other associated problems. The sanitizers are built into the
@@ -101,9 +98,9 @@ conditions, and other associated problems. The sanitizers are built into the
 - [Clang DataFlowSanitizer](https://clang.llvm.org/docs/DataFlowSanitizer.html)
 - [Clang LeakSanitizer](https://clang.llvm.org/docs/LeakSanitizer.html)
 
-### Linker
+# Linker
 
-#### GNU Gold Linker
+## GNU Gold Linker
 
 The **GNU gold** linker was designed as an ELF-specific linker, with the
 intention of producing a more maintainable and faster linker than BFD **ld**
@@ -112,7 +109,7 @@ intention of producing a more maintainable and faster linker than BFD **ld**
 > To use the **GNU gold** linker add the following flag to your compiler call
 > `-fuse-ld=gold`.
 
-#### LLD
+## LLD
 
 **LLD** is a linker from the LLVM project that is a drop-in replacement for
 system linkers and runs much faster than them.
@@ -121,7 +118,7 @@ system linkers and runs much faster than them.
 
 - Website: https://lld.llvm.org/
 
-### LLVM-based Tools
+# LLVM-based Tools
 
 LLVM-based tools work best with a build system that can output a compile
 commands database. For other build systems there is
@@ -133,7 +130,7 @@ system and generate a compile command database.
 $ cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
-#### Include-What-You-Use
+## Include-What-You-Use
 
 The **include-what-you-use tool** is a program that can be built with the clang
 libraries in order to analyze `#include` of source files to find
@@ -150,7 +147,7 @@ needed for the given file (both `.cpp` and `.hpp` files), and by replacing
 
 - Website: https://include-what-you-use.org/
 
-#### Clang-Format
+## Clang-Format
 
 The **clang-format** standalone tool is built on top of **LibFormat**, which is
 a library that implements automatic source code formatting based on **Clang**.
@@ -179,7 +176,7 @@ The **clang-format** tool **can not** help with:
 > The clang-format config file which conforms the guidelines can be found under
 > [cxx/assets/.clang-format](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-format).
 
-#### Clang-Tidy
+## Clang-Tidy
 
 **clang-tidy** is a clang-based C++ *linter* tool. Its purpose is to provide an
 extensible framework for diagnosing and fixing typical programming errors, like
@@ -211,7 +208,7 @@ The **clang-tidy** tool **can not** help with:
 > The clang-tidy config file which conforms the guidelines can be found under
 > [cxx/assets/.clang-tidy](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-tidy).
 
-#### Clazy
+## Clazy
 
 **clazy** is a Qt oriented code checker based on the clang framework. It has
 more than 50 Qt related compiler warnings, ranging from unneeded memory
@@ -219,7 +216,7 @@ allocations to misusage of the API.
 
 - Website: https://github.com/KDE/clazy
 
-### Cppcheck
+# Cppcheck
 
 **Cppcheck** is a static analysis tool for C and C++ code. It provides unique
 code analysis to detect bugs and focuses on detecting undefined behavior and
@@ -227,7 +224,7 @@ dangerous coding constructs.
 
 - Website: http://cppcheck.sourceforge.net/
 
-### rr
+# rr
 
 **rr** is a lightweight tool for recording, replaying and debugging execution of
 applications (trees of processes and threads). Record a failure once, then debug
@@ -236,14 +233,14 @@ replayed every time.
 
 - Website: https://rr-project.org/
 
-### Heaptrack
+# Heaptrack
 
 **heaptrack** is a heap memory profiler for Linux. It traces all memory
 allocations and annotates these events with stack traces.
 
 - Website: https://github.com/KDE/heaptrack
 
-### Valgrind
+# Valgrind
 
 **Valgrind** is an instrumentation framework for building dynamic analysis
 tools. There are **Valgrind tools** that can automatically detect many memory
@@ -252,7 +249,7 @@ on various **Unix** platforms.
 
 - Website: https://www.valgrind.org/
 
-### Dr. Memory
+# Dr. Memory
 
 **Dr. Memory** is a memory monitoring tool capable of identifying memory-related
 programming errors such as accesses of uninitialized/unaddressable/freed memory.
@@ -264,7 +261,7 @@ programming errors such as accesses of uninitialized/unaddressable/freed memory.
 
 - Website: https://www.drmemory.org/
 
-### Testing
+# Testing
 
 **CMake** has a built in framework for executing test. The **ctest** executable
 is the CMake test driver program. It can run the test added with `add_test()`
@@ -281,7 +278,7 @@ organizing the tests. A few well known test frameworks:
 - [CppUTest](https://github.com/cpputest/cpputest)
 - [Boost.Test](https://www.boost.org/doc/libs/1_72_0/libs/test/doc/html/index.html)
 
-#### Code Coverage Analysis
+## Code Coverage Analysis
 
 A coverage analysis tool shall be run when tests are executed to make sure the
 entire application is being tested.
