@@ -174,7 +174,7 @@ The **clang-format** tool **can not** help with:
 - Comment Style
 
 > The clang-format config file which conforms the guidelines can be found under
-> [cxx/assets/.clang-format](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-format).
+> [assets/.clang-format](assets/.clang-format).
 
 ## Clang-Tidy
 
@@ -206,7 +206,7 @@ The **clang-tidy** tool **can not** help with:
 - Comment Style
 
 > The clang-tidy config file which conforms the guidelines can be found under
-> [cxx/assets/.clang-tidy](https://git.sr.ht/~sblumentritt/coding_guidelines/tree/master/cxx/assets/.clang-tidy).
+> [assets/.clang-tidy](assets/.clang-tidy).
 
 ## Clazy
 
