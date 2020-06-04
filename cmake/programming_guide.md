@@ -322,11 +322,6 @@ equivalents are more appropriate variables to use.
 
 # Project Layout
 
-<div class="alert alert-info">
-  The following section is quiet controversial as there is no right or wrong.
-  The section just shows my personal preference and can be adjusted if wanted.
-</div>
-
 ## Common Top Level Subdirectories
 
 - **cmake** folder: Contains CMake helper scripts and template files which will
