@@ -385,12 +385,15 @@ for 'value-level' constructs (functions and variables). The advantage of
 
 ## Variable/Function Prefixes
 
-- Simple boolean predicates should be prefixed with `is_` or another short
-  question word, e.g. `is_empty`.
-- Converter functions should be prefixed with `as_` / `to_` / `from_` depending
-  on the cost and direction, e.g. `as_bytes` / `to_string` / `from_uint`.
+- Simple boolean predicates should be prefixed with `is_` / `has_` or another
+  short question word, e.g. `is_empty` / `has_bytes`.
+- Converter functions should be prefixed with `as_` / `to_` / `from_` / `into_`
+  depending on the cost and direction, e.g. `as_bytes` / `to_string` /
+  `from_uint` / `into_raw_fd`.
   - Prefix `as_` has no costs and gives a view to the data, which is a no-op.
   - Prefix `to_` is expensive because it copies the data to a new type.
+  - Prefix `from_` conversion from another type.
+  - Prefix `into_` potentially expensive conversion which consumes the data.
 
 ## Getter/Setter Methods
 
