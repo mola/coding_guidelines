@@ -143,7 +143,7 @@ auto tmp = 1;
 # Always Use Trailing Return Type
 
 **Always** use **trailing return type** to be consistent with all use cases e.g.
-lambdas, templates where the return type depends on the argument type.
+lambdas / templates where the return type depends on the argument type.
 
 ```cpp
 // requires 'trailing return type' to compile/work
@@ -230,8 +230,8 @@ auto bar() -> void {
   }
   ```
 
-- Add a comment to the **end of a namespace** which helps the readability and
-  makes it easier to find out which brace closes a namespace.
+- Add a comment to the **end of a namespace** which helps to improve the
+  readability as it is easier to find out which brace closes a namespace.
 
   ```cpp
   namespace foo {
