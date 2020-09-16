@@ -68,6 +68,19 @@ code.
 - `-Wdocumentation` turns on compiler flags which warn about problems with the
   provided documentation e.g. parameter mismatch, missing parameter
   documentation, etc.
+- `-Wimplicit-fallthrough` warns on unannotated fall-through between switch
+  labels.
+- `-Wchar-subscripts` warns when array subscript is of type 'char'.
+- `-Wmisleading-indentation` warns when a statement is not part of the previous
+  if/else/for/while but still indented.
+- `-Wmissing-braces` suggests braces around initialization of subobject.
+- `-Wpessimizing-move` warns for moving a temporary object which prevents copy
+  elision.
+- `-Wdeprecated-copy` warns that implicit copy is deprecated because an object
+  has an user-declared copy.
+- `-Wredundant-move` warns about redundant move in return statement.
+- `-Wtype-limits` warns that comparison is always true or always false due to
+  the limited range.
 
 ## MSVC Compiler Flags
 
