@@ -304,6 +304,18 @@ for 'value-level' constructs (functions and variables). The advantage of
   };
   ```
 
+- **Function arguments with the same name as public member** should be prefixed
+  with `a_` (as in argument).
+
+  ```cpp
+  struct Dimension {
+    int width;
+    int height;
+
+    Dimension(int a_width, int a_height) : width{a_width}, height{a_height} {}
+  };
+  ```
+
 - **Global / Static variables** should follow the normal variable naming.
 
   ```cpp
