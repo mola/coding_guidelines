@@ -420,15 +420,51 @@ for 'value-level' constructs (functions and variables). The advantage of
 ## class/struct Keywords
 
 In C++, the `class` and `struct` keywords can be used almost interchangeably.
-The only difference is in the default access scope. The `struct` keyword should
-be used for POD (Plain Old Data), meaning a data structure which does not
-contain any logic on his own.
+From a language perspective `class` and `struct` differ only in the default
+visibility of their members.
+
+Most guidelines define that the `struct` keyword should only be used for POD
+(Plain Old Data), meaning a data structure which does not contain any logic on
+his own.
 
 ```cpp
 struct SomeData {
     std::uint32_t address;
     std::uint16_t reserved;
     std::uint16_t count;
+};
+```
+
+Personally the `class` keyword should be avoided and only be used in conjunction
+with the `enum` keyword. As the preferred scope order is `public` -> `protected`
+-> `private` and most of the time an inheritance is `public` the `class` keyword
+usage needs more writing in total which can be avoided with the `struct`
+keyword.
+
+```cpp
+struct Derived : Base {
+  Derived(int x, int y);
+  ~Derived() = default;
+
+  auto do_something() -> void;
+
+private:
+  int m_x;
+  int m_y;
+};
+
+// vs.
+
+class Derived : public Base {
+public:
+  Derived(int x, int y);
+  ~Derived() = default;
+
+  auto do_something() -> void;
+
+private:
+  int m_x;
+  int m_y;
 };
 ```
 
