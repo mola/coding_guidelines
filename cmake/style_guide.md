@@ -262,7 +262,7 @@ abbreviations unless they are well known e.g from a protocol specification.
   ```cmake
   project("libfoo")
 
-  set(libfoo_enable_tests OFF
+  set(${PROJECT_NAME}_enable_tests OFF
     CACHE
         BOOL "Enable tests which can be run with 'ctest' ..."
     FORCE
