@@ -383,7 +383,7 @@ private:
 };
 ```
 
-For more detailed informations see the following stackoverflow post:
+For more detailed information see the following stackoverflow post:
 https://stackoverflow.com/questions/3279543/what-is-the-copy-and-swap-idiom
 
 # Pointer

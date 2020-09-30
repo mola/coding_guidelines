@@ -217,7 +217,7 @@ target_source(foo PUBLIC foo.hpp PRIVATE foo.cpp)
 # Naming Conventions
 
 Poorly-chosen names can mislead the reader and cause bugs. Pick names that match
-the semantics and role of the underlying entities, withing reason. Avoid
+the semantics and role of the underlying entities, within reason. Avoid
 abbreviations unless they are well known e.g from a protocol specification.
 
 - **Commands** should be lowercase and `snake_case`.
