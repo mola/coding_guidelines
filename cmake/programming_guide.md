@@ -194,6 +194,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/analyzer/analyzer_check.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/package_helper/threads.cmake)
 ```
 
+> NOTE: It is advised to unset the `CMAKE_MODULE_PATH` variable when adding
+> third party projects as the file names can collide between projects.
+
 # Use Project-Relative Variables
 
 There are various scenarios where paths relative to a location in the source or
