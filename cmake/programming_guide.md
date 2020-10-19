@@ -244,13 +244,11 @@ equivalents are more appropriate variables to use.
   Markdown files, etc.
 - **include** folder: Contains a folder with the `target` name, which in return
   contains all **public header** files associated with the `target`.
-
-> The **include** folder is only used for **library projects**, as **executable
-> projects** do not have **public header** files.
-
-- **src** folder: Contains **all source** and **private header** files.
-- **test** folder: Contains tests written for the project e.g. integration
-  tests.
+- **src** folder: Contains a folder with the `target` name, which in return
+  contains all **source** and **private header** files associated with the
+  `target`.
+- **test** folder: Contains a folder with the `target` name, which in return
+  contains source code for the tests.
 - **example** folder: Contains examples which would help other users to get a
   better understanding for the usage of a library.
 - **script** folder: Contains project related scripts to help a developer e.g.
@@ -258,7 +256,7 @@ equivalents are more appropriate variables to use.
 - **dependency** folder: Contains libraries which come from a third party. The
   libraries are mainly added via `git submodules` or directly copied if they are
   header only.
-- **packaging**: folder: Contains files which are only relevant for the
+- **packaging** folder: Contains files which are only relevant for the
   packaging e.g. resource files, installer images, etc.
 
 ## Target Sources And The `src` Folder
