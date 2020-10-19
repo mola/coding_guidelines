@@ -62,104 +62,15 @@ list(APPEND compiler_flags
 ```
 
 Such problems can be hard to spot and can lead to undesired behavior. To prevent
-the child scope pollution the **following three functions should be used** in
-the `CMakeLists.txt`.
+those conflicts prefix project specific variables with `${PROJECT_NAME}`.
 
-- `main()`: function which should be called from the root scope, calls the other
-  functions and defines global variables
-
-  ```cmake
-  function(main)
-      # unset module path to not get polluted from including projects
-      unset(CMAKE_MODULE_PATH)
-
-      # global variables
-      # -------------------------------------
-      get_filename_component(${PROJECT_NAME}_top_level_workspace
-          "${CMAKE_CURRENT_LIST_DIR}/.."
-          ABSOLUTE
-      )
-
-      set(${PROJECT_NAME}_target_bar "bar")
-
-      # append custom cmake paths to module search
-      # -------------------------------------
-      list(APPEND CMAKE_MODULE_PATH
-          "${${PROJECT_NAME}_top_level_workspace}/cmake_utils"
-      )
-
-      # call function which handles the project related initialization
-      # e.g. creation of targets
-      initialize_project()
-
-      # unset module path to not pollute third party projects
-      unset(CMAKE_MODULE_PATH)
-
-      # call function which handles dependencies e.g. with 'add_subdirectory'
-      configure_dependencies()
-  endfunction()
-  ```
-
-- `initialize_project()`: function which should handle the current project
-  related initialization e.g. create targets.
-
-  ```cmake
-  function(initialize_project)
-      # define cache variables
-      # -------------------------------------
-      set(${PROJECT_NAME}_enable_documentation OFF
-          CACHE
-              BOOL "Create and install the HTML based documentation"
-      )
-
-      # define compiler/linker flags
-      # -------------------------------------
-      include(common_compiler_flags)
-      get_common_cxx_compiler_flags(compiler_flags_to_test)
-
-      # check which flags are supported by the compiler
-      check_supported_cxx_compiler_flags("${compiler_flags_to_test}" cxx_compiler_flags)
-
-      # create executable target
-      add_executable(${${PROJECT_NAME}_target_bar})
-      add_executable(
-          ${${PROJECT_NAME}_target_bar}::${${PROJECT_NAME}_target_bar}
-          ALIAS
-          ${${PROJECT_NAME}_target_bar}
-      )
-
-      # ....
-  endfunction()
-  ```
-
-- `configure_dependencies()`: function handles dependencies and related target
-  configuration e.g. `add_subdirectory`, `target_link_libraries`.
-
-  ```cmake
-  function(configure_dependencies)
-      # add third party dependencies
-      # -------------------------------------
-      # set(BUILD_SHARED_LIBS ON)
-      add_subdirectory(
-          ${${PROJECT_NAME}_top_level_workspace}/libfoo
-          ${CMAKE_CURRENT_BINARY_DIR}/libfoo
-      )
-
-      target_link_libraries(${${PROJECT_NAME}_target_bar} foo::foo)
-      # unset(BUILD_SHARED_LIBS)
-  endfunction()
-  ```
-
-## Scoping CMake Restrictions
-
-Not every function / option can be set inside a function to take effect. This is
-a restriction of CMake without a clear understandable reason.
-
-The following things need to be outside of a function:
-
-- `project()`
-- `set(CMAKE_EXPORT_COMPILE_COMMANDS ON)`
-- `enable_testing()`
+```cmake
+# in 'main' project
+list(APPEND ${PROJECT_NAME}_compiler_flags
+    -Weverything
+	  -Werror
+)
+```
 
 # Think In Targets And Properties
 
