@@ -38,23 +38,23 @@ behavior of the dependency can vary.
 # -> variable 'compiler_flags' = NOT DEFINED
 list(APPEND compiler_flags
     -Weverything
-	  -Werror
+    -Werror
 )
 
 # -> variable 'compiler_flags' = [-Weverything, -Werror]
 
 # add dependency to 'main' project
 add_subdirectory(
-	  ${path_to_dependency}/<dependency>
-	  ${CMAKE_CURRENT_BINARY_DIR}/<dependency>
+    ${path_to_dependency}/<dependency>
+    ${CMAKE_CURRENT_BINARY_DIR}/<dependency>
 )
 
 # in '<dependency>' project
 # -> variable 'compiler_flags' = [-Weverything, -Werror]
 # ERROR: variable is expected to be not defined
 list(APPEND compiler_flags
-	  -Wall
-	  -Wextra
+    -Wall
+    -Wextra
 )
 
 # -> variable 'compiler_flags' = [-Weverything, -Werror, -Wall, -Wextra]
@@ -68,7 +68,7 @@ those conflicts prefix project specific variables with `${PROJECT_NAME}`.
 # in 'main' project
 list(APPEND ${PROJECT_NAME}_compiler_flags
     -Weverything
-	  -Werror
+    -Werror
 )
 ```
 
