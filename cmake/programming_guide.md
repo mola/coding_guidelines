@@ -259,6 +259,30 @@ equivalents are more appropriate variables to use.
 - **packaging** folder: Contains files which are only relevant for the
   packaging e.g. resource files, installer images, etc.
 
+## Test Folder Structure
+
+The `target` folder inside the **test** folder should reflect the top level
+structure with an **include** and a **src** folder which contain a `test target`
+related folder. A **data** folder can be provided to hold files which will be
+used inside the tests.
+
+```sh
+.
+└── test
+   └── <target>
+      ├── data
+      │  └── sample.png
+      ├── include
+      │  └── test_common
+      │     ├── fake
+      │     ├── mock
+      │     └── stub
+      └── src
+         ├── performance_test
+         ├── specification_test
+         └── test_common
+```
+
 ## Target Sources And The `src` Folder
 
 When the number of source files increases, having them all in the one directory
