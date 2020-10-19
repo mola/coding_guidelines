@@ -120,6 +120,57 @@ differently to the rest of the project without polluting the global scope.
 > variable can be used to change the default (`STATIC`) in on place instead of
 > having to modify every call to `add_library()`.
 
+## Target Sources
+
+When the number of source files increases, having them all in the one directory
+can make them more difficult to work with. This is generally addressed by
+placing them under subdirectories grouped by functionality. **Each** directory
+**must** contain a `CMakeLists.txt` file, which adds the files in its level via
+`target_sources()` to the target. This helps keep things local to the code they
+relate to and allows other `target_...()` commands to be moved into the
+subdirectories.
+
+```cmake
+# CMakeLists.txt
+# ---------------------------
+# define the target at the top-level
+add_executable(${target_foo})
+
+# 'include' subdirectory which adds sources and related options to the target
+add_subdirectory(src)
+
+# configure target with things which are source file 'independent'
+target_compile_features(${target_foo}
+    PUBLIC
+        cxx_std_17
+)
+
+# src/CMakeLists.txt
+# ---------------------------
+target_sources(${target_foo}
+    PRIVATE
+        main.cpp
+)
+
+add_subdirectory(coffee)
+
+# src/coffee/CMakeLists.txt
+# ---------------------------
+target_sources(${target_foo}
+    PRIVATE
+        coffee.cpp
+        coffee.hpp
+)
+
+target_compile_definitions(${target_foo}
+    PUBLIC
+        COFFEE_FAMILY=Robusta
+)
+```
+
+> **Always** add header files to the `target_sources()` call. This is needed
+> because some IDE's will not show the header files otherwise.
+
 # Functions And Macros
 
 **Prefer function** over **macros** whenever reasonable. In addition to
@@ -282,54 +333,3 @@ used inside the tests.
          ├── specification_test
          └── test_common
 ```
-
-## Target Sources And The `src` Folder
-
-When the number of source files increases, having them all in the one directory
-can make them more difficult to work with. This is generally addressed by
-placing them under subdirectories grouped by functionality. **Each** directory
-**must** contain a `CMakeLists.txt` file, which adds the files in its level via
-`target_sources()` to the target. This helps keep things local to the code they
-relate to and allows other `target_...()` commands to be moved into the
-subdirectories.
-
-```cmake
-# CMakeLists.txt
-# ---------------------------
-# define the target at the top-level
-add_executable(${target_foo})
-
-# 'include' subdirectory which adds sources and related options to the target
-add_subdirectory(src)
-
-# configure target with things which are source file 'independent'
-target_compile_features(${target_foo}
-    PUBLIC
-        cxx_std_17
-)
-
-# src/CMakeLists.txt
-# ---------------------------
-target_sources(${target_foo}
-    PRIVATE
-        main.cpp
-)
-
-add_subdirectory(coffee)
-
-# src/coffee/CMakeLists.txt
-# ---------------------------
-target_sources(${target_foo}
-    PRIVATE
-        coffee.cpp
-        coffee.hpp
-)
-
-target_compile_definitions(${target_foo}
-    PUBLIC
-        COFFEE_FAMILY=Robusta
-)
-```
-
-> **Always** add header files to the `target_sources()` call. This is needed
-> because some IDE's will not show the header files otherwise.
