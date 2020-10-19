@@ -229,7 +229,7 @@ equivalents are more appropriate variables to use.
 - Use a *'Find module'* for **third party** libraries that do not **support
   clients to use CMake**.
 - Use `cmake_policy` sparingly as policies change for a reason.
-- Use the **testing** and **packaging** functionality provided by CMake.
+- Use the **packaging** functionality provided by CMake.
 - **Prefer** to provide **cache variables** for controlling whether to enable
   **optional parts** of the build instead of encoding the logic in build scripts
   outside of CMake.
