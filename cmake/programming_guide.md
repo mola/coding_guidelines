@@ -195,6 +195,17 @@ target_compile_definitions(${target_foo}
 > variable can be used to change the default (`STATIC`) in one place instead of
 > having to modify every call to `add_library()`.
 
+## Generic Target Names
+
+The following generic target names should be used:
+
+| target name         | variable name                                 | purpose                                                              |
+|---------------------|-----------------------------------------------|----------------------------------------------------------------------|
+| documentation       | ${PROJECT\_NAME}\_target\_documentation       | generates the documentation                                          |
+| test\_common        | ${PROJECT\_NAME}\_target\_test\_common        | library which shares logic between tests                             |
+| specification\_test | ${PROJECT\_NAME}\_target\_specification\_test | tests the specification defined by the documentation and source code |
+| performance\_test   | ${PROJECT\_NAME}\_target\_performance\_test   | tests which measure the performance of the source code               |
+
 # Functions And Macros
 
 **Prefer function** over **macros** whenever reasonable. In addition to
