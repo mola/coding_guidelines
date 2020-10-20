@@ -339,7 +339,7 @@ equivalents are more appropriate variables to use.
 - **script** folder: Contains project related scripts to help a developer e.g.
   script to format the whole code, update changelog etc.
 - **dependency** folder: Contains libraries which come from a third party. The
-  libraries are mainly added via `git submodules` or directly copied if they are
+  libraries are mainly added via `git submodule` or directly copied if they are
   header only.
 - **packaging** folder: Contains files which are only relevant for the
   packaging e.g. resource files, installer images, etc.
