@@ -72,6 +72,19 @@ list(APPEND ${PROJECT_NAME}_compiler_flags
 )
 ```
 
+# Target Creation And Configuration
+
+To avoid to much lines of code in the top-level CMakeLists.txt file move the
+corresponding target related creation and configuration near the source code.
+
+```sh
+.
+├── CMakeLists.txt
+└── src
+   └── <target>
+      └── CMakeLists.txt # target creation and configuration
+```
+
 # Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
