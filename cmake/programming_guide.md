@@ -72,30 +72,6 @@ list(APPEND ${PROJECT_NAME}_compiler_flags
 )
 ```
 
-# Target Creation And Configuration
-
-To avoid to much lines of code in the top-level CMakeLists.txt file move the
-corresponding target related creation and configuration near the source code.
-
-```sh
-.
-├── CMakeLists.txt
-└── src
-   └── <target>
-      └── CMakeLists.txt # target creation and configuration
-```
-
-## Order Of Target Related Tasks
-
-The content of the target CMakeLists.txt file should be structured in the
-following order:
-
-1. Target creation
-2. Target configuration (compiler flags, includes, etc.)
-3. Source file addition and sub-folder inclusion
-4. Dependency handling and linkage
-5. Installation configuration
-
 # Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
@@ -126,23 +102,29 @@ differently to the rest of the project without polluting the global scope.
   add_library(bar::bar ALIAS bar)
   ```
 
-## Library Targets
+## Target Creation And Configuration
 
-- When naming targets of libraries, **do not** start or end the name with `lib`.
+To avoid to much lines of code in the top-level CMakeLists.txt file move the
+corresponding target related creation and configuration near the source code.
 
-> On all platforms except *'Windows'*, a leading `lib` will be prefixed
-> automatically when constructing the actual library name to make it conform to
-> the platform's usual convention. If the target name already begins with `lib`,
-> the resultant file name would end up with the form `liblibsomething...`. This
-> is often assumed to be a mistake and by all means bad practice.
+```sh
+.
+├── CMakeLists.txt
+└── src
+   └── <target>
+      └── CMakeLists.txt # target creation and configuration
+```
 
-- **Try to avoid** specifying the `STATIC` or `SHARED` keyword for a library
-  until it is known to be needed.
+## Order Of Target Related Tasks
 
-> Avoiding it allows greater flexibility in choosing between static or dynamic
-> libraries as an overall project-wide strategy. The `BUILD_SHARED_LIBS`
-> variable can be used to change the default (`STATIC`) in one place instead of
-> having to modify every call to `add_library()`.
+The content of the target CMakeLists.txt file should be structured in the
+following order:
+
+1. Target creation
+2. Target configuration (compiler flags, includes, etc.)
+3. Source file addition and sub-folder inclusion
+4. Dependency handling and linkage
+5. Installation configuration
 
 ## Target Sources
 
@@ -194,6 +176,24 @@ target_compile_definitions(${target_foo}
 
 > **Always** add header files to the `target_sources()` call. This is needed
 > because some IDE's will not show the header files otherwise.
+
+## Library Targets
+
+- When naming targets of libraries, **do not** start or end the name with `lib`.
+
+> On all platforms except *'Windows'*, a leading `lib` will be prefixed
+> automatically when constructing the actual library name to make it conform to
+> the platform's usual convention. If the target name already begins with `lib`,
+> the resultant file name would end up with the form `liblibsomething...`. This
+> is often assumed to be a mistake and by all means bad practice.
+
+- **Try to avoid** specifying the `STATIC` or `SHARED` keyword for a library
+  until it is known to be needed.
+
+> Avoiding it allows greater flexibility in choosing between static or dynamic
+> libraries as an overall project-wide strategy. The `BUILD_SHARED_LIBS`
+> variable can be used to change the default (`STATIC`) in one place instead of
+> having to modify every call to `add_library()`.
 
 # Functions And Macros
 
