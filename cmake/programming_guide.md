@@ -85,6 +85,17 @@ corresponding target related creation and configuration near the source code.
       └── CMakeLists.txt # target creation and configuration
 ```
 
+## Order Of Target Related Tasks
+
+The content of the target CMakeLists.txt file should be structured in the
+following order:
+
+1. Target creation
+2. Target configuration (compiler flags, includes, etc.)
+3. Source file addition and sub-folder inclusion
+4. Dependency handling and linkage
+5. Installation configuration
+
 # Think In Targets And Properties
 
 By defining properties in terms of targets, it helps developers to reason about
