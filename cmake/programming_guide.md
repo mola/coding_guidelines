@@ -139,11 +139,12 @@ subdirectories.
 ```cmake
 # CMakeLists.txt
 # ---------------------------
+add_subdirectory(src)
+
+# src/CMakeLists.txt
+# ---------------------------
 # define the target at the top-level
 add_executable(${target_foo})
-
-# 'include' subdirectory which adds sources and related options to the target
-add_subdirectory(src)
 
 # configure target with things which are source file 'independent'
 target_compile_features(${target_foo}
@@ -151,8 +152,6 @@ target_compile_features(${target_foo}
         cxx_std_17
 )
 
-# src/CMakeLists.txt
-# ---------------------------
 target_sources(${target_foo}
     PRIVATE
         main.cpp
