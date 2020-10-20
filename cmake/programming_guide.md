@@ -117,7 +117,7 @@ differently to the rest of the project without polluting the global scope.
 
 > Avoiding it allows greater flexibility in choosing between static or dynamic
 > libraries as an overall project-wide strategy. The `BUILD_SHARED_LIBS`
-> variable can be used to change the default (`STATIC`) in on place instead of
+> variable can be used to change the default (`STATIC`) in one place instead of
 > having to modify every call to `add_library()`.
 
 ## Target Sources
