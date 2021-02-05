@@ -1,7 +1,28 @@
 This page provides tools with can and should be used to improve the C++ source
 code.
 
-[[_TOC_]]
+# Table of Contents
+
+* [Compiler](#compiler)
+  * [Clang / GCC Compiler Flags](#clang--gcc-compiler-flags)
+  * [MSVC Compiler Flags](#msvc-compiler-flags)
+  * [Treat Warnings As Errors](#treat-warnings-as-errors)
+  * [Sanitizer](#sanitizer)
+* [Linker](#linker)
+  * [GNU Gold Linker](#gnu-gold-linker)
+  * [LLD](#lld)
+* [LLVM-based Tools](#llvm-based-tools)
+  * [Include-What-You-Use](#include-what-you-use)
+  * [Clang-Format](#clang-format)
+  * [Clang-Tidy](#clang-tidy)
+  * [Clazy](#clazy)
+* [Cppcheck](#cppcheck)
+* [rr](#rr)
+* [Heaptrack](#heaptrack)
+* [Valgrind](#valgrind)
+* [Dr. Memory](#dr-memory)
+* [Testing](#testing)
+  * [Code Coverage Analysis](#code-coverage-analysis)
 
 # Compiler
 

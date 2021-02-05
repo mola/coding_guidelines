@@ -1,6 +1,11 @@
 # Coding Guidelines
 
-[[_TOC_]]
+## Table of Contents
+
+* [Golden Rule](#golden-rule)
+* [Guides](#guides)
+* [Inspiration](#inspiration)
+* [License](#license)
 
 This repository holds guidelines for a range of different programming languages.
 These guidelines consist of a **style guide** which defines the general source

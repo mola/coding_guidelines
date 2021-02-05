@@ -1,6 +1,17 @@
 This page provides style guidelines for the CMake programming language.
 
-[[_TOC_]]
+# Table of Contents
+
+* [Source Code Column Limit](#source-code-column-limit)
+* [Whitespace](#whitespace)
+  * [Do Not Use Whitespace For Alignment](#do-not-use-whitespace-for-alignment)
+* [Indentation](#indentation)
+* [Rules Of Thumb](#rules-of-thumb)
+  * [Quotes](#quotes)
+  * [Conditions](#conditions)
+  * [Use Variable For Target](#use-variable-for-target)
+* [Naming Conventions](#naming-conventions)
+* [Comments](#comments)
 
 # Source Code Column Limit
 

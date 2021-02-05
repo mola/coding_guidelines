@@ -1,6 +1,27 @@
 This page provides programming guidelines for the CMake programming language.
 
-[[_TOC_]]
+# Table of Contents
+
+* [Minimum CMake Version](#minimum-cmake-version)
+* [Treat CMake Code Like Production Code](#treat-cmake-code-like-production-code)
+* [Scripted CMake](#scripted-cmake)
+* [Scoping Issue](#scoping-issue)
+* [Think In Targets And Properties](#think-in-targets-and-properties)
+  * [Target Creation And Configuration](#target-creation-and-configuration)
+  * [Order Of Target Related Tasks](#order-of-target-related-tasks)
+  * [Target Sources](#target-sources)
+  * [Library Targets](#library-targets)
+  * [Generic Target Names](#generic-target-names)
+* [Functions And Macros](#functions-and-macros)
+  * [Argument Handling](#argument-handling)
+* [Avoid Message Pollution](#avoid-message-pollution)
+* [Do Not Use file(GLOB)](#do-not-use-fileglob)
+* [Do Not include() With File Path](#do-not-include-with-file-path)
+* [Use Project-Specific Variables](#use-project-specific-variables)
+* [Rules Of Thumb](#rules-of-thumb)
+* [Project Layout](#project-layout)
+  * [Common Top Level Subdirectories](#common-top-level-subdirectories)
+  * [Test Folder Structure](#test-folder-structure)
 
 # Minimum CMake Version
 

@@ -1,6 +1,27 @@
 This page provides style guidelines for the C++ programming language.
 
-[[_TOC_]]
+# Table of Contents
+
+* [Source Code Column Limit](#source-code-column-limit)
+* [Whitespace](#whitespace)
+  * [Do Not Use Whitespace For Alignment](#do-not-use-whitespace-for-alignment)
+* [Indentation](#indentation)
+* [Always Use Trailing Return Type](#always-use-trailing-return-type)
+* [Opening Braces Always Go On The Same Line](#opening-braces-always-go-on-the-same-line)
+* [Comments](#comments)
+  * [Use Doxygen For Documentation Comments](#use-doxygen-for-documentation-comments)
+* [Naming Conventions](#naming-conventions)
+  * [General Conventions](#general-conventions)
+  * [Variable/Function Prefixes](#variablefunction-prefixes)
+  * [Getter/Setter Methods](#gettersetter-methods)
+  * [class/struct Keywords](#classstruct-keywords)
+  * [File Naming / Extensions](#file-naming--extensions)
+  * [Avoid Redundant Namespace/Filename Prefixes](#avoid-redundant-namespacefilename-prefixes)
+* [Includes](#includes)
+  * [Include Guards](#include-guards)
+* [Specifier Placement](#specifier-placement)
+* [Format Lambdas Like Blocks Of Code](#format-lambdas-like-blocks-of-code)
+* [Automation And Sample Of Formatted Source Code](#automation-and-sample-of-formatted-source-code)
 
 # Source Code Column Limit
 
